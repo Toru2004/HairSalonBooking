@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Era Hair Salon</title>
+    <title>Service</title>
     <link rel="icon" href="../images/logo.png">
     <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/services.css">
 </head>
 <body>
 
@@ -22,7 +23,7 @@
             <!-- Logo -->
             <div class="top-bar">
                 <div class="logo">
-                    <img src="../images/logo.png" alt="Booksy Logo">
+                    <a href="home.html"><img src="../images/logo.png" alt="Booksy Logo"></a>
                 </div>
                 <div class="login-signup">
                     <a href="#">Log In / Sign Up</a>
@@ -30,31 +31,58 @@
             </div>
 
             
-            
+            <h1 style="font-size:60px;">Service</h1>
+            <div style="font-size:20px; margin-top:-30px;">Skilled stylists, great service — highly recommended!</div>
 
-            <!-- Phần chính với tiêu đề và thanh tìm kiếm -->
-            <div class="header-content">
-                <h1><span id="typing-text"></span></h1>
-                <p>Discover and book beauty & wellness professionals near you</p>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search services or businesses">
-                </div>
-            </div>
+            
 
             <!-- Menu điều hướng -->
             <nav>
                 <ul id="main-menu">
-                    <li><a href="#">About us</a></li>
-                    <li><a href="services.html">Services</a></li>
-                    <li><a href="#">Stylists</a></li>
-                    <li><a href="booknow.html">Book now</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">Handbook</a></li>
+                    <li><a href="#" onclick="showContent('hair-cut')">Hair cut</a></li>
+                    <li><a href="#" onclick="showContent('makeup')">Makeup</a></li>
+                    <li><a href="#" onclick="showContent('massage')">Massage</a></li>
+                    <li><a href="#" onclick="showContent('head-washing')">Head Washing</a></li>
+                    <li><a href="#" onclick="showContent('hair-dying')">Hair Dying</a></li>
+                    <li><a href="#" onclick="showContent('hair-curling')">Hair Curling</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <!-- Nội dung dịch vụ -->
+<section id="hair-cut" class="service-content">
+    <h2>Hair Cut</h2>
+    <p>Chi tiết về dịch vụ cắt tóc...</p>
+</section>
+
+<section id="makeup" class="service-content">
+    <h2>Makeup</h2>
+    <p>Chi tiết về dịch vụ trang điểm...</p>
+</section>
+
+<section id="massage" class="service-content">
+    <h2>Massage</h2>
+    <p>Chi tiết về dịch vụ massage...</p>
+</section>
+
+<section id="head-washing" class="service-content">
+    <h2>Head Washing</h2>
+    <p>Chi tiết về dịch vụ gội đầu...</p>
+</section>
+
+<section id="hair-dying" class="service-content">
+    <h2>Hair Dying</h2>
+    <p>Chi tiết về dịch vụ nhuộm tóc...</p>
+</section>
+
+<section id="hair-curling" class="service-content">
+    <h2>Hair Curling</h2>
+    <p>Chi tiết về dịch vụ uốn tóc...</p>
+</section>
+
+
+    <script src="js/show-content.js"></script>
 </body>
 </html>
 <script>
@@ -110,6 +138,10 @@
         typeText();
     };
 
+    
+
 </script>
+
+
 
 

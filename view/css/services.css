@@ -1,0 +1,18 @@
+#main-menu a{
+    font-size:23px;
+}
+
+#main-menu {
+    margin-top:40px;
+
+}
+
+h1{
+    margin-top:0px;
+}
+
+.service-content {
+    display: none; /* Ẩn tất cả các phần dịch vụ ban đầu */
+    margin-top:-300px;
+    padding:30px;
+}
