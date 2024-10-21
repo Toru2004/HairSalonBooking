@@ -25,6 +25,7 @@ body {
 h2 {
     text-align: center;
     color: #333;
+    font-size:35px;
 }
 
 form {
@@ -36,6 +37,7 @@ label {
     margin-top: 10px;
     margin-bottom: 5px;
     color: #333;
+    font-size:20px;
 }
 
 input[type="text"],
@@ -63,3 +65,40 @@ button {
 button:hover {
     background-color: #989898;
 }
+
+.staff-profile {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-bottom:15px;
+}
+
+.staff-profile img {
+    width: 200px;
+    height: 200px;
+    
+    margin-right: 15px;
+}
+
+.staff-profile div {
+    flex: 1;
+}
+
+#staff-profile {
+    display: none; /* Ẩn phần profile mặc định */
+}
+
+.star {
+    font-size: 20px;
+    color: #ccc; /* Màu của sao trống */
+}
+
+.star.filled {
+    color: #000000; /* Màu của sao đầy */
+}
+
+.star-rating {
+    margin-top: 5px;
+}
+
+
