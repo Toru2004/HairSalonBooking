@@ -1,100 +1,77 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+.contact-section {
+    padding: 20px; /* Thêm khoảng đệm cho phần liên hệ */
+    background-color: #f9f9f9; /* Màu nền sáng cho phần liên hệ */
 }
 
-body {
-    font-family: Arial, sans-serif;
+.contact-section h1 {
+    margin-bottom: 10px;
+    color: #000000;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    text-align: center; /* Căn giữa nội dung */
 }
 
-header {
-    background-color: #1e1e1e;
+.contact-info {
+    display: flex; /* Sử dụng Flexbox để bố trí */
+    justify-content: space-between; /* Căn giữa các mục */
+    margin-top: 10px; /* Khoảng cách giữa phần giới thiệu và thông tin liên lạc */
 }
 
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 20px; /* Giảm padding để loại bỏ khoảng trống thừa */
+.contact-info h2 {
+    margin-top: 5px; /* Thêm khoảng cách cho tiêu đề thông tin liên hệ */
+    color: #444;
 }
 
-.logo img {
-    width: 100px;
+.address {
+    flex: 3; /* Địa chỉ chiếm 3 phần không gian */
 }
 
-.search-container {
-    display: flex;
-    flex-grow: 2;
-    justify-content: center;
-    align-items: center; /* Đảm bảo thanh tìm kiếm căn giữa theo chiều dọc */
+.contact-item {
+    flex: 1; /* Mỗi mục còn lại chiếm 1 phần không gian */
+    margin: 0 10px; /* Khoảng cách giữa các mục */
 }
 
-.search-container input {
-    padding: 8px; /* Giảm padding bên trong các ô input */
-    margin-right: 5px; /* Giảm khoảng cách giữa các ô input */
-    border: none;
+.contact-item p {
+    margin-bottom: 0px; /* Xóa khoảng cách dưới cùng của đoạn văn */
+}
+
+.contact-form {
+    margin-top: 10px;
+}
+
+.contact-form label {
+    display: block;
+    margin: 10px 0 5px;
+    color: #444;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    width: 250px; /* Giảm chiều rộng của các ô input */
 }
 
-.search-container input::placeholder {
-    color: #888;
+.contact-form button {
+    margin-left: auto; /* Đẩy nút sang bên phải */
+    display: flex; /* Sử dụng flexbox để căn giữa */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    padding: 10px 20px; /* Thêm padding cho nút */
+    border: none; /* Xóa viền mặc định */
+    border-radius: 5px; /* Bo tròn các góc của nút */
+    background-color: #555; /* Màu nền mặc định của nút */
+    color: white; /* Màu chữ */
+    cursor: pointer; /* Hiện con trỏ tay khi hover */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền */
 }
 
-.user-section {
-    display: flex;
-    align-items: center;
+.contact-form button:hover {
+    background-color: #333; /* Màu nền khi hover */
 }
 
-.user-section a {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 10px;
-    font-size: 14px;
-    padding: 10px 20px;
-    border-radius: 50px;
+footer {
+    background-color: #1e1e1e; /* Màu nền cho footer */
+    color: white; /* Màu chữ */
+    text-align: center; /* Căn giữa nội dung */
+    padding: 5px 0; /* Khoảng đệm cho footer */
 }
-
-.flag {
-    width: 25px;
-    height: auto;
-}
-
-.user-section a:hover {
-    background-color: white;
-    color: black;
-}
-
-.nav-links {
-    background-color: #222;
-    padding: 5px 0; /* Giảm padding để tránh khoảng cách thừa */
-    text-align: center;
-}
-
-.nav-links a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 10px; /* Giảm khoảng cách giữa các liên kết */
-    font-size: 14px;
-}
-
-.nav-links a:hover {
-    text-decoration: underline;
-}
-
-/* Responsive Design */
-@media screen and (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-    }
-
-    .search-container {
-        margin-top: 10px;
-    }
-
-    .nav-links {
-        flex-wrap: wrap;
-    }
-}
-
