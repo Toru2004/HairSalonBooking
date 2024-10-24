@@ -6,9 +6,51 @@
     <title>About us</title>
     <link rel="icon" href="../images/logo.png">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/popUp.css">
     <link rel="stylesheet" href="css/handbook.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- <script src="js/popup-manage.js"></script> -->
 </head>
+
+<!-- Pop-up Login Form -->
+<div id="login-popup" class="popup-overlay">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <h2>Login</h2>
+        <form action="" method="post">
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" name="username" required>
+
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="#" id="to-signup">Sign Up</a></p>
+    </div>
+</div>
+
+<!-- Pop-up Sign Up Form -->
+<div id="signup-popup" class="popup-overlay">
+    <div class="popup-content">
+        <span class="close-popup">&times;</span>
+        <h2>Sign Up</h2>
+        <form action="" method="post">
+            <label for="signup-username">Username:</label>
+            <input type="text" id="signup-username" name="username" required>
+
+            <label for="signup-email">Email:</label>
+            <input type="email" id="signup-email" name="email" required>
+
+            <label for="signup-password">Password:</label>
+            <input type="password" id="signup-password" name="password" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="#" id="to-login">Login</a></p>
+    </div>
+</div>
+
 <body>
     <header>
         <div class="header-container">
@@ -127,3 +169,5 @@
     </footer>
 </body>
 </html>
+
+<script src="js/popup-manage.js"></script>
