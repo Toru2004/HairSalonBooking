@@ -24,6 +24,7 @@ header {
     width: 100%;
     position: fixed;
     z-index: 1000;
+    height:130px;
 }
 
 .container {
@@ -101,10 +102,9 @@ h4 {
 }
 
 .sidebar {
-    width: 200px;
-    position: fixed;
-    margin-top: 130px;
-    top: 0;
+    width: 170px;
+    position: sticky;
+    top: 130px;
     left: 0;
     height: calc(100vh - 130px);
     background-color: #f4f4f4;
@@ -120,7 +120,7 @@ h4 {
 
 .sidebar a {
     display: block;
-    padding: 10px;
+    padding: 10px 17px;
     margin: 5px 0;
     text-decoration: none;
     color: #333;
@@ -134,9 +134,10 @@ h4 {
 }
 
 .content {
-    margin-left: 220px;
-    padding: 20px;
-    padding-top: 160px;
+    margin-left: 170px;
+    padding: 30px;
+    margin-top:-535px;
+    
 }
 
 .service-section {
@@ -194,13 +195,16 @@ h4 {
 /* Hiệu ứng trượt từ trên xuống */
 .service-info {
     opacity: 0;
-    transform: translateY(-20px);
-    transition: all 0.6s ease-in-out;
+    transform: translateY(-300px);
+    transition: all 1s ease-in-out;
+    
 }
 
 .service-info.show {
     opacity: 1;
     transform: translateY(0);
+   
+    
 }
 
 .staff-box-container {
@@ -209,6 +213,7 @@ h4 {
     justify-content: space-around;
     padding-top:20px;
     padding-bottom:20px;
+   
 }
 
 .staff-box {
@@ -353,9 +358,10 @@ th:hover {
 }
 
 .box-wrapper:hover {
-    transform: translateY(-5px); /* Nâng lên một chút khi hover */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Tăng bóng khi hover */
+   
+    box-shadow: 0 8px 16px rgba(0.4, 0.4, 0.4, 0.4); /* Tăng bóng khi hover */
 }
+
 
 
 
@@ -395,13 +401,14 @@ th:hover {
         </nav>
     </header>
 
+
     <!-- Left Sidebar (Service Menu) -->
     <div class="sidebar">
         <h3>Services</h3>
         <a href="#" onclick="showServiceInfo('haircut')">Hair Cut</a>
         <a href="#" onclick="showServiceInfo('makeup')">Makeup</a>
         <a href="#" onclick="showServiceInfo('massage')">Massage</a>
-        <a href="#" onclick="showServiceInfo('headwashing')">Head Washing</a>
+        <a href="#" onclick="showServiceInfo('headwashing')" style="padding:10px 5px;">Head Washing</a>
         <a href="#" onclick="showServiceInfo('hairdying')">Hair Dying</a>
         <a href="#" onclick="showServiceInfo('haircurling')">Hair Curling</a>
     </div>
@@ -770,6 +777,7 @@ th:hover {
             </tr>
         </table>
     </div>
+</div>
 
 <!-- Hair Curling Section -->
 <div id="haircurling-info" class="service-info">
@@ -832,6 +840,9 @@ th:hover {
             </tr>
         </table>
     </div>
+</div>
+    </div>
+
 
     <script>
         window.onload = function() {
