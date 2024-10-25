@@ -5,7 +5,8 @@ html, body {
     padding: 0;
     font-family: Arial, sans-serif;
     box-sizing: border-box;
-    background-color: white;
+    background-color: black;
+    
 }
 
 /* Thiết lập header với vị trí tương đối và chiếm toàn bộ màn hình */
@@ -239,14 +240,14 @@ nav ul li a {
 }
 /* Phong cách chung cho phần giới thiệu */
 .intro-text {
-    font-family: 'Georgia', serif; /* Font chữ serif mang phong cách cổ điển và sang trọng */
-    font-size: 10px; /* Kích thước chữ lớn để gây ấn tượng */
-    font-weight: 400; /* Độ dày trung bình, không quá nặng */
-    color: #333; /* Màu xám đậm, nhẹ nhàng và không quá mạnh như đen */
-    text-align: center; /* Canh giữa văn bản */
-    line-height: 1.6; /* Tạo khoảng cách giữa các dòng giúp dễ đọc */
-    margin: 10px auto; /* Tạo khoảng cách giữa các phần và canh giữa */
-    max-width: 800px; /* Giới hạn chiều rộng của phần văn bản */
+    font-family: 'Georgia', serif; 
+    font-size: 10px;
+    font-weight: 400; 
+    color: white; 
+    text-align: center; 
+    line-height: 1.6; 
+    margin: 10px auto; 
+    max-width: 800px; 
 }
 
 /* nnde */
