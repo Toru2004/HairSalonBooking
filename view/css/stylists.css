@@ -6,6 +6,8 @@
 
 .stylists-section h1 {
     margin-bottom: 10px;
+    font-size: 2.5em; /* Increase font size for better visibility */
+    color: #2d263c; /* Change to a darker color for contrast */
 }
 
 .stylists-container {
@@ -17,17 +19,29 @@
 .stylist {
     background-color: white;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px; /* More rounded corners */
     padding: 15px;
     margin: 10px;
-    width: 30%; /* Chiếm 30% chiều rộng của mỗi nhà tạo mẫu */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 30%; /* 30% width for each stylist */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s, box-shadow 0.5s, background-color 0.5s; /* Transition for hover effects */
+}
+
+.stylist:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
+    background-color: #e8d5f3; /* Light purple background on hover */
 }
 
 .stylist img {
     width: 100%;
     height: auto;
-    border-radius: 5px;
+    border-radius: 10px; /* Rounded corners for images */
+    transition: transform 0.5s; /* Transition for image scale effect */
+}
+
+.stylist img:hover {
+    transform: scale(1.05); /* Scale up image slightly on hover */
 }
 
 footer {
@@ -35,4 +49,26 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
+}
+.button-container {
+    margin-top: 10px; /* Space between the name and the buttons */
+}
+
+.button-container button {
+    background: linear-gradient(90deg, #2d263c 0%, #6528af 100%); /* Gradient background */
+    color: white; /* Text color */
+    border: none;
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px 15px; /* Padding */
+    cursor: pointer; /* Pointer cursor on hover */
+    margin-right: 10px; /* Space between buttons */
+    margin-top: 3px;
+    transition: background-position 0.5s, transform 0.5s; /* Transition for background position and scale */
+    background-size: 200% 100%; /* Set background size for the animation */
+    background-position: left; /* Initial position of the background */
+}
+
+.button-container button:hover {
+    background-position: right; /* Move background position to right on hover */
+    transform: scale(1.05); /* Slight scale up effect on hover */
 }
