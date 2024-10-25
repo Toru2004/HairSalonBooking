@@ -102,7 +102,7 @@ h4 {
 }
 
 .sidebar {
-    width: 170px;
+    width:170px;
     position: sticky;
     top: 130px;
     left: 0;
@@ -133,10 +133,14 @@ h4 {
     color: #ffffff;
 }
 
+.container-content{
+display:flex;
+}
 .content {
-    margin-left: 170px;
+    flex: 1; /* Tự động chiếm phần còn lại của màn hình */
     padding: 30px;
-    margin-top:-535px;
+    margin-top:120px;
+  
     
 }
 
@@ -217,7 +221,7 @@ h4 {
 }
 
 .staff-box {
-    width: 230px;
+    width: 250px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -401,7 +405,7 @@ th:hover {
         </nav>
     </header>
 
-
+<div class="container-content">
     <!-- Left Sidebar (Service Menu) -->
     <div class="sidebar">
         <h3>Services</h3>
@@ -842,6 +846,7 @@ th:hover {
     </div>
 </div>
     </div>
+</div>
 
 
     <script>
