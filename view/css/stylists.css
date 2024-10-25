@@ -13,7 +13,7 @@
 .stylists-container {
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
 }
 
 .stylist {
@@ -50,6 +50,7 @@ footer {
     text-align: center;
     padding: 10px 0;
 }
+
 .button-container {
     margin-top: 10px; /* Space between the name and the buttons */
 }
@@ -71,4 +72,16 @@ footer {
 .button-container button:hover {
     background-position: right; /* Move background position to right on hover */
     transform: scale(1.05); /* Slight scale up effect on hover */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .stylist {
+        width: calc(50% - 20px); /* Two boxes side by side on smaller screens */
+        margin: 10px; /* Margin between cards */
+    }
+    
+    .stylists-section h1 {
+        font-size: 2em; /* Adjust header font size for smaller screens */
+    }
 }
