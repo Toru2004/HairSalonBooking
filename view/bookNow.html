@@ -46,7 +46,7 @@
             <!-- Form thông tin khách hàng -->
             <div class="box customer-info">
                 <h2>Thông tin khách hàng</h2>
-                <form>
+                <form id="booking-form">
                     <label for="name">Tên khách hàng:</label>
                     <input type="text" id="name" name="name" required>
     
@@ -64,44 +64,43 @@
                 </form>
             </div>
     
-            <!-- Form thông tin dịch vụ và nhân viên -->
-           <!-- Form thông tin dịch vụ và nhân viên -->
-    <div class="box service-info">
-        <h2>Thông tin dịch vụ</h2>
-        <form>
-            <label for="service">Chọn dịch vụ:</label>
-            <select id="service" name="service" required>
-                <option value="haircut">Hair Cut</option>
-                <option value="makeup">Makeup</option>
-                <option value="massage">Massage</option>
-                <option value="headwash">Hair Washing</option>
+          >
+   <!-- Form thông tin dịch vụ và nhân viên -->
+<div class="box service-info">
+    <h2>Thông tin dịch vụ</h2>
+    <form>
+        <label for="service">Chọn dịch vụ:</label>
+        <select id="service" name="service" required onchange="updateStaffList()">
+            <option value="">Chọn dịch vụ</option>
+            <option value="haircut">Hair Cut</option>
+            <option value="makeup">Makeup</option>
+            <option value="massage">Massage</option>
+            <option value="headwashing">Hair Washing</option>
+            <option value="hairdying">Hair Dying</option>
+            <option value="haircurling">Hair Curling</option>
+        </select>
 
-                <option value="hairdye">Hair Dying</option>
-                <option value="haircurl">Hair Curling</option>
-            </select>
-    
-            <label for="staff">Chọn nhân viên:</label>
-            <select id="staff" name="staff" required onchange="displayStaffProfile()">
-                <option value="staff1">Lưu Trường Văn</option>
-                <option value="staff2">Trần Thành Đông</option>
-                <option value="staff3">Đỗ Tấn Phát</option>
-                <option value="staff4">Lê Nguyễn Minh Phúc</option>
-            </select>
-    
-            <!-- Hiển thị profile của nhân viên -->
-            <div id="staff-profile" class="staff-profile">
-                <img id="staff-image" src="" alt="Profile Image">
-                <div id="staff-details"></div>
-            </div>
-    
-            <button type="submit">Đặt lịch</button>
-        </form>
-    </div>
+        <label for="staff">Chọn nhân viên:</label>
+        <select id="staff" name="staff" required onchange="displayStaffProfile()">
+            <option value="">Chọn nhân viên</option>
+        </select>
+
+        <!-- Hiển thị profile của nhân viên -->
+        <div id="staff-profile" class="staff-profile">
+            <img id="staff-image" src="" alt="Profile Image">
+            <div id="staff-details"></div>
+        </div>
+
+        <button type="submit">Đặt lịch</button>
+    </form>
+</div>
+
     
         </div>
     </section>
 
     
     <script src="js/profile-staff-booknow.js"></script>
+   
 </body>
 </html>
