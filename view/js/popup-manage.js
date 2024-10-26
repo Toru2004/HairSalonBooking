@@ -1,43 +1,43 @@
-    // Pop-up elements
+document.addEventListener('DOMContentLoaded', function () {
     const loginPopup = document.getElementById('login-popup');
     const signupPopup = document.getElementById('signup-popup');
-    const loginLink = document.querySelector('.user-section a');
-    const closePopupButtons = document.querySelectorAll('.close-popup');
-    const toSignupLink = document.getElementById('to-signup');
-    const toLoginLink = document.getElementById('to-login');
+    const openLoginButton = document.getElementById('open-login');
+    const closeButtons = document.querySelectorAll('.close-popup');
 
-    // Mở pop-up khi nhấn vào "Log In / Sign Up"
-    loginLink.addEventListener('click', function(event) {
+    // Mở Login Popup
+    openLoginButton.onclick = (event) => {
         event.preventDefault();
-        loginPopup.style.display = 'flex';
-    });
+        loginPopup.classList.remove('d-none');
+        signupPopup.classList.add('d-none');
+    };
 
-    // Đóng pop-up khi nhấn vào dấu "x"
-    closePopupButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            loginPopup.style.display = 'none';
-            signupPopup.style.display = 'none';
-        });
-    });
-
-    // Chuyển từ Login sang Sign Up
-    toSignupLink.addEventListener('click', function(event) {
+    // Chuyển sang Sign Up Popup
+    document.getElementById('to-signup').onclick = (event) => {
         event.preventDefault();
-        loginPopup.style.display = 'none';
-        signupPopup.style.display = 'flex';
-    });
+        loginPopup.classList.add('d-none');
+        signupPopup.classList.remove('d-none');
+    };
 
-    // Chuyển từ Sign Up sang Login
-    toLoginLink.addEventListener('click', function(event) {
+    // Chuyển sang Login Popup
+    document.getElementById('to-login').onclick = (event) => {
         event.preventDefault();
-        signupPopup.style.display = 'none';
-        loginPopup.style.display = 'flex';
+        signupPopup.classList.add('d-none');
+        loginPopup.classList.remove('d-none');
+    };
+
+    // Đóng cả Login và Signup Popups
+    closeButtons.forEach(button => {
+        button.onclick = function () {
+            loginPopup.classList.add('d-none');
+            signupPopup.classList.add('d-none');
+        };
     });
 
-    // Đóng pop-up khi nhấn ra ngoài pop-up
-    window.addEventListener('click', function(event) {
-        if (event.target === loginPopup || event.target === signupPopup) {
-            loginPopup.style.display = 'none';
-            signupPopup.style.display = 'none';
+    // Đóng popup khi click ra ngoài
+    window.onclick = function (event) {
+        if (event.target == loginPopup || event.target == signupPopup) {
+            loginPopup.classList.add('d-none');
+            signupPopup.classList.add('d-none');
         }
-    });
+    };
+});

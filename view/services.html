@@ -7,30 +7,27 @@
     <link rel="icon" href="../images/logo.png">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
+body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
-    margin: 0;
-    padding: 0;
 }
 
-        /* Header */
-        header {
-            background-color: #1e1e1e;
-       
-            width: 100%;
-            position: fixed;
-            z-index: 1000;
-        }
+header {
+    background-color: #1e1e1e;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    height:130px;
+}
 
-        .container {
+.container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
@@ -40,186 +37,195 @@ h3 {
     text-align: center;
     font-size: 30px;
     color: #333;
-    margin-bottom:30px;
+    margin-bottom: 30px;
 }
 
-h4{
-    text-align:center;
-    font-size:30px;
-    margin:20px 0px;
+h4 {
+    text-align: center;
+    font-size: 30px;
+    margin: 20px 0;
 }
 
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0px 20px;
-        }
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
 
-        .logo img {
-            width: 100px;
-        }
+.logo img {
+    width: 100px;
+}
 
-        .search-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .search-container input {
-            padding: 8px;
-            margin-right: 5px;
-            border: none;
-            border-radius: 5px;
-            width: 250px;
-        }
+.search-container input {
+    padding: 8px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 5px;
+    width: 250px;
+}
 
-        .user-section a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 14px;
-        }
+.user-section a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+}
 
-        .user-section a:hover {
-            background-color: white;
-            color: black;
-        }
+.user-section a:hover {
+    background-color: white;
+    color: black;
+}
 
-        .nav-links {
-            background-color: #222;
-            padding:5px 0;
-            text-align: center;
-        }
+.nav-links {
+    background-color: #222;
+    padding: 5px 0;
+    text-align: center;
+}
 
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
-        }
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 14px;
+}
 
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
+.nav-links a:hover {
+    text-decoration: underline;
+}
 
-        .sidebar {
-            width: 200px;
-            position: fixed;
-            margin-top: 130px;
-            top: 0;
-            left: 0;
-            height: calc(100vh - 150px);
-            background-color: #f4f4f4;
-            padding: 20px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            overflow-y: auto;
-        }
+.sidebar {
+    width:170px;
+    position: sticky;
+    top: 130px;
+    left: 0;
+    height: calc(100vh - 130px);
+    background-color: #f4f4f4;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
 
-        .sidebar h3 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .sidebar a {
-            display: block;
-            padding: 10px;
-            margin: 5px 0;
-            text-decoration: none;
-            color: #333;
-            border-radius: 5px;
-            font-size:18px;
-        }
+.sidebar a {
+    display: block;
+    padding: 10px 17px;
+    margin: 5px 0;
+    text-decoration: none;
+    color: #333;
+    border-radius: 5px;
+    font-size: 18px;
+}
 
-        .sidebar a:hover {
-            background-color: #000000;
-            color: #ffffff;
-        }
+.sidebar a:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
 
-        /* Content Area */
-        .content {
-            margin-left: 220px;
-            padding: 20px;
-            padding-top: 160px;
-        }
+.container-content{
+display:flex;
+}
+.content {
+    flex: 1; /* Tự động chiếm phần còn lại của màn hình */
+    padding: 30px;
+    margin-top:130px;
+  
+    
+}
 
-        .service-section {
-            display: flex;
-            align-items: center;
-            margin-bottom: 40px;
-            width: 100%;
-            position: relative; /* Thêm để hỗ trợ cho hover */
-        }
+.service-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    width: 100%;
+    position: relative; /* Hỗ trợ cho hover */
+}
 
-        .service-section:nth-child(even) {
-            flex-direction: row-reverse;
-        }
+.service-section:nth-child(even) {
+    flex-direction: row-reverse;
+}
 
-        .service-section img {
-            width: 100%;
-            height: auto;
-            max-width: 400px;
-            object-fit: cover;
-            margin-right: 20px;
-            transition: transform 0.3s ease; /* Hiệu ứng chuyển ảnh */
+.service-section img {
+    width: 100%;
+    height: auto;
+    max-width: 400px;
+    object-fit: cover;
+    margin-right: 20px;
+    transition: transform 0.3s ease; /* Hiệu ứng chuyển ảnh */
+}
 
-        }
-
-        .service-section:hover img {
+.service-section:hover img {
     transform: scale(1.15); /* Phóng to ảnh khi hover */
 }
 
-        .service-section:nth-child(even) img {
-            margin-right: 0;
-            margin-left: 20px;
-        }
-
-        .service-description {
-            flex: 1;
-            padding: 20px;
-            background-color: #dbdbdb;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Thêm bóng cho hộp mô tả */
-    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền */
-        }
-        .service-description:hover {
-    background-color: #a6a5a5; /* Thay đổi màu nền khi hover */
-    font-size:17px;
+.service-section:nth-child(even) img {
+    margin-right: 0;
+    margin-left: 20px;
 }
 
-        .service-description h3 {
-            margin-bottom: 15px;
-        }
+.service-description {
+    flex: 1;
+    padding: 20px;
+    background-color: #dbdbdb;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng cho hộp mô tả */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền */
+}
 
-        .service-description p {
-            line-height: 1.6;
-        }
+.service-description:hover {
+    background-color: #a6a5a5; /* Thay đổi màu nền khi hover */
+    font-size: 17px;
+}
 
-        /* Hiệu ứng trượt từ trên xuống */
+.service-description h3 {
+    margin-bottom: 15px;
+}
+
+.service-description p {
+    line-height: 1.6;
+}
+
+/* Hiệu ứng trượt từ trên xuống */
 .service-info {
     opacity: 0;
-    transform: translateY(-20px);
-    transition: all 0.6s ease-in-out;
+    transform: translateY(-300px);
+    transition: all 1s ease-in-out;
+    
 }
 
 .service-info.show {
     opacity: 1;
     transform: translateY(0);
+   
+    
 }
 
-        .staff-box-container {
+.staff-box-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    padding-top:20px;
+    padding-bottom:20px;
+   
 }
 
 .staff-box {
-    width: 260px;
+    width: 240px;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -227,14 +233,13 @@ h4{
 }
 
 .staff-box:hover {
-    transform: translateY(-10px);
+    transform: scale(1.20); /* Tăng kích thước lên 20% khi hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
 .staff-box img {
     width: 100%;
-    height: 250px;
-    
+    height: 220px;
     margin-bottom: 10px;
 }
 
@@ -263,7 +268,8 @@ h4{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.price-table th, .price-table td {
+.price-table th, 
+.price-table td {
     padding: 20px;
     text-align: center;
     border: 1px solid #ccc;
@@ -272,7 +278,7 @@ h4{
 .price-table th {
     background-color: #333;
     color: #fff;
-    font-size:18px;
+    font-size: 18px;
 }
 
 .price-table td {
@@ -281,58 +287,54 @@ h4{
 
 .price-table tr:nth-child(even) {
     background-color: #eaeaea;
-    font-size:17px;
+    font-size: 17px;
 }
 
-/* Hiệu ứng hover */
-.price-table th:hover {
-    background-color: #5b5a5a; /* Màu nền khi hover */
-    cursor: pointer; /* Hiệu ứng con trỏ khi hover */
+tr:hover td {
+    background-color: #f0f0f0; /* Màu nền khi hover */
+    transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
 }
 
-.price-table tr:hover{
-    background-color: #979494; /* Màu nền khi hover */
-    cursor: pointer; /* Hiệu ứng con trỏ khi hover */
+th:hover {
+    background-color: #444444; /* Màu nền cho tiêu đề khi hover */
 }
 
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+    }
 
+    .search-container {
+        margin-top: 10px;
+    }
 
-        /* Responsive Design */
-        @media screen and (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-            }
+    .sidebar {
+        width: 100%;
+        position: relative;
+        height: auto;
+    }
 
-            .search-container {
-                margin-top: 10px;
-            }
+    .content {
+        margin-left: 0;
+    }
 
-            .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-            }
+    .service-section {
+        flex-direction: column;
+    }
 
-            .content {
-                margin-left: 0;
-            }
+    .staff-box {
+        flex: 0 0 48%;
+        margin-bottom: 10px;
+    }
 
-            .service-section {
-                flex-direction: column;
-            }
+    .service-section img {
+        margin-bottom: 20px;
+    }
+}
 
-            .staff-box {
-                flex: 0 0 48%;
-                margin-bottom: 10px;
-            }
-
-            .service-section img {
-                margin-bottom: 20px;
-            }
-        }
-
-        .staff-box button {
-    background-color: #000000; /* Màu nền xanh lá cây */
+.staff-box button {
+    background-color: #000000; /* Màu nền đen */
     color: white; /* Màu chữ trắng */
     border: none; /* Không có viền */
     padding: 10px 20px; /* Khoảng cách bên trong */
@@ -349,6 +351,24 @@ h4{
 .staff-box button:hover {
     background-color: #5f5d5d; /* Màu nền khi hover */
 }
+
+.box-wrapper {
+    background-color: #f9f9f9; /* Màu nền hộp bọc */
+    border: 1px solid #000000; /* Viền cho hộp bọc */
+    border-radius: 10px; /* Bo góc cho hộp bọc */
+    padding: 20px; /* Khoảng cách bên trong */
+    margin-bottom: 20px; /* Khoảng cách dưới cùng */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng cho hộp bọc */
+}
+
+.box-wrapper:hover {
+   
+    box-shadow: 0 8px 16px rgba(0.4, 0.4, 0.4, 0.4); /* Tăng bóng khi hover */
+}
+
+
+
+
 
     </style>
 </head>
@@ -385,13 +405,14 @@ h4{
         </nav>
     </header>
 
+<div class="container-content">
     <!-- Left Sidebar (Service Menu) -->
     <div class="sidebar">
         <h3>Services</h3>
         <a href="#" onclick="showServiceInfo('haircut')">Hair Cut</a>
         <a href="#" onclick="showServiceInfo('makeup')">Makeup</a>
         <a href="#" onclick="showServiceInfo('massage')">Massage</a>
-        <a href="#" onclick="showServiceInfo('headwashing')">Head Washing</a>
+        <a href="#" onclick="showServiceInfo('headwashing')" style="padding:10px 5px;">Head Washing</a>
         <a href="#" onclick="showServiceInfo('hairdying')">Hair Dying</a>
         <a href="#" onclick="showServiceInfo('haircurling')">Hair Curling</a>
     </div>
@@ -453,7 +474,9 @@ h4{
 
         <!-- Service Details -->
         <div id="haircut-info" class="service-info">
-            <h3>Staff for Hair Cut</h3>
+            
+            <div class="box-wrapper">
+                <h3>Staff for Hair Cut</h3>
             <div class="staff-box-container">
                 <div class="staff-box">
                     <img src="../images/staff1.jpg" alt="Staff 1">
@@ -488,26 +511,34 @@ h4{
                     <button>Select</button>
                 </div>
             </div>
+            </div>
 
-            <h4>Price List</h4>
-            <table class="price-table">
-                <tr>
-                    <th>Service</th>
-                    <th>Price</th>
-                </tr>
-                <tr>
-                    <td>Basic Hair Cut</td>
-                    <td>$20</td>
-                </tr>
-                <tr>
-                    <td>Advanced Hair Cut</td>
-                    <td>$35</td>
-                </tr>
-            </table>
+            <div class="box-wrapper">
+                <h4>Bảng Giá Dịch Vụ Hair Cut</h4>
+                <table class="price-table">
+                    <tr>
+                        <th>Dịch Vụ</th>
+                        <th>Giá (VNĐ)</th>
+                    </tr>
+                    <tr>
+                        <td>Cắt Tóc Nam</td>
+                        <td>100.000</td>
+                    </tr>
+                    <tr>
+                        <td>Cắt Tóc Nữ</td>
+                        <td>300.000</td>
+                    </tr>
+                    <tr>
+                        <td>Cắt Tóc Trẻ Em</td>
+                        <td>80.000</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- Makeup Section -->
         <div id="makeup-info" class="service-info">
+            <div class="box-wrapper">
             <h3>Staff for Makeup</h3>
             <div class="staff-box-container">
                 <div class="staff-box">
@@ -543,26 +574,33 @@ h4{
                     <button>Select</button>
                 </div>
             </div>
-
-            <h4>Price List</h4>
-            <table class="price-table">
-                <tr>
-                    <th>Service</th>
-                    <th>Price</th>
-                </tr>
-                <tr>
-                    <td>Basic Makeup</td>
-                    <td>$50</td>
-                </tr>
-                <tr>
-                    <td>Bridal Makeup</td>
-                    <td>$150</td>
-                </tr>
-            </table>
+            </div>
+            <div class="box-wrapper">
+                <h4>Bảng Giá Dịch Vụ Makeup</h4>
+                <table class="price-table">
+                    <tr>
+                        <th>Dịch Vụ</th>
+                        <th>Giá (VNĐ)</th>
+                    </tr>
+                    <tr>
+                        <td>Makeup Cưới</td>
+                        <td>800.000</td>
+                    </tr>
+                    <tr>
+                        <td>Makeup Dự Tiệc</td>
+                        <td>600.000</td>
+                    </tr>
+                    <tr>
+                        <td>Makeup Hằng Ngày</td>
+                        <td>400.000</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <!-- Massage Section -->
 <div id="massage-info" class="service-info">
+    <div class="box-wrapper">
     <h3>Staff for Massage</h3>
     <div class="staff-box-container">
         <div class="staff-box">
@@ -598,26 +636,34 @@ h4{
             <button>Select</button>
         </div>
     </div>
+    </div>
 
-    <h4>Price List</h4>
-    <table class="price-table">
-        <tr>
-            <th>Service</th>
-            <th>Price</th>
-        </tr>
-        <tr>
-            <td>Basic Massage</td>
-            <td>$40</td>
-        </tr>
-        <tr>
-            <td>Deep Tissue Massage</td>
-            <td>$70</td>
-        </tr>
-    </table>
+    <div class="box-wrapper">
+        <h4>Bảng Giá Dịch Vụ Massage</h4>
+        <table class="price-table">
+            <tr>
+                <th>Dịch Vụ</th>
+                <th>Giá (VNĐ)</th>
+            </tr>
+            <tr>
+                <td>Massage Thư Giãn</td>
+                <td>300.000</td>
+            </tr>
+            <tr>
+                <td>Massage Toàn Thân</td>
+                <td>600.000</td>
+            </tr>
+            <tr>
+                <td>Massage Chân</td>
+                <td>150.000</td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <!-- Head Washing Section -->
 <div id="headwashing-info" class="service-info">
+    <div class="box-wrapper">
     <h3>Staff for Head Washing</h3>
     <div class="staff-box-container">
         <div class="staff-box">
@@ -653,26 +699,30 @@ h4{
             <button>Select</button>
         </div>
     </div>
+    </div>
 
-    <h4>Price List</h4>
-    <table class="price-table">
-        <tr>
-            <th>Service</th>
-            <th>Price</th>
-        </tr>
-        <tr>
-            <td>Basic Head Wash</td>
-            <td>$15</td>
-        </tr>
-        <tr>
-            <td>Luxury Head Wash</td>
-            <td>$30</td>
-        </tr>
-    </table>
+    <div class="box-wrapper">
+        <h4>Bảng Giá Dịch Vụ Gội Đầu</h4>
+        <table class="price-table">
+            <tr>
+                <th>Dịch Vụ</th>
+                <th>Giá (VNĐ)</th>
+            </tr>
+            <tr>
+                <td>Gội Đầu Thư Giãn</td>
+                <td>100.000</td>
+            </tr>
+            <tr>
+                <td>Gội Đầu & Massage Da Đầu</td>
+                <td>200.000</td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <!-- Hair Dying Section -->
 <div id="hairdying-info" class="service-info">
+    <div class="box-wrapper">
     <h3>Staff for Hair Dying</h3>
     <div class="staff-box-container">
         <div class="staff-box">
@@ -708,26 +758,34 @@ h4{
             <button>Select</button>
         </div>
     </div>
+    </div>
 
-    <h4>Price List</h4>
-    <table class="price-table">
-        <tr>
-            <th>Service</th>
-            <th>Price</th>
-        </tr>
-        <tr>
-            <td>Single Process Color</td>
-            <td>$60</td>
-        </tr>
-        <tr>
-            <td>Highlights</td>
-            <td>$100</td>
-        </tr>
-    </table>
+    <div class="box-wrapper">
+        <h4>Bảng Giá Dịch Vụ Nhuộm Tóc</h4>
+        <table class="price-table">
+            <tr>
+                <th>Dịch Vụ</th>
+                <th>Giá (VNĐ)</th>
+            </tr>
+            <tr>
+                <td>Nhuộm Tóc Thông Thường</td>
+                <td>600.000</td>
+            </tr>
+            <tr>
+                <td>Nhuộm Ombre</td>
+                <td>1.200.000</td>
+            </tr>
+            <tr>
+                <td>Nhuộm Balayage</td>
+                <td>1.500.000</td>
+            </tr>
+        </table>
+    </div>
 </div>
 
 <!-- Hair Curling Section -->
 <div id="haircurling-info" class="service-info">
+    <div class="box-wrapper">
     <h3>Staff for Hair Curling</h3>
     <div class="staff-box-container">
         <div class="staff-box">
@@ -763,26 +821,33 @@ h4{
             <button>Select</button>
         </div>
     </div>
+    </div>
 
-    <h4>Price List</h4>
-    <table class="price-table">
-        <tr>
-            <th>Service</th>
-            <th>Price</th>
-        </tr>
-        <tr>
-            <td>Basic Curl</td>
-            <td>$50</td>
-        </tr>
-        <tr>
-            <td>Advanced Curl</td>
-            <td>$75</td>
-        </tr>
-    </table>
+    <div class="box-wrapper">
+        <h4>Bảng Giá Dịch Vụ Uốn Tóc</h4>
+        <table class="price-table">
+            <tr>
+                <th>Dịch Vụ</th>
+                <th>Giá (VNĐ)</th>
+            </tr>
+            <tr>
+                <td>Uốn Tóc Bồng Bềnh</td>
+                <td>800.000</td>
+            </tr>
+            <tr>
+                <td>Uốn Tóc Đuôi</td>
+                <td>600.000</td>
+            </tr>
+            <tr>
+                <td>Uốn Tóc Sóng Nước</td>
+                <td>1.000.000</td>
+            </tr>
+        </table>
+    </div>
+</div>
+    </div>
 </div>
 
-        <!-- Other service sections... -->
-    </div>
 
     <script>
         window.onload = function() {
