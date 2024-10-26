@@ -14,6 +14,8 @@
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap; /* Allows items to wrap to the next line */
+    max-width: 90%; /* Limit the container to 90% width of the viewport */
+    margin: 0 auto; /* Center the container */
 }
 
 .stylist {
