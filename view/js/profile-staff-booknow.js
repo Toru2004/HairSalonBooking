@@ -205,7 +205,7 @@ function updateStaffList() {
     const staffSelect = document.getElementById('staff');
     
     // Xóa nhân viên cũ
-    staffSelect.innerHTML = '<option value="">Chọn nhân viên</option>';
+    staffSelect.innerHTML = '<option value="">Select Staff</option>';
     
     // Thêm nhân viên mới theo dịch vụ
     if (staffByService[service]) {

@@ -103,3 +103,5 @@ button:hover {
 }
 
 
+.star { color: lightgray; }
+.star.filled { color: gold; }
