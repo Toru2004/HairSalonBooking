@@ -34,11 +34,11 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Increased shadow on hover */
     background-color: #e8d5f3; /* Light purple background on hover */
 }
-
 .stylist img {
     width: 100%;
-    height: auto;
+    height: 330px; /* Set a fixed height for uniformity */
     border-radius: 10px; /* Rounded corners for images */
+    object-fit: cover; /* Ensures image fits within the box without distortion */
     transition: transform 0.5s; /* Transition for image scale effect */
 }
 
@@ -62,7 +62,7 @@ footer {
     color: white; /* Text color */
     border: none;
     border-radius: 5px; /* Rounded corners */
-    padding: 10px 15px; /* Padding */
+    padding: 4px 6px; /* Padding */
     cursor: pointer; /* Pointer cursor on hover */
     margin-right: 10px; /* Space between buttons */
     margin-top: 3px;
@@ -77,10 +77,20 @@ footer {
 }
 
 /* Media Queries for Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .stylist {
         width: calc(50% - 20px); /* Two boxes side by side on smaller screens */
         margin: 10px; /* Margin between cards */
+    }
+    
+    .stylists-section h1 {
+        font-size: 3em; /* Adjust header font size for smaller screens */
+    }
+}
+@media (max-width: 550px) {
+    .stylist {
+        width: 100%; /* Full width for each stylist card */
+        margin: 10px 0; /* Margin to separate cards vertically */
     }
     
     .stylists-section h1 {
