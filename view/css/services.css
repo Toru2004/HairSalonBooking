@@ -98,7 +98,7 @@ h4 {
     top: 130px;
     left: 0;
     height: calc(100vh - 130px);
-    background-color: #f4f4f4;
+    background-color: #2f2f2f;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
@@ -107,21 +107,23 @@ h4 {
 .sidebar h3 {
     text-align: center;
     margin-bottom: 20px;
+    color:#dbdbdb;
 }
 
 .sidebar a {
     display: block;
-    padding: 10px 17px;
+    padding: 20px 17px;
     margin: 5px 0;
     text-decoration: none;
-    color: #333;
+    color: #ffffff;
     border-radius: 5px;
     font-size: 18px;
 }
 
 .sidebar a:hover {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: #ffffff;
+    color: #000000;
+    
 }
 
 .container-content{
@@ -157,7 +159,8 @@ display:flex;
 }
 
 .service-section:hover img {
-    transform: scale(1.15); /* Phóng to ảnh khi hover */
+    transform: scale(1.10); /* Phóng to ảnh khi hover */
+    box-shadow: 0 8px 16px rgba(0, 0.5, 0.5, 0.5); /* Bóng cho hộp mô tả */
 }
 
 .service-section:nth-child(even) img {
