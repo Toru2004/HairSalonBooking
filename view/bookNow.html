@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About us</title>
+    <title>Book</title>
+    <link rel="stylesheet" href="css/booknow.css">
     <link rel="icon" href="../images/logo.png">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
+
     <header>
         <div class="header-container">
             <!-- Logo -->
@@ -39,13 +42,115 @@
         </nav>
     </header>
 
-    <section class="book-now-section">
-        <h1>Book now</h1>
-        <p>bla bla xin chào</p>
+    <section class="bookNow-section">
+        <div class="booking-container">
+            <!-- Form thông tin khách hàng -->
+            <div class="box customer-info">
+                <h2>Thông tin khách hàng</h2>
+                <form id="booking-form">
+                    <label for="name">Tên khách hàng:</label>
+                    <input type="text" id="name" name="name" required>
+    
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+    
+                    <label for="phone">Số điện thoại:</label>
+                    <input type="tel" id="phone" name="phone" required>
+    
+                    <label for="date">Ngày đặt lịch:</label>
+                    <input type="date" id="date" name="date" required>
+    
+                    <label for="time">Thời gian:</label>
+                    <input type="time" id="time" name="time" required>
+                </form>
+            </div>
+    
+          >
+   <!-- Form thông tin dịch vụ và nhân viên -->
+<div class="box service-info">
+    <h2>Thông tin dịch vụ</h2>
+    <form>
+        <label for="service">Chọn dịch vụ:</label>
+        <select id="service" name="service" required onchange="updateStaffList()">
+            <option value="">Chọn dịch vụ</option>
+            <option value="haircut">Hair Cut</option>
+            <option value="makeup">Makeup</option>
+            <option value="massage">Massage</option>
+            <option value="headwashing">Hair Washing</option>
+            <option value="hairdying">Hair Dying</option>
+            <option value="haircurling">Hair Curling</option>
+        </select>
+
+        <label for="staff">Chọn nhân viên:</label>
+        <select id="staff" name="staff" required onchange="displayStaffProfile()">
+            <option value="">Chọn nhân viên</option>
+        </select>
+
+        <!-- Hiển thị profile của nhân viên -->
+        <div id="staff-profile" class="staff-profile">
+            <img id="staff-image" src="" alt="Profile Image">
+            <div id="staff-details"></div>
+        </div>
+
+        <button type="submit">Đặt lịch</button>
+    </form>
+</div>
+
+    
+        </div>
     </section>
 
     <footer>
-        
+        <div class="footer-container">
+            <div class="footer-left">
+                <div class="logo">
+                    <span>NewEra.</span>
+                </div>
+                <p>
+                    With a team of professional and experienced hairstylists who are always up to date with the latest fashion trends, we are confident in delivering the perfect hairstyle that suits your unique personality and style.
+                </p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-dribbble"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-right">
+                <div class="footer-section">
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Testimonial</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#">Smooth Shave</a></li>
+                        <li><a href="#">Beard Triming</a></li>
+                        <li><a href="#">Haircut Styles</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>This hair salon was founded and completed in 2024 <span>❤️</span> by Group 5 student UTH</p>
+        </div>
     </footer>
+    
 </body>
 </html>
+<script src="js/profile-staff-booknow.js"></script>
