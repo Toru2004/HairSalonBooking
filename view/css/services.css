@@ -226,6 +226,7 @@ display:flex;
 .staff-box:hover {
     transform: scale(1.20); /* Tăng kích thước lên 20% khi hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      background-color:#e9ecef;
 }
 
 .staff-box img {
@@ -342,6 +343,7 @@ th:hover {
 .staff-box button:hover {
     background-color: #5f5d5d; /* Màu nền khi hover */
 }
+
 
 .box-wrapper {
     background-color: #f9f9f9; /* Màu nền hộp bọc */
