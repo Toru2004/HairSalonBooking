@@ -10,13 +10,6 @@ body {
     color: #333;
 }
 
-header {
-    background-color: #1e1e1e;
-    width: 100%;
-    position: fixed;
-    z-index: 1000;
-    height:130px;
-}
 
 .container {
     max-width: 1200px;
@@ -95,9 +88,9 @@ h4 {
 .sidebar {
     width:170px;
     position: sticky;
-    top: 130px;
+    top: 0px;
     left: 0;
-    height: calc(100vh - 130px);
+    height: 100vh;
     background-color: #2f2f2f;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
@@ -113,7 +106,7 @@ h4 {
 .sidebar a {
     display: block;
     padding: 15px 25px;
-    margin: 10px 0;
+    margin: 20px 0;
     text-decoration: none;
     color: #ffffff;
     border-radius: 5px;
@@ -132,9 +125,19 @@ display:flex;
 .content {
     flex: 1; /* Tự động chiếm phần còn lại của màn hình */
     padding: 30px;
-    margin-top:130px;
+    
   
     
+}
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(2000px); /* Xuất phát từ bên ngoài */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0); /* Vị trí cuối cùng là bên trong */
+    }
 }
 
 .service-section {
@@ -142,11 +145,14 @@ display:flex;
     align-items: center;
     margin-bottom: 40px;
     width: 100%;
-    position: relative; /* Hỗ trợ cho hover */
+    position: relative;
+    opacity: 0; /* Bắt đầu ở trạng thái ẩn */
+    animation: slideIn 0.8s ease forwards; /* Hiệu ứng trượt vào */
 }
 
 .service-section:nth-child(even) {
     flex-direction: row-reverse;
+    animation: slideIn 1.5s ease forwards;
 }
 
 .service-section img {
@@ -193,8 +199,8 @@ display:flex;
 /* Hiệu ứng trượt từ trên xuống */
 .service-info {
     opacity: 0;
-    transform: translateY(-300px);
-    transition: all 1s ease-in-out;
+    transform: translateY(1500px);
+    transition: all 0.7s ease-in-out;
     
 }
 
@@ -219,9 +225,10 @@ display:flex;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    margin-bottom:10px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -229,7 +236,12 @@ display:flex;
 .staff-box:hover {
     transform: scale(1.20); /* Tăng kích thước lên 20% khi hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-      background-color:#e9ecef;
+    background-color:rgb(187, 187, 187);
+    border:1.5px solid black;
+    img{
+        border:1px solid black;
+    }
+   
 }
 
 .staff-box img {
@@ -247,7 +259,7 @@ display:flex;
 
 .staff-info {
     font-size: 14px;
-    color: #666;
+    color: #474747;
 }
 
 .star-rating {
