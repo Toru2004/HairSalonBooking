@@ -15,13 +15,28 @@ body {
     margin: 0 auto;
 }
 
+
+
 .box {
     width: 45%;
     background-color: #f9f9f9;
-    padding: 20px;
+    padding: 30px 20px;
     border-radius: 8px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
 }
+
+.box:hover,
+.box:focus,
+.box.active {
+    background-color: #e9ecef; /* Đổi màu nền khi hover, focus hoặc có class active */
+    transform: translateY(-10px); /* Di chuyển nhẹ lên trên khi hover, focus hoặc có class active */
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    outline: none; /* Xóa viền mặc định khi focus */
+}
+
+
 
 h2 {
     text-align: center;
@@ -103,3 +118,5 @@ button:hover {
 }
 
 
+.star { color: lightgray; }
+.star.filled { color: gold; }
