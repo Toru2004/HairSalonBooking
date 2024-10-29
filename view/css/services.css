@@ -147,7 +147,7 @@ display:flex;
     width: 100%;
     position: relative;
     opacity: 0; /* Bắt đầu ở trạng thái ẩn */
-    animation: slideIn 0.8s ease forwards; /* Hiệu ứng trượt vào */
+    animation: slideIn 1s ease forwards; /* Hiệu ứng trượt vào */
 }
 
 .service-section:nth-child(even) {
@@ -196,7 +196,7 @@ display:flex;
     line-height: 1.6;
 }
 
-/* Hiệu ứng trượt từ trên xuống */
+
 .service-info {
     opacity: 0;
     transform: translateY(1500px);
@@ -226,7 +226,7 @@ display:flex;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
-    margin-bottom:10px;
+    
     text-align: center;
     margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -234,7 +234,7 @@ display:flex;
 }
 
 .staff-box:hover {
-    transform: scale(1.20); /* Tăng kích thước lên 20% khi hover */
+    transform: scale(1.15); /* Tăng kích thước lên 20% khi hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     background-color:rgb(187, 187, 187);
     border:1.5px solid black;
