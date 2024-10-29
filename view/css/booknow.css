@@ -19,6 +19,37 @@ body {
     margin: 0 auto;
 }
 
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-700px); /* Trượt vào từ bên trái */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(1500px); /* Trượt vào từ bên phải */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.customer-info {
+    animation: slideInLeft 1.3s ease forwards; /* Hiệu ứng trượt vào từ bên trái */
+}
+
+.service-info {
+    animation: slideInRight 1.3s ease forwards; /* Hiệu ứng trượt vào từ bên phải */
+}
+
+
 .box {
     width: 45%;
     background-color: #f9f9f9;
