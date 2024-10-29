@@ -129,17 +129,30 @@ display:flex;
   
     
 }
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(2000px); /* Xuất phát từ bên ngoài */
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0); /* Vị trí cuối cùng là bên trong */
+    }
+}
 
 .service-section {
     display: flex;
     align-items: center;
     margin-bottom: 40px;
     width: 100%;
-    position: relative; /* Hỗ trợ cho hover */
+    position: relative;
+    opacity: 0; /* Bắt đầu ở trạng thái ẩn */
+    animation: slideIn 0.8s ease forwards; /* Hiệu ứng trượt vào */
 }
 
 .service-section:nth-child(even) {
     flex-direction: row-reverse;
+    animation: slideIn 1.5s ease forwards;
 }
 
 .service-section img {
@@ -186,8 +199,8 @@ display:flex;
 /* Hiệu ứng trượt từ trên xuống */
 .service-info {
     opacity: 0;
-    transform: translateY(-300px);
-    transition: all 1s ease-in-out;
+    transform: translateY(1500px);
+    transition: all 0.7s ease-in-out;
     
 }
 
