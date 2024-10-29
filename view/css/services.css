@@ -225,9 +225,10 @@ display:flex;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 10px;
-    padding: 20px;
+    padding: 10px;
+    margin-bottom:10px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -235,7 +236,12 @@ display:flex;
 .staff-box:hover {
     transform: scale(1.20); /* Tăng kích thước lên 20% khi hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-      background-color:#e9ecef;
+    background-color:rgb(187, 187, 187);
+    border:1.5px solid black;
+    img{
+        border:1px solid black;
+    }
+   
 }
 
 .staff-box img {
@@ -253,7 +259,7 @@ display:flex;
 
 .staff-info {
     font-size: 14px;
-    color: #666;
+    color: #474747;
 }
 
 .star-rating {
