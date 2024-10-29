@@ -18,6 +18,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         
+
+         <!-- CSS của AOS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <!-- Các CSS khác của bạn -->
+
         <link rel="icon" href="../images/logo.png">
         <link rel="stylesheet" href="css/home.css">
     </head>
@@ -65,41 +70,9 @@
             </div>
         </header>
 
-        <!-- Banner -->
-        <h2 class="chucommon">Common</h2>
-        <div id="demo" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-                <li data-target="#demo" data-slide-to="2"></li>
-            </ul>
-          
-            <!-- The slideshow -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="../images/Homeimg.png" alt="Los Angeles">
-                </div>
-                <div class="carousel-item">
-                    <img src="../images/Homeimg2.png" alt="Chicago">
-                </div>
-                <div class="carousel-item">
-                    <img src="../images/Homeimg4.png" alt="New York">
-                </div>
-            </div>
-          
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
-
         <!-- khung2 -->
         <div class="container mt-5">
-            <div class="location-container">
+            <div class="location-container" data-aos="fade-up">
                 <div class="location-info">
                     <h2>Turn on location services</h2>
                     <p>Get recommendations of great businesses! Turn on location services so we can show you nearby businesses.</p>
@@ -194,7 +167,24 @@
                 </div>
             </div>
         </div>
-        
+        <!-- ảnh -->
+        <div class="recommended-section">
+            <h2>Recommended for you</h2>
+            <div class="recommended-cards" >
+                <div class="card"  data-aos="fade-up">
+                    <img src="../images/Homeimg.png" alt="Best Mustache Styles">
+                    <p>Best Mustache Styles</p>
+                </div>
+                <div class="card"  data-aos="fade-up" data-aos-delay="200">
+                    <img src="../images/Homeimg4.png" alt="What does an esthetician do?">
+                    <p>What does an esthetician do?</p>
+                </div>
+                <div class="card"  data-aos="fade-up" data-aos-delay="400">
+                    <img src="../images/Homimg7.webp" alt="Our Favorite Short Nail Styles To Try">
+                    <p>Our Favorite Short Nail Styles To Try</p>
+                </div>
+            </div>
+        </div>
         <h2 class="mb-4">Find your Booksy specialist by city</h2>
         <div class="row">
             <!-- Cột 1 -->
@@ -244,6 +234,17 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+   <!-- JavaScript của AOS -->
+<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1200, // Thời gian hiệu ứng
+        easing: 'ease-in-out', // Đường cong chuyển động
+        once: true // Chỉ kích hoạt hiệu ứng một lần khi cuộn
+    });
+</script>
+
 <script>
     // Danh sách các cụm từ cần hiển thị
     const textList = [
