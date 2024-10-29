@@ -96,53 +96,8 @@
             </form>
         </div>
     </section>
-
-
-  
-
-    <script> // Lấy tất cả các input và select trong form
-        const customerInputs = document.querySelectorAll('#booking-form input, #booking-form select');
-        const serviceInputs = document.querySelectorAll('#service-info select');
-        
-        // Hàm để thêm hoặc xóa class active
-        function toggleActiveClass() {
-            const customerBox = document.getElementById('customer-info');
-            const serviceBox = document.getElementById('service-info');
-        
-            // Kiểm tra nếu có bất kỳ input nào được điền trong phần thông tin khách hàng
-            const isCustomerFilled = Array.from(customerInputs).some(input => input.value.trim() !== '');
-            const isServiceFilled = Array.from(serviceInputs).some(input => input.value.trim() !== '');
-        
-            // Thêm hoặc xóa class active cho bảng thông tin khách hàng
-            if (isCustomerFilled) {
-                customerBox.classList.add('active');
-            } else {
-                customerBox.classList.remove('active');
-            }
-        
-            // Thêm hoặc xóa class active cho bảng thông tin dịch vụ
-            if (isServiceFilled) {
-                serviceBox.classList.add('active');
-            } else {
-                serviceBox.classList.remove('active');
-            }
-        }
-        
-        // Gắn sự kiện input cho tất cả các input trong form khách hàng
-        customerInputs.forEach(input => {
-            input.addEventListener('input', toggleActiveClass);
-        });
-        
-        // Gắn sự kiện input cho tất cả các select trong dịch vụ
-        serviceInputs.forEach(input => {
-            input.addEventListener('change', toggleActiveClass);
-        });
-</script>        
    
-</body>
-</html>
 
-<script src="js/profile-staff-booknow.js"> </script>
 
     <footer>
         <div class="footer-container">
@@ -198,4 +153,44 @@
 </body>
 </html>
 <script src="js/profile-staff-booknow.js"></script>
+
+
+<script> // Lấy tất cả các input và select trong form
+    const customerInputs = document.querySelectorAll('#booking-form input, #booking-form select');
+    const serviceInputs = document.querySelectorAll('#service-info select');
+    
+    // Hàm để thêm hoặc xóa class active
+    function toggleActiveClass() {
+        const customerBox = document.getElementById('customer-info');
+        const serviceBox = document.getElementById('service-info');
+    
+        // Kiểm tra nếu có bất kỳ input nào được điền trong phần thông tin khách hàng
+        const isCustomerFilled = Array.from(customerInputs).some(input => input.value.trim() !== '');
+        const isServiceFilled = Array.from(serviceInputs).some(input => input.value.trim() !== '');
+    
+        // Thêm hoặc xóa class active cho bảng thông tin khách hàng
+        if (isCustomerFilled) {
+            customerBox.classList.add('active');
+        } else {
+            customerBox.classList.remove('active');
+        }
+    
+        // Thêm hoặc xóa class active cho bảng thông tin dịch vụ
+        if (isServiceFilled) {
+            serviceBox.classList.add('active');
+        } else {
+            serviceBox.classList.remove('active');
+        }
+    }
+    
+    // Gắn sự kiện input cho tất cả các input trong form khách hàng
+    customerInputs.forEach(input => {
+        input.addEventListener('input', toggleActiveClass);
+    });
+    
+    // Gắn sự kiện input cho tất cả các select trong dịch vụ
+    serviceInputs.forEach(input => {
+        input.addEventListener('change', toggleActiveClass);
+    });
+</script>        
 
