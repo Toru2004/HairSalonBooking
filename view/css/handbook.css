@@ -8,6 +8,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    align-items: stretch; 
 }
 
 .blog-item {
@@ -18,21 +19,27 @@
     overflow: hidden;
     transition: transform 0.3s;
     width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .blog-item img {
     width: 100%;
-    height: auto;
+    height: 200px;
+    object-fit: cover; 
     transition: transform 0.3s;
 }
 
 .blog-item h2 {
     font-size: 20px;
     margin: 15px 10px;
+    min-height: 60px; 
 }
 
 .blog-item p {
     margin: 10px;
+    min-height: 80px; 
 }
 
 .blog-item a {
