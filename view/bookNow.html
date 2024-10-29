@@ -7,14 +7,10 @@
  
     <link rel="icon" href="../images/logo.png">
     <link rel="stylesheet" href="css/header.css">
-
     <link rel="stylesheet" href="css/booknow.css">
-
     <link rel="stylesheet" href="css/footer.css">
-
 </head>
 <body>
-
     <header>
         <div class="header-container">
             <!-- Logo -->
@@ -48,10 +44,11 @@
 
     <section class="bookNow-section">
         <div class="booking-container">
-            <!-- Customer Information Form -->
-            <div class="box customer-info" id="customer-info">
-                <h2>Customer Information</h2>
-                <form id="booking-form">
+            <!-- Combined Form -->
+            <form id="booking-form">
+                <!-- Customer Information -->
+                <div class="box customer-info" id="customer-info">
+                    <h2>Customer Information</h2>
                     <label for="name">Customer Name:</label>
                     <input type="text" id="name" name="name" required>
                 
@@ -66,12 +63,11 @@
                 
                     <label for="time">Time:</label>
                     <input type="time" id="time" name="time" required>
-                </form>
-            </div>
-            
-            <div class="box service-info" id="service-info">
-                <h2>Service Information</h2>
-                <form>
+                </div>
+                
+                <!-- Service Information -->
+                <div class="box service-info" id="service-info">
+                    <h2>Service Information</h2>
                     <label for="service">Select Service:</label>
                     <select id="service" name="service" required onchange="updateStaffList()">
                         <option value="">Select Service</option>
@@ -92,11 +88,12 @@
                         <img id="staff-image" src="" alt="Profile Image">
                         <div id="staff-details"></div>
                     </div>
-            
                     <button type="submit">Book Appointment</button>
-                </form>
-            </div>
-            
+                </div>
+
+                <!-- Submit Button -->
+                
+            </form>
         </div>
     </section>
 

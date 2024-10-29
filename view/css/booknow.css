@@ -4,8 +4,12 @@ body {
     margin: 0px;
 }
 
+.bookNow-section{
+    padding:20px;
+    padding-bottom:30px;
+}
+
 .booking-container {
-    
     display: flex;
     justify-content: space-between;
     background-color: #ffffff;
@@ -14,8 +18,6 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
-
-
 
 .box {
     width: 45%;
@@ -30,30 +32,29 @@ body {
 .box:hover,
 .box:focus,
 .box.active {
-    background-color: #e9ecef; /* Đổi màu nền khi hover, focus hoặc có class active */
-    transform: translateY(-10px); /* Di chuyển nhẹ lên trên khi hover, focus hoặc có class active */
+    background-color: #e9ecef;
+    transform: translateY(-10px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-    outline: none; /* Xóa viền mặc định khi focus */
+    outline: none;
 }
-
-
 
 h2 {
     text-align: center;
     color: #333;
-    font-size:35px;
+    font-size: 35px;
 }
 
 form {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 label {
     margin-top: 10px;
     margin-bottom: 5px;
     color: #333;
-    font-size:20px;
+    font-size: 20px;
 }
 
 input[type="text"],
@@ -66,6 +67,7 @@ select {
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 100%;
 }
 
 button {
@@ -75,7 +77,9 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size:20px;
+    font-size: 20px;
+    width: 100%;
+    margin-top: 20px;
 }
 
 button:hover {
@@ -86,13 +90,12 @@ button:hover {
     display: flex;
     align-items: center;
     margin-top: 15px;
-    margin-bottom:15px;
+    margin-bottom: 15px;
 }
 
 .staff-profile img {
     width: 200px;
     height: 200px;
-    
     margin-right: 15px;
 }
 
@@ -101,22 +104,21 @@ button:hover {
 }
 
 #staff-profile {
-    display: none; /* Ẩn phần profile mặc định */
+    display: none;
 }
 
 .star {
     font-size: 20px;
-    color: #ccc; /* Màu của sao trống */
+    color: #ccc;
 }
 
 .star.filled {
-    color: #000000; /* Màu của sao đầy */
+    color: #000000;
 }
 
 .star-rating {
     margin-top: 5px;
 }
-
 
 .star { color: lightgray; }
 .star.filled { color: gold; }
