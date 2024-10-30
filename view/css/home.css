@@ -23,7 +23,7 @@ header {
     position: absolute;
     top: 0;
     left: 0;
-    width: 120%;
+    width: 100%;
     object-fit: cover;
     z-index: -1; /* Đặt video nằm phía sau nội dung */
 }
@@ -132,6 +132,14 @@ nav ul li a {
     padding: 8px 12px;
     transition: color 0.3s ease;    
     position: relative;
+}
+
+#main-menu a {
+  text-decoration: none;
+}
+
+#main-menu a:hover {
+  color: white;
 }
 
 #main-menu>li>a::before{
