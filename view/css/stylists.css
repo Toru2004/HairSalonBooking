@@ -46,12 +46,6 @@
     transform: scale(1.05); /* Scale up image slightly on hover */
 }
 
-footer {
-    background-color: #1e1e1e;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-}
 
 .button-container {
     margin-top: 10px; /* Space between the name and the buttons */
