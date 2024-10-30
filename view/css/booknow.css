@@ -88,18 +88,16 @@ label {
     font-size: 20px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-input[type="time"],
-select {
+
+
+.booking-input {
     padding: 8px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%;
 }
+
 
 button {
     padding: 10px;
@@ -152,4 +150,4 @@ button:hover {
 }
 
 .star { color: lightgray; }
-.star.filled { color: gold; }
+.star.filled { color: rgb(0, 0, 0); }
