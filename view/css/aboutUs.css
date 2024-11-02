@@ -1,33 +1,45 @@
-/* Phần giới thiệu chi tiết */
+       
+ /* About Us Section */
 .about-detail-section {
-    background-color: #fff;
-    padding: 60px 20px;
+    padding: 9px 20px;
+    background-color: #f8f9fa;
+    text-align: center;
 }
 .about-detail-section h2 {
     font-size: 2.5em;
+    font-weight: bold;
     color: #333;
     margin-bottom: 20px;
 }
 .about-detail-section p {
-    font-size: 1.1em;
+    font-size: 1.2em;
     color: #666;
-    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto;
 }
-
-/* Hình ảnh salon và gallery */
 .about-img img {
     width: 100%;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Gallery Section */
+ .gallery-item {
+    margin-top: 40px;
+    text-align: center;
 }
 .gallery-item img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    transition: transform 0.3s;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+.gallery-item:hover img {
+    transform: scale(1.05);
 }
 .gallery-item p {
-    font-size: 1em;
-    color: #333;
+    margin-top: 10px;
     font-weight: bold;
-}
+    color: #333;
+} 
