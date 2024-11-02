@@ -1,5 +1,5 @@
-       
- /* About Us Section */
+
+/* About Us Section */
 .about-detail-section {
     padding: 9px 20px;
     background-color: #f8f9fa;
@@ -17,29 +17,29 @@
     max-width: 700px;
     margin: 0 auto;
 }
-.about-img img {
+.about-detail-section .about-img img {
     width: 100%;
     border-radius: 10px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 /* Gallery Section */
- .gallery-item {
+.about-detail-section .gallery-item {
     margin-top: 40px;
     text-align: center;
 }
-.gallery-item img {
+.about-detail-section .gallery-item img {
     width: 100%;
     height: auto;
     border-radius: 10px;
     transition: transform 0.3s;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
-.gallery-item:hover img {
+.about-detail-section .gallery-item:hover img {
     transform: scale(1.05);
 }
-.gallery-item p {
+.about-detail-section .gallery-item p {
     margin-top: 10px;
     font-weight: bold;
     color: #333;
-} 
+}

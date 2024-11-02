@@ -1,12 +1,12 @@
 
 
 /* Body Styles */
-body {
-    background-color: #f4f4f9;
-    color: #333;
-    line-height: 1.6;
-    transition: background-color 0.3s ease; /* Transition for background color change */
-}
+/*body {*/
+/*    background-color: #f4f4f9;*/
+/*    color: #333;*/
+/*    line-height: 1.6;*/
+/*    transition: background-color 0.3s ease; !* Transition for background color change *!*/
+/*}*/
 
 /* Contact Section */
 .contact-section {
@@ -15,6 +15,8 @@ body {
     padding: 20px;
     background-color: #ffffff;
     border-radius: 8px;
+    line-height: 1.6;
+    transition: background-color 0.3s ease; /* Transition for background color change */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -161,17 +163,6 @@ body {
 .contact-form button:hover {
     background-color: #6d5cd9; /* Màu tím đậm khi hover */
     transform: scale(1.05); /* Tăng kích thước khi hover */
-}
-
-
-/* Footer Styles */
-footer {
-    text-align: center;
-    padding: 10px;
-    background-color: #222;
-    color: #fff;
-    font-size: 0.9em;
-    margin-top: 30px;
 }
 
 /* Responsive Design */

@@ -1,5 +1,3 @@
-
-
 .sidebar {
     width:170px;
     position: sticky;
@@ -31,19 +29,18 @@
 .sidebar a:hover {
     background-color: #ffffff;
     color: #000000;
-    
+
 }
 
 .container-content{
-display:flex;
+    display:flex;
 }
-.content {
+
+.container-content .content {
     flex: 1; /* Tự động chiếm phần còn lại của màn hình */
     padding: 30px;
-    
-  
-    
 }
+
 @keyframes slideIn {
     from {
         opacity: 0;
@@ -116,14 +113,14 @@ display:flex;
     opacity: 0;
     transform: translateY(1500px);
     transition: all 0.7s ease-in-out;
-    
+
 }
 
 .service-info.show {
     opacity: 1;
     transform: translateY(0);
-   
-    
+
+
 }
 
 .staff-box-container {
@@ -132,7 +129,7 @@ display:flex;
     justify-content: space-around;
     padding-top:20px;
     padding-bottom:20px;
-   
+
 }
 
 .staff-box {
@@ -141,7 +138,7 @@ display:flex;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 10px;
-    
+
     text-align: center;
     margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -156,7 +153,7 @@ display:flex;
     img{
         border:1px solid black;
     }
-   
+
 }
 
 .staff-box img {
@@ -190,7 +187,7 @@ display:flex;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.price-table th, 
+.price-table th,
 .price-table td {
     padding: 20px;
     text-align: center;
@@ -285,6 +282,5 @@ th:hover {
 }
 
 .box-wrapper:hover {
-   
     box-shadow: 0 8px 16px rgba(0.4, 0.4, 0.4, 0.4); /* Tăng bóng khi hover */
 }
