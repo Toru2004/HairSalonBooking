@@ -4,13 +4,13 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    
-}
-
 header {
     background-color: #1e1e1e;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .header-container {
@@ -18,6 +18,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 0px; /* Giảm padding để loại bỏ khoảng trống thừa */
+    /*height: 200px;*/
 }
 
 .logo img {
@@ -37,6 +38,7 @@ header {
     border: none;
     border-radius: 5px;
     width: 250px; /* Giảm chiều rộng của các ô input */
+    height: 40px;
 }
 
 .search-container input::placeholder {
@@ -55,6 +57,7 @@ header {
     font-size: 14px;
     padding: 10px 20px;
     border-radius: 50px;
+    height: 40px;
 }
 
 .flag {
@@ -71,6 +74,8 @@ header {
     background-color: #222;
     padding: 5px 0; /* Giảm padding để tránh khoảng cách thừa */
     text-align: center;
+    /*height: 24px;*/
+    /*box-sizing: border-box;*/
 }
 
 .nav-links a {

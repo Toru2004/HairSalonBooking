@@ -76,7 +76,7 @@
         width: calc(50% - 20px); /* Two boxes side by side on smaller screens */
         margin: 10px; /* Margin between cards */
     }
-    
+
     .stylists-section h1 {
         font-size: 3em; /* Adjust header font size for smaller screens */
     }
@@ -86,7 +86,7 @@
         width: 100%; /* Full width for each stylist card */
         margin: 10px 0; /* Margin to separate cards vertically */
     }
-    
+
     .stylists-section h1 {
         font-size: 2em; /* Adjust header font size for smaller screens */
     }
