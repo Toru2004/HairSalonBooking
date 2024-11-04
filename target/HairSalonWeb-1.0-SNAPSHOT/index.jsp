@@ -54,7 +54,7 @@
     <%
         String currentPage = request.getParameter("currentPage") != null
                 ? request.getParameter("currentPage").trim()
-                : "aboutUs";
+                : "home";
 
         switch (currentPage) {
             case "home":
