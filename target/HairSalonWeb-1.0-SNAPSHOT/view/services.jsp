@@ -4,7 +4,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="view/css/services.css">
+    <style>
+        .sidebar {
+            width:170px;
+            position: sticky;
+            top: 0px;
+            left: 0;
+            height: 100vh;
+            background-color: #2f2f2f;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color:#dbdbdb;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            margin: 20px 0;
+            text-decoration: none;
+            color: #ffffff;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .sidebar a:hover {
+            background-color: #ffffff;
+            color: #000000;
+
+        }
+
+        .container-content{
+            display:flex;
+        }
+
+        .container-content .content {
+            flex: 1; /* Tự động chiếm phần còn lại của màn hình */
+            padding: 30px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(2000px); /* Xuất phát từ bên ngoài */
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0); /* Vị trí cuối cùng là bên trong */
+            }
+        }
+
+        .service-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            width: 100%;
+            position: relative;
+            opacity: 0; /* Bắt đầu ở trạng thái ẩn */
+            animation: slideIn 1s ease forwards; /* Hiệu ứng trượt vào */
+        }
+
+        .service-section:nth-child(even) {
+            flex-direction: row-reverse;
+            animation: slideIn 1.5s ease forwards;
+        }
+
+        .service-section img {
+            width: 100%;
+            height: auto;
+            max-width: 400px;
+            object-fit: cover;
+            margin-right: 20px;
+            transition: transform 0.3s ease; /* Hiệu ứng chuyển ảnh */
+        }
+
+        .service-section:hover img {
+            transform: scale(1.10); /* Phóng to ảnh khi hover */
+            box-shadow: 0 8px 16px rgba(0, 0.5, 0.5, 0.5); /* Bóng cho hộp mô tả */
+        }
+
+        .service-section:nth-child(even) img {
+            margin-right: 0;
+            margin-left: 20px;
+        }
+
+        .service-description {
+            flex: 1;
+            padding: 20px;
+            background-color: #dbdbdb;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng cho hộp mô tả */
+            transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu nền */
+        }
+
+        .service-description:hover {
+            background-color: #a6a5a5; /* Thay đổi màu nền khi hover */
+            font-size: 17px;
+        }
+
+        .service-description h3 {
+            margin-bottom: 15px;
+        }
+
+        .service-description p {
+            line-height: 1.6;
+        }
+
+
+        .service-info {
+            opacity: 0;
+            transform: translateY(1500px);
+            transition: all 0.7s ease-in-out;
+
+        }
+
+        .service-info.show {
+            opacity: 1;
+            transform: translateY(0);
+            padding: 20px;
+            border: 1px solid #ddd; /* Đường viền xung quanh phần chi tiết */
+            border-radius: 8px; /* Bo góc */
+            margin-top: 20px; /* Khoảng cách với các phần khác */
+            background-color: #f9f9f9; /* Màu nền nhạt */
+
+
+        }
+        .service-info h4 {
+            font-size: 24px; /* Kích thước chữ tiêu đề */
+            margin-bottom: 15px; /* Khoảng cách dưới tiêu đề */
+            color: #333; /* Màu chữ */
+        }
+
+        .additional-info {
+            margin-top: 40px; /* Khoảng cách trên phần thông tin thêm */
+            padding: 15px;
+            background-color: #e7f3fe; /* Màu nền cho phần ưu đãi */
+            border-left: 5px solid #2196F3; /* Đường viền bên trái màu xanh */
+        }
+
+        .additional-info h4 {
+            font-size: 20px; /* Kích thước chữ tiêu đề cho phần thông tin thêm */
+            color: #1a73e8; /* Màu chữ */
+        }
+
+        .additional-info ul {
+            list-style-type: disc; /* Kiểu danh sách chấm */
+            margin-left: 20px; /* Lề trái cho danh sách */
+        }
+
+
+
+
+
+        .price-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .price-table th,
+        .price-table td {
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .price-table th {
+            background-color: #333;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .price-table td {
+            background-color: #f9f9f9;
+        }
+
+        .price-table tr:nth-child(even) {
+            background-color: #eaeaea;
+            font-size: 17px;
+        }
+
+        tr:hover td {
+            background-color: #f0f0f0; /* Màu nền khi hover */
+            transform: scale(1.05); /* Tăng kích thước nhẹ khi hover */
+        }
+
+        th:hover {
+            background-color: #444444; /* Màu nền cho tiêu đề khi hover */
+        }
+
+        .service-image {
+            text-align: center; /* Căn giữa hình ảnh */
+            margin: 20px 0; /* Khoảng cách trên và dưới hình ảnh */
+        }
+
+        .service-image img {
+            max-width: 100%; /* Đảm bảo hình ảnh không vượt quá độ rộng của phần chứa */
+            height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+            border-radius: 8px; /* Bo góc cho hình ảnh */
+        }
+
+        .box-wrapper{
+            margin-top:40px;
+        }
+
+        .booking-button {
+            text-align: center; /* Căn giữa nút */
+            margin-top: 20px; /* Khoảng cách trên nút */
+        }
+
+        .btn-booking {
+            display: inline-block; /* Hiển thị dạng inline-block để có thể tùy chỉnh kích thước */
+            padding: 10px 20px; /* Khoảng cách trong nút */
+            background-color: #000000; /* Màu nền của nút */
+            color: #fff; /* Màu chữ */
+            text-decoration: none; /* Bỏ gạch chân */
+            border-radius: 5px; /* Bo góc cho nút */
+            transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền khi hover */
+        }
+
+        .btn-booking:hover {
+            background-color: #595858; /* Màu nền khi hover */
+            color:white;
+            text-decoration: none; /* Bỏ gạch chân */
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+
+            .search-container {
+                margin-top: 10px;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            .service-section {
+                flex-direction: column;
+            }
+
+
+            .service-section img {
+                margin-bottom: 20px;
+            }
+        }
+
+
+    </style>
 </head>
 <body>
 
@@ -79,43 +341,21 @@
 
         <!-- Service Details -->
         <div id="haircut-info" class="service-info">
+            <h4>Chi tiết dịch vụ Cắt tóc</h4>
+            <p>Các nhà tạo mẫu chuyên nghiệp của chúng tôi cung cấp nhiều kiểu tóc khác nhau, từ đơn giản đến phức tạp. Chúng tôi cam kết mang đến trải nghiệm tốt nhất cho khách hàng.</p>
 
-            <div class="box-wrapper">
-                <h3>Staff for Hair Cut</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff1.jpg" alt="Staff 1">
-                        <div class="staff-name">Lưu Trường Văn</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 8 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff2.jpg" alt="Staff 2">
-                        <div class="staff-name">Trần Thành Đông</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff3.jpg" alt="Staff 3">
-                        <div class="staff-name">Đỗ Tấn Phát</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 10 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff4.jpg" alt="Staff 4">
-                        <div class="staff-name">Lê Nguyễn Minh Phúc</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 9 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <!-- Hình ảnh minh họa -->
+            <div class="service-image">
+                <img src="../images/haircut-image.jpg" alt="Hình ảnh dịch vụ cắt tóc" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Các bước thực hiện dịch vụ</h4>
+                <ul>
+                    <li>Bước 1: Tư vấn kiểu tóc phù hợp với khuôn mặt.</li>
+                    <li>Bước 2: Cắt và tạo kiểu theo yêu cầu của khách hàng.</li>
+                    <li>Bước 3: Hoàn thiện và chăm sóc tóc sau khi cắt.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
@@ -140,322 +380,253 @@
                 </table>
             </div>
 
+            <!-- Nút đặt lịch -->
+            <div class="booking-button">
+                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+            </div>
         </div>
+
 
         <!-- Makeup Section -->
         <div id="makeup-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Makeup</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff5.jpg" alt="Staff 5">
-                        <div class="staff-name">Sarah Lee</div>
-                        <div class="staff-info">Age: 29</div>
-                        <div class="staff-info">Experience: 7 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff6.jpg" alt="Staff 6">
-                        <div class="staff-name">Chris Green</div>
-                        <div class="staff-info">Age: 33</div>
-                        <div class="staff-info">Experience: 9 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff7.jpg" alt="Staff 7">
-                        <div class="staff-name">Anna Black</div>
-                        <div class="staff-info">Age: 31</div>
-                        <div class="staff-info">Experience: 8 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff8.jpg" alt="Staff 8">
-                        <div class="staff-name">Tom Blue</div>
-                        <div class="staff-info">Age: 34</div>
-                        <div class="staff-info">Experience: 10 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Chi tiết dịch vụ Trang điểm</h4>
+            <p>Đội ngũ trang điểm chuyên nghiệp của chúng tôi sẽ biến bạn thành phiên bản xinh đẹp nhất của chính mình. Chúng tôi cung cấp nhiều phong cách trang điểm phù hợp với từng dịp, từ trang điểm hàng ngày đến trang điểm cô dâu.</p>
+
+            <!-- Hình ảnh minh họa -->
+            <div class="service-image">
+                <img src="../images/makeup-image.jpg" alt="Hình ảnh dịch vụ trang điểm" />
             </div>
+
+            <div class="additional-info">
+                <h4>Các bước thực hiện dịch vụ</h4>
+                <ul>
+                    <li>Bước 1: Tư vấn phong cách trang điểm phù hợp với khách hàng.</li>
+                    <li>Bước 2: Thực hiện trang điểm theo yêu cầu.</li>
+                    <li>Bước 3: Hoàn thiện và kiểm tra kỹ lưỡng trước khi kết thúc.</li>
+                </ul>
+            </div>
+
             <div class="box-wrapper">
-                <h4>Makeup Service Price List</h4>
+                <h4>Bảng giá dịch vụ Trang điểm</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Service</th>
-                        <th>Price (VND)</th>
+                        <th>Dịch vụ</th>
+                        <th>Giá (VND)</th>
                     </tr>
                     <tr>
-                        <td>Wedding Makeup</td>
+                        <td>Trang điểm Cô dâu</td>
                         <td>800,000</td>
                     </tr>
                     <tr>
-                        <td>Party Makeup</td>
+                        <td>Trang điểm Tiệc</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Everyday Makeup</td>
+                        <td>Trang điểm Hàng ngày</td>
                         <td>400,000</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- Nút đặt lịch -->
+            <div class="booking-button">
+                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+            </div>
         </div>
+
 
         <!-- Massage Section -->
         <div id="massage-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Massage</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff9.jpg" alt="Staff 9">
-                        <div class="staff-name">Nguyễn Văn A</div>
-                        <div class="staff-info">Age: 30</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff10.jpg" alt="Staff 10">
-                        <div class="staff-name">Trần Thị B</div>
-                        <div class="staff-info">Age: 28</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff11.jpg" alt="Staff 11">
-                        <div class="staff-name">Lê Văn C</div>
-                        <div class="staff-info">Age: 35</div>
-                        <div class="staff-info">Experience: 7 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff12.jpg" alt="Staff 12">
-                        <div class="staff-name">Phạm Thị D</div>
-                        <div class="staff-info">Age: 32</div>
-                        <div class="staff-info">Experience: 9 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Chi tiết dịch vụ Massage</h4>
+            <p>Đội ngũ chuyên nghiệp của chúng tôi cung cấp các liệu pháp massage thư giãn giúp bạn giải tỏa căng thẳng và phục hồi sức khỏe. Với nhiều phương pháp khác nhau, chúng tôi cam kết mang đến trải nghiệm thư giãn tuyệt vời cho khách hàng.</p>
+
+            <!-- Hình ảnh minh họa -->
+            <div class="service-image">
+                <img src="../images/massage-image.jpg" alt="Hình ảnh dịch vụ massage" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Các bước thực hiện dịch vụ</h4>
+                <ul>
+                    <li>Bước 1: Tư vấn và xác định nhu cầu của khách hàng.</li>
+                    <li>Bước 2: Thực hiện liệu pháp massage theo yêu cầu.</li>
+                    <li>Bước 3: Hoàn thiện và kiểm tra sự hài lòng của khách hàng.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Massage Service Price List</h4>
+                <h4>Bảng giá dịch vụ Massage</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Service</th>
-                        <th>Price (VND)</th>
+                        <th>Dịch vụ</th>
+                        <th>Giá (VND)</th>
                     </tr>
                     <tr>
-                        <td>Relaxation Massage</td>
+                        <td>Massage Thư giãn</td>
                         <td>300,000</td>
                     </tr>
                     <tr>
-                        <td>Full Body Massage</td>
+                        <td>Massage Toàn thân</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Foot Massage</td>
+                        <td>Massage Chân</td>
                         <td>150,000</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- Nút đặt lịch -->
+            <div class="booking-button">
+                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+            </div>
         </div>
+
 
         <!-- Head Washing Section -->
         <div id="headwashing-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Head Washing</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff13.jpg" alt="Staff 13">
-                        <div class="staff-name">Nguyễn Văn E</div>
-                        <div class="staff-info">Age: 27</div>
-                        <div class="staff-info">Experience: 4 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff14.jpg" alt="Staff 14">
-                        <div class="staff-name">Lê Thị F</div>
-                        <div class="staff-info">Age: 29</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff15.jpg" alt="Staff 15">
-                        <div class="staff-name">Trần Văn G</div>
-                        <div class="staff-info">Age: 31</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff16.jpg" alt="Staff 16">
-                        <div class="staff-name">Phạm Thị H</div>
-                        <div class="staff-info">Age: 26</div>
-                        <div class="staff-info">Experience: 3 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Chi tiết dịch vụ Gội đầu</h4>
+            <p>Dịch vụ gội đầu của chúng tôi không chỉ giúp bạn thư giãn mà còn mang lại cảm giác tươi mới và sảng khoái. Với các kỹ thuật gội đầu chuyên nghiệp, chúng tôi cam kết đem đến trải nghiệm tuyệt vời nhất cho khách hàng.</p>
+
+            <!-- Hình ảnh minh họa -->
+            <div class="service-image">
+                <img src="../images/headwashing-image.jpg" alt="Hình ảnh dịch vụ gội đầu" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Các bước thực hiện dịch vụ</h4>
+                <ul>
+                    <li>Bước 1: Tư vấn nhu cầu gội đầu của khách hàng.</li>
+                    <li>Bước 2: Gội đầu và mát xa da đầu theo kỹ thuật chuyên nghiệp.</li>
+                    <li>Bước 3: Sử dụng sản phẩm chăm sóc tóc phù hợp sau khi gội.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Head Washing Service Price List</h4>
+                <h4>Bảng giá dịch vụ Gội đầu</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Service</th>
-                        <th>Price (VND)</th>
+                        <th>Dịch vụ</th>
+                        <th>Giá (VND)</th>
                     </tr>
                     <tr>
-                        <td>Relaxing Head Wash</td>
+                        <td>Gội đầu thư giãn</td>
                         <td>100,000</td>
                     </tr>
                     <tr>
-                        <td>Head Wash & Scalp Massage</td>
+                        <td>Gội đầu & Mát xa da đầu</td>
                         <td>200,000</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- Nút đặt lịch -->
+            <div class="booking-button">
+            <a href="index.jsp?currentPage=bookNow" class="btn-booking">Bấm vào đây để đặt lịch</a>
         </div>
+
+        </div>
+
+
+
 
         <!-- Hair Dying Section -->
         <div id="hairdying-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Hair Dying</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff17.jpg" alt="Staff 17">
-                        <div class="staff-name">Nguyễn Văn I</div>
-                        <div class="staff-info">Age: 28</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff18.jpg" alt="Staff 18">
-                        <div class="staff-name">Lê Thị J</div>
-                        <div class="staff-info">Age: 34</div>
-                        <div class="staff-info">Experience: 8 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff19.jpg" alt="Staff 19">
-                        <div class="staff-name">Trần Văn K</div>
-                        <div class="staff-info">Age: 30</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff20.jpg" alt="Staff 20">
-                        <div class="staff-name">Phạm Thị L</div>
-                        <div class="staff-info">Age: 25</div>
-                        <div class="staff-info">Experience: 4 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Chi tiết dịch vụ Nhuộm tóc</h4>
+            <p>Chúng tôi cung cấp dịch vụ nhuộm tóc chuyên nghiệp với nhiều màu sắc và kỹ thuật khác nhau, từ nhuộm tiêu chuẩn đến các phong cách nổi bật như Ombre và Balayage. Đội ngũ chuyên gia của chúng tôi sẽ tư vấn để bạn có được màu tóc hoàn hảo nhất.</p>
+
+            <!-- Hình ảnh minh họa -->
+            <div class="service-image">
+                <img src="../images/hairdying-image.jpg" alt="Hình ảnh dịch vụ nhuộm tóc" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Các bước thực hiện dịch vụ</h4>
+                <ul>
+                    <li>Bước 1: Tư vấn màu sắc và phong cách nhuộm phù hợp với bạn.</li>
+                    <li>Bước 2: Thực hiện quá trình nhuộm theo kỹ thuật đã chọn.</li>
+                    <li>Bước 3: Hoàn thiện và chăm sóc tóc sau khi nhuộm.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Hair Dyeing Service Price List</h4>
+                <h4>Bảng giá dịch vụ Nhuộm tóc</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Service</th>
-                        <th>Price (VND)</th>
+                        <th>Dịch vụ</th>
+                        <th>Giá (VND)</th>
                     </tr>
                     <tr>
-                        <td>Standard Hair Dye</td>
+                        <td>Nhuộm tóc tiêu chuẩn</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Ombre Dye</td>
+                        <td>Nhuộm Ombre</td>
                         <td>1,200,000</td>
                     </tr>
                     <tr>
-                        <td>Balayage Dye</td>
+                        <td>Nhuộm Balayage</td>
                         <td>1,500,000</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- Nút đặt lịch -->
+            <div class="booking-button">
+                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+            </div>
         </div>
+
 
         <!-- Hair Curling Section -->
         <div id="haircurling-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Hair Curling</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff21.jpg" alt="Staff 21">
-                        <div class="staff-name">Nguyễn Văn M</div>
-                        <div class="staff-info">Age: 26</div>
-                        <div class="staff-info">Experience: 4 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff22.jpg" alt="Staff 22">
-                        <div class="staff-name">Lê Thị N</div>
-                        <div class="staff-info">Age: 29</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff23.jpg" alt="Staff 23">
-                        <div class="staff-name">Trần Văn O</div>
-                        <div class="staff-info">Age: 32</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff24.jpg" alt="Staff 24">
-                        <div class="staff-name">Phạm Thị P</div>
-                        <div class="staff-info">Age: 28</div>
-                        <div class="staff-info">Experience: 7 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Chi tiết dịch vụ Uốn tóc</h4>
+            <p>Chúng tôi cung cấp dịch vụ uốn tóc chuyên nghiệp với nhiều phong cách khác nhau, từ uốn phồng cho đến uốn sóng nước. Đội ngũ chuyên gia của chúng tôi sẽ đảm bảo bạn có được kiểu tóc hoàn hảo và phù hợp nhất với bạn.</p>
+
+            <!-- Hình ảnh minh họa -->
+            <div class="service-image">
+                <img src="../images/haircurling-image.jpg" alt="Hình ảnh dịch vụ uốn tóc" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Các bước thực hiện dịch vụ</h4>
+                <ul>
+                    <li>Bước 1: Tư vấn kiểu uốn tóc phù hợp với khuôn mặt và nhu cầu của khách hàng.</li>
+                    <li>Bước 2: Tiến hành uốn tóc theo kỹ thuật đã chọn.</li>
+                    <li>Bước 3: Hoàn thiện và chăm sóc tóc sau khi uốn.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Hair Curling Service Price List</h4>
+                <h4>Bảng giá dịch vụ Uốn tóc</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Service</th>
-                        <th>Price (VND)</th>
+                        <th>Dịch vụ</th>
+                        <th>Giá (VND)</th>
                     </tr>
                     <tr>
-                        <td>Voluminous Curl</td>
+                        <td>Uốn phồng</td>
                         <td>800,000</td>
                     </tr>
                     <tr>
-                        <td>End Curl</td>
+                        <td>Uốn đuôi</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Water Wave Curl</td>
+                        <td>Uốn sóng nước</td>
                         <td>1,000,000</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- Nút đặt lịch -->
+            <div class="booking-button">
+                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+            </div>
         </div>
+
+
+    </div>
     </div>
 </div>
 
