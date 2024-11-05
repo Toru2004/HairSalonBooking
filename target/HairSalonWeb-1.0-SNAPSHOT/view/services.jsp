@@ -202,12 +202,14 @@
         .service-image {
             text-align: center; /* Căn giữa hình ảnh */
             margin: 20px 0; /* Khoảng cách trên và dưới hình ảnh */
+            width:100%;
         }
 
         .service-image img {
-            max-width: 100%; /* Đảm bảo hình ảnh không vượt quá độ rộng của phần chứa */
+            width: 100%; /* Đảm bảo hình ảnh không vượt quá độ rộng của phần chứa */
             height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
             border-radius: 8px; /* Bo góc cho hình ảnh */
+            height:400px;
         }
 
         .box-wrapper{
@@ -341,20 +343,21 @@
 
         <!-- Service Details -->
         <div id="haircut-info" class="service-info">
-            <h4>Chi tiết dịch vụ Cắt tóc</h4>
-            <p>Các nhà tạo mẫu chuyên nghiệp của chúng tôi cung cấp nhiều kiểu tóc khác nhau, từ đơn giản đến phức tạp. Chúng tôi cam kết mang đến trải nghiệm tốt nhất cho khách hàng.</p>
+            <h4>Haircut Service Details</h4>
+            <p>Our professional stylists offer a variety of hairstyles, from simple to complex, suitable for different face shapes, hair types, and personal styles. We understand that a good haircut not only enhances appearance but also boosts confidence, and we strive to bring out the best look for each client. With a focus on precision and attention to detail, our stylists stay updated on the latest trends and techniques to deliver modern, stylish cuts. Whether you're looking for a fresh everyday look or a bold transformation, we’re here to ensure you leave feeling satisfied and confident.</p>
 
-            <!-- Hình ảnh minh họa -->
+
+            <!-- Illustration Image -->
             <div class="service-image">
-                <img src="../images/haircut-image.jpg" alt="Hình ảnh dịch vụ cắt tóc" />
+                <img src="images/haircut-banner.jpg" alt="Haircut service image" />
             </div>
 
             <div class="additional-info">
-                <h4>Các bước thực hiện dịch vụ</h4>
+                <h4>Service Steps</h4>
                 <ul>
-                    <li>Bước 1: Tư vấn kiểu tóc phù hợp với khuôn mặt.</li>
-                    <li>Bước 2: Cắt và tạo kiểu theo yêu cầu của khách hàng.</li>
-                    <li>Bước 3: Hoàn thiện và chăm sóc tóc sau khi cắt.</li>
+                    <li>Step 1: Consultation to determine a hairstyle that suits your face.</li>
+                    <li>Step 2: Cutting and styling as per the client's request.</li>
+                    <li>Step 3: Finishing and after-cut care.</li>
                 </ul>
             </div>
 
@@ -380,250 +383,244 @@
                 </table>
             </div>
 
-            <!-- Nút đặt lịch -->
+            <!-- Booking Button -->
             <div class="booking-button">
-                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+                <a href="index.jsp?currentPage=bookNow"  class="btn-booking">Click here to book</a>
             </div>
         </div>
 
-
         <!-- Makeup Section -->
         <div id="makeup-info" class="service-info">
-            <h4>Chi tiết dịch vụ Trang điểm</h4>
-            <p>Đội ngũ trang điểm chuyên nghiệp của chúng tôi sẽ biến bạn thành phiên bản xinh đẹp nhất của chính mình. Chúng tôi cung cấp nhiều phong cách trang điểm phù hợp với từng dịp, từ trang điểm hàng ngày đến trang điểm cô dâu.</p>
+            <h4>Makeup Service Details</h4>
+            <p>Our professional makeup team will transform you into the most beautiful version of yourself. We offer a variety of makeup styles tailored to different occasions, including natural, everyday looks, glamorous evening makeup, and sophisticated bridal makeup. Our makeup artists are skilled in enhancing your unique features, using high-quality products that suit your skin type and tone. With a focus on precision and artistry, we ensure a flawless finish that complements your style and the occasion. Whether you need a fresh look for a business event, a dramatic transformation for a night out, or an elegant touch for your wedding day, our team is here to make you look and feel exceptional.</p>
 
-            <!-- Hình ảnh minh họa -->
+
+            <!-- Illustration Image -->
             <div class="service-image">
-                <img src="../images/makeup-image.jpg" alt="Hình ảnh dịch vụ trang điểm" />
+                <img src="images/makeup-banner.jpg" alt="Makeup service image" />
             </div>
 
             <div class="additional-info">
-                <h4>Các bước thực hiện dịch vụ</h4>
+                <h4>Service Steps</h4>
                 <ul>
-                    <li>Bước 1: Tư vấn phong cách trang điểm phù hợp với khách hàng.</li>
-                    <li>Bước 2: Thực hiện trang điểm theo yêu cầu.</li>
-                    <li>Bước 3: Hoàn thiện và kiểm tra kỹ lưỡng trước khi kết thúc.</li>
+                    <li>Step 1: Consultation to choose a makeup style that suits you.</li>
+                    <li>Step 2: Applying makeup as requested.</li>
+                    <li>Step 3: Finishing and thorough check before completion.</li>
                 </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Bảng giá dịch vụ Trang điểm</h4>
+                <h4>Makeup Service Price List</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Dịch vụ</th>
-                        <th>Giá (VND)</th>
+                        <th>Service</th>
+                        <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Trang điểm Cô dâu</td>
+                        <td>Bridal Makeup</td>
                         <td>800,000</td>
                     </tr>
                     <tr>
-                        <td>Trang điểm Tiệc</td>
+                        <td>Party Makeup</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Trang điểm Hàng ngày</td>
+                        <td>Everyday Makeup</td>
                         <td>400,000</td>
                     </tr>
                 </table>
             </div>
 
-            <!-- Nút đặt lịch -->
+            <!-- Booking Button -->
             <div class="booking-button">
-                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
             </div>
         </div>
 
-
         <!-- Massage Section -->
         <div id="massage-info" class="service-info">
-            <h4>Chi tiết dịch vụ Massage</h4>
-            <p>Đội ngũ chuyên nghiệp của chúng tôi cung cấp các liệu pháp massage thư giãn giúp bạn giải tỏa căng thẳng và phục hồi sức khỏe. Với nhiều phương pháp khác nhau, chúng tôi cam kết mang đến trải nghiệm thư giãn tuyệt vời cho khách hàng.</p>
+            <h4>Massage Service Details</h4>
+            <p>Our professional team provides relaxing massage therapies designed to relieve stress, alleviate pain, and promote overall well-being. With a variety of techniques, including Swedish, deep tissue, hot stone, and aromatherapy massage, we customize each session to meet your unique needs and preferences. Our skilled therapists use gentle, effective methods to reduce muscle tension, improve circulation, and create a tranquil environment for ultimate relaxation. We are committed to offering a rejuvenating experience that helps you escape from daily stress, reset your mind, and restore balance to your body. Whether you're looking for relief from chronic pain, a soothing experience after a busy week, or simply some time to unwind, our massage therapies provide the care and comfort you deserve.</p>
 
-            <!-- Hình ảnh minh họa -->
+
+            <!-- Illustration Image -->
             <div class="service-image">
-                <img src="../images/massage-image.jpg" alt="Hình ảnh dịch vụ massage" />
+                <img src="images/massage-banner.jpg" alt="Massage service image" />
             </div>
 
             <div class="additional-info">
-                <h4>Các bước thực hiện dịch vụ</h4>
+                <h4>Service Steps</h4>
                 <ul>
-                    <li>Bước 1: Tư vấn và xác định nhu cầu của khách hàng.</li>
-                    <li>Bước 2: Thực hiện liệu pháp massage theo yêu cầu.</li>
-                    <li>Bước 3: Hoàn thiện và kiểm tra sự hài lòng của khách hàng.</li>
+                    <li>Step 1: Consultation to determine client needs.</li>
+                    <li>Step 2: Applying massage therapy as requested.</li>
+                    <li>Step 3: Completion and client satisfaction check.</li>
                 </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Bảng giá dịch vụ Massage</h4>
+                <h4>Massage Service Price List</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Dịch vụ</th>
-                        <th>Giá (VND)</th>
+                        <th>Service</th>
+                        <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Massage Thư giãn</td>
+                        <td>Relaxing Massage</td>
                         <td>300,000</td>
                     </tr>
                     <tr>
-                        <td>Massage Toàn thân</td>
+                        <td>Full Body Massage</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Massage Chân</td>
+                        <td>Foot Massage</td>
                         <td>150,000</td>
                     </tr>
                 </table>
             </div>
 
-            <!-- Nút đặt lịch -->
+            <!-- Booking Button -->
             <div class="booking-button">
-                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
             </div>
         </div>
 
-
         <!-- Head Washing Section -->
         <div id="headwashing-info" class="service-info">
-            <h4>Chi tiết dịch vụ Gội đầu</h4>
-            <p>Dịch vụ gội đầu của chúng tôi không chỉ giúp bạn thư giãn mà còn mang lại cảm giác tươi mới và sảng khoái. Với các kỹ thuật gội đầu chuyên nghiệp, chúng tôi cam kết đem đến trải nghiệm tuyệt vời nhất cho khách hàng.</p>
+            <h4>Head Washing Service Details</h4>
+            <p>Our head washing service is designed to offer a soothing and refreshing experience that goes beyond basic cleansing. By using professional techniques and high-quality products, we gently massage the scalp to stimulate circulation, promote relaxation, and nourish your hair from root to tip. Our skilled team ensures that each session leaves you feeling rejuvenated and stress-free, with hair that looks and feels revitalized. Whether you need a quick refresh or a relaxing scalp massage, our head washing service provides the perfect way to unwind and treat yourself to a little extra care.</p>
 
-            <!-- Hình ảnh minh họa -->
+
+            <!-- Illustration Image -->
             <div class="service-image">
-                <img src="../images/headwashing-image.jpg" alt="Hình ảnh dịch vụ gội đầu" />
+                <img src="images/headwashing-banner.jpg" alt="Head washing service image" />
             </div>
 
             <div class="additional-info">
-                <h4>Các bước thực hiện dịch vụ</h4>
+                <h4>Service Steps</h4>
                 <ul>
-                    <li>Bước 1: Tư vấn nhu cầu gội đầu của khách hàng.</li>
-                    <li>Bước 2: Gội đầu và mát xa da đầu theo kỹ thuật chuyên nghiệp.</li>
-                    <li>Bước 3: Sử dụng sản phẩm chăm sóc tóc phù hợp sau khi gội.</li>
+                    <li>Step 1: Consultation to determine head washing needs.</li>
+                    <li>Step 2: Washing and scalp massage using professional techniques.</li>
+                    <li>Step 3: Using suitable hair care products post-wash.</li>
                 </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Bảng giá dịch vụ Gội đầu</h4>
+                <h4>Head Washing Service Price List</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Dịch vụ</th>
-                        <th>Giá (VND)</th>
+                        <th>Service</th>
+                        <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Gội đầu thư giãn</td>
+                        <td>Relaxing Head Wash</td>
                         <td>100,000</td>
                     </tr>
                     <tr>
-                        <td>Gội đầu & Mát xa da đầu</td>
+                        <td>Head Wash & Scalp Massage</td>
                         <td>200,000</td>
                     </tr>
                 </table>
             </div>
 
-            <!-- Nút đặt lịch -->
+            <!-- Booking Button -->
             <div class="booking-button">
-            <a href="index.jsp?currentPage=bookNow" class="btn-booking">Bấm vào đây để đặt lịch</a>
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
+            </div>
         </div>
-
-        </div>
-
-
-
 
         <!-- Hair Dying Section -->
         <div id="hairdying-info" class="service-info">
-            <h4>Chi tiết dịch vụ Nhuộm tóc</h4>
-            <p>Chúng tôi cung cấp dịch vụ nhuộm tóc chuyên nghiệp với nhiều màu sắc và kỹ thuật khác nhau, từ nhuộm tiêu chuẩn đến các phong cách nổi bật như Ombre và Balayage. Đội ngũ chuyên gia của chúng tôi sẽ tư vấn để bạn có được màu tóc hoàn hảo nhất.</p>
+            <h4>Hair Dyeing Service Details</h4>
+            <p>We offer professional hair dyeing services featuring an extensive palette of colors and advanced techniques to meet every client's unique style. From classic single-color applications to artistic styles like Ombre, Balayage, and Highlights, our team of experienced colorists is dedicated to delivering vibrant and lasting results. Using high-quality, salon-grade products, we prioritize hair health while ensuring rich color depth and shine. Whether you’re looking to enhance your natural shade or try a bold new look, our experts are here to help you achieve a personalized color that complements your individual style.</p>
 
-            <!-- Hình ảnh minh họa -->
+
+            <!-- Illustration Image -->
             <div class="service-image">
-                <img src="../images/hairdying-image.jpg" alt="Hình ảnh dịch vụ nhuộm tóc" />
+                <img src="images/hairdying-banner.jpg" alt="Hair dyeing service image" />
             </div>
 
             <div class="additional-info">
-                <h4>Các bước thực hiện dịch vụ</h4>
+                <h4>Service Steps</h4>
                 <ul>
-                    <li>Bước 1: Tư vấn màu sắc và phong cách nhuộm phù hợp với bạn.</li>
-                    <li>Bước 2: Thực hiện quá trình nhuộm theo kỹ thuật đã chọn.</li>
-                    <li>Bước 3: Hoàn thiện và chăm sóc tóc sau khi nhuộm.</li>
+                    <li>Step 1: Consultation to determine suitable color and dyeing style.</li>
+                    <li>Step 2: Performing the dyeing process as selected.</li>
+                    <li>Step 3: Finishing and post-dyeing hair care.</li>
                 </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Bảng giá dịch vụ Nhuộm tóc</h4>
+                <h4>Hair Dyeing Service Price List</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Dịch vụ</th>
-                        <th>Giá (VND)</th>
+                        <th>Service</th>
+                        <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Nhuộm tóc tiêu chuẩn</td>
+                        <td>Standard Hair Dyeing</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Nhuộm Ombre</td>
+                        <td>Ombre Dyeing</td>
                         <td>1,200,000</td>
                     </tr>
                     <tr>
-                        <td>Nhuộm Balayage</td>
+                        <td>Balayage Dyeing</td>
                         <td>1,500,000</td>
                     </tr>
                 </table>
             </div>
 
-            <!-- Nút đặt lịch -->
+            <!-- Booking Button -->
             <div class="booking-button">
-                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
             </div>
         </div>
 
-
         <!-- Hair Curling Section -->
         <div id="haircurling-info" class="service-info">
-            <h4>Chi tiết dịch vụ Uốn tóc</h4>
-            <p>Chúng tôi cung cấp dịch vụ uốn tóc chuyên nghiệp với nhiều phong cách khác nhau, từ uốn phồng cho đến uốn sóng nước. Đội ngũ chuyên gia của chúng tôi sẽ đảm bảo bạn có được kiểu tóc hoàn hảo và phù hợp nhất với bạn.</p>
+            <h4>Hair Curling Service Details</h4>
+            <p>We offer professional hair curling services tailored to create a variety of stunning looks, from voluminous curls to effortless beach waves. Our stylists use advanced techniques and high-quality tools to craft curls that are bouncy, long-lasting, and suited to your unique style. Whether you’re looking for soft, natural waves or glamorous, defined curls, our team ensures a personalized result that enhances your beauty and complements your face shape. Experience the transformation with curls that add texture, volume, and elegance to your look.</p>
 
-            <!-- Hình ảnh minh họa -->
+
+            <!-- Illustration Image -->
             <div class="service-image">
-                <img src="../images/haircurling-image.jpg" alt="Hình ảnh dịch vụ uốn tóc" />
+                <img src="images/haircurling-banner.jpg" alt="Hair curling service image" />
             </div>
 
             <div class="additional-info">
-                <h4>Các bước thực hiện dịch vụ</h4>
+                <h4>Service Steps</h4>
                 <ul>
-                    <li>Bước 1: Tư vấn kiểu uốn tóc phù hợp với khuôn mặt và nhu cầu của khách hàng.</li>
-                    <li>Bước 2: Tiến hành uốn tóc theo kỹ thuật đã chọn.</li>
-                    <li>Bước 3: Hoàn thiện và chăm sóc tóc sau khi uốn.</li>
+                    <li>Step 1: Consultation to determine suitable curl style.</li>
+                    <li>Step 2: Curling and styling as requested.</li>
+                    <li>Step 3: Finishing and post-curling care.</li>
                 </ul>
             </div>
 
             <div class="box-wrapper">
-                <h4>Bảng giá dịch vụ Uốn tóc</h4>
+                <h4>Hair Curling Service Price List</h4>
                 <table class="price-table">
                     <tr>
-                        <th>Dịch vụ</th>
-                        <th>Giá (VND)</th>
+                        <th>Service</th>
+                        <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Uốn phồng</td>
+                        <td>Volume Curling</td>
+                        <td>500,000</td>
+                    </tr>
+                    <tr>
+                        <td>Beach Waves</td>
                         <td>800,000</td>
-                    </tr>
-                    <tr>
-                        <td>Uốn đuôi</td>
-                        <td>600,000</td>
-                    </tr>
-                    <tr>
-                        <td>Uốn sóng nước</td>
-                        <td>1,000,000</td>
                     </tr>
                 </table>
             </div>
 
-            <!-- Nút đặt lịch -->
+            <!-- Booking Button -->
             <div class="booking-button">
-                <a href="view/bookNow.jsp" class="btn-booking">Bấm vào đây để đặt lịch</a>
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
             </div>
         </div>
+
 
 
     </div>
