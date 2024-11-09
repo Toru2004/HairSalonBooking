@@ -78,8 +78,13 @@
         case "handbook":
     %><jsp:include page="view/handbook.jsp" /> <%
             break;
+<<<<<<< HEAD
         case "viewMoreLiz":
     %><jsp:include page="view/viewMoreLiz.jsp" /> <%
+=======
+        case "handbook_home":
+    %><jsp:include page="view/home_handbook.jsp" /> <%
+>>>>>>> 10ebb2a65a6e729265316812727df59319d10829
             break;
         default:
     %><jsp:include page="view/aboutUs.jsp" /> <%
