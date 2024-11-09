@@ -28,6 +28,7 @@
     <!-- CSS của AOS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
     <!-- Các CSS khác của bạn -->
+    <link rel="stylesheet" href="veiw/css/home.css">
 
 
 </head>
@@ -201,69 +202,105 @@
             <img src="../images/anhphan3-3.jpg" alt="Illustration 3" class="illustration">
         </div>
     </div>
-</div>
-<!-- ảnh -->
-<div class="recommended-section">
-    <h2>Recommended for you</h2>
-    <div class="recommended-cards" >
-        <div class="card"  data-aos="fade-up">
-            <img src="../images/Homeimg.png" alt="Best Mustache Styles">
-            <p>Best Mustache Styles</p>
-        </div>
-        <div class="card"  data-aos="fade-up" data-aos-delay="200">
-            <img src="../images/Homeimg4.png" alt="What does an esthetician do?">
-            <p>What does an esthetician do?</p>
-        </div>
-        <div class="card"  data-aos="fade-up" data-aos-delay="400">
-            <img src="../images/Homimg7.webp" alt="Our Favorite Short Nail Styles To Try">
-            <p>Our Favorite Short Nail Styles To Try</p>
-        </div>
-    </div>
-</div>
-<h2 class="mb-4">Find your Booksy specialist by city</h2>
-<div class="row">
 
-    <!-- Cột 1 -->
-    <div class="col-md-3">
-        <ul class="city-list">
-            <li><a href="#"><span class="city-icon">&gt;</span> Charlotte</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Columbus</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Philadelphia</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Tampa</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Chicago</a></li>
+<%--   SLIDE SHOW STYLIST--%>
+    <!-- First Carousel for Stylist -->
+    <div id="stylist-carousel" class="carousel slide" data-ride="carousel">
+        <h2>STYLIST</h2>
+        <p class="chu">Discover the art of elegance with our exclusive styling services. Transform your look with our experts.</p>
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#stylist-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#stylist-carousel" data-slide-to="1"></li>
+            <li data-target="#stylist-carousel" data-slide-to="2"></li>
         </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../images/homeimg6.png" alt="Image 1">
+                <div class="carousel-caption">
+                    <h3>Elegance in Every Detail</h3>
+                    <p>Our stylists bring sophistication to every look. Redefine your elegance today.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../images/homeimg6.png" alt="Image 2">
+                <div class="carousel-caption">
+                    <h3>Unmatched Expertise</h3>
+                    <p>Entrust your style to our expert hands for a truly unique transformation.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../images/homeimg6.png" alt="Image 3">
+                <div class="carousel-caption">
+                    <h3>Timeless Beauty</h3>
+                    <p>Experience styling that brings out your natural elegance and confidence.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#stylist-carousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#stylist-carousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
     </div>
-    <!-- Cột 2 -->
-    <div class="col-md-3">
-        <ul class="city-list">
-            <li><a href="#"><span class="city-icon">&gt;</span> San Francisco</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> San Antonio</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Los Angeles</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Dallas</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Orlando</a></li>
+
+    <!-- Second Carousel for Service -->
+    <div id="service-carousel" class="carousel slide" data-ride="carousel">
+        <h2>SERVICE</h2>
+        <p class="chu">Experience unmatched quality and care with our professional services, tailored just for you.</p>
+
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li data-target="#service-carousel" data-slide-to="0" class="active"></li>
+            <li data-target="#service-carousel" data-slide-to="1"></li>
+            <li data-target="#service-carousel" data-slide-to="2"></li>
         </ul>
-    </div>
-    <!-- Cột 3 -->
-    <div class="col-md-3">
-        <ul class="city-list">
-            <li><a href="#"><span class="city-icon">&gt;</span> New York City</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Washington</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Miami</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> San Diego</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Phoenix</a></li>
-        </ul>
-    </div>
-    <!-- Cột 4 -->
-    <div class="col-md-3">
-        <ul class="city-list">
-            <li><a href="#"><span class="city-icon">&gt;</span> Jacksonville</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Houston</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Austin</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> San Jose</a></li>
-            <li><a href="#"><span class="city-icon">&gt;</span> Atlanta</a></li>
-        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="../images/homeimg5.png" alt="Service Image 1">
+                <div class="carousel-caption">
+                    <h3>Personalized Care</h3>
+                    <p>Enjoy a service experience designed uniquely for your needs and preferences.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../images/homeimg5.png" alt="Service Image 2">
+                <div class="carousel-caption">
+                    <h3>Quality and Precision</h3>
+                    <p>Our team is dedicated to delivering precision and quality in every service.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="../images/homeimg5.png" alt="Service Image 3">
+                <div class="carousel-caption">
+                    <h3>Excellence in Every Detail</h3>
+                    <p>Experience our commitment to excellence and attention to detail with every visit.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" href="#service-carousel" data-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" href="#service-carousel" data-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </a>
     </div>
 </div>
+
+
+
+
+
 
 <%--footer--%>
 <jsp:include page="footer.jsp" />
@@ -339,5 +376,6 @@
         typeText();
     };
 </script>
+
 
 <script src="js/popup-manage.js"></script>

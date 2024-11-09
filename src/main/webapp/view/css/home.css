@@ -1,4 +1,4 @@
-/* Đặt tất cả các phần tử body và html chiếm toàn bộ chiều cao trang */
+ /* Đặt tất cả các phần tử body và html chiếm toàn bộ chiều cao trang */
 html, body {
     height: 100%;
     margin: 0;
@@ -359,7 +359,7 @@ nav ul li a {
 }
 
 .section-text p {
-    font-size: 1rem; /* Kích thước chữ */
+    font-size: 1.2rem; /* Kích thước chữ */
     color: #555;
     line-height: 1.8; /* Khoảng cách giữa các dòng */
     margin-bottom: 15px; /* Khoảng cách giữa các đoạn văn */
@@ -404,45 +404,28 @@ nav ul li a {
     margin-right: 8px;
 }
 /* end phần 4 */
-/* ảnh */
-.recommended-section {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    text-align: center;
-}
 
-.recommended-cards {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between; /* Tránh khoảng trống dư thừa */
-    flex-wrap: wrap;
-    max-width: 100%; /* Đảm bảo chiếm hết chiều rộng */
-}
+/*slide show*/
+ .carousel-inner img {
+     width: 100%; /* Giúp hình ảnh đáp ứng theo chiều rộng của carousel */
+     height: 500px; /* Thiết lập chiều cao mong muốn */
+     object-fit: cover; /* Đảm bảo hình ảnh phủ kín khu vực mà không bị biến dạng */
+ }
+ h2 {
+     text-align: center;
+     font-size: 2em;
+     color: #333;
+     margin-top: 20px;
+ }
+ #service-carousel {
+     margin-top: 60px; /* Space between Stylist and Service */
+     margin-bottom: 60px; /* Space between Service and Footer */
+ }
+ .chu{
+     text-align: center;
+     font-size: 1.2em;
+     color: #666;
+     margin-bottom: 30px;
+ }
 
-.card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    flex: 1 1 30%; /* Đảm bảo các thẻ có chiều rộng đều nhau */
-    max-width: 380px; /* Đặt chiều rộng tối đa để không quá lớn */
-    text-align: center;
-    transition: transform 0.3s;
-}
 
-.card img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    display: block;
-}
-/* aos */
-/* Hiệu ứng chuyển động khi hover */
-.card {
-    transition: transform 0.3s ease-in-out;
-}
-
-.card:hover {
-    transform: scale(1.05);
-}
