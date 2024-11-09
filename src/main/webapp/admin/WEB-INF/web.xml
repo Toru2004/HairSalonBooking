@@ -3,4 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
          version="6.0">
+
+    <!-- Cấu hình Servlet Mapping cho tài nguyên tĩnh -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/view/*</url-pattern>
+    </servlet-mapping>
+
 </web-app>

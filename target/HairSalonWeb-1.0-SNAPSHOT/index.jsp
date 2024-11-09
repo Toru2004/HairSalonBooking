@@ -54,7 +54,7 @@
     <%
         String currentPage = request.getParameter("currentPage") != null
                 ? request.getParameter("currentPage").trim()
-                : "aboutUs";
+                : "home";
 
         switch (currentPage) {
             case "home":
@@ -77,6 +77,9 @@
             break;
         case "handbook":
     %><jsp:include page="view/handbook.jsp" /> <%
+            break;
+        case "handbook_home":
+    %><jsp:include page="view/home_handbook.jsp" /> <%
             break;
         default:
     %><jsp:include page="view/aboutUs.jsp" /> <%
