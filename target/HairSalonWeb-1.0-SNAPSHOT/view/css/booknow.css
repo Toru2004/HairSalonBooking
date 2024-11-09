@@ -79,11 +79,22 @@ form {
     flex-wrap: wrap;
 }
 
+label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 20px;
+}
 
 
 
-
-
+.booking-input {
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
 
 
 button {
@@ -138,42 +149,3 @@ button:hover {
 
 .star { color: lightgray; }
 .star.filled { color: rgb(0, 0, 0); }
-
-/* Cải thiện bố cục phần chọn dịch vụ */
-.booking-input {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-    justify-content: space-between;
-}
-
-.booking-input label {
-    flex: 1 1 45%; /* Để mỗi nhãn chiếm 45% chiều rộng */
-    text-align: center;
-    padding: 12px 20px;
-    margin: 5px;
-    background-color: #f3f3f3;
-    color: #333;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    border: 1px solid #ddd;
-}
-
-.booking-input label:hover,
-.booking-input input[type="checkbox"]:checked + label {
-    background-color: #e0e0e0;
-    color: #000;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.booking-input input[type="checkbox"] {
-    display: none; /* Ẩn checkbox mặc định */
-}
-
-

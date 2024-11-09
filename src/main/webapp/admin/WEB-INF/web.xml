@@ -1,0 +1,32 @@
+<web-app>
+    <!-- Cấu hình servlet cho phần quản trị -->
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>com.yourcompany.AdminServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/admin/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Bảo mật chỉ cho phép admin truy cập -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin Pages</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>admin</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Admin Area</realm-name>
+    </login-config>
+
+    <security-role>
+        <role-name>admin</role-name>
+    </security-role>
+</web-app>
