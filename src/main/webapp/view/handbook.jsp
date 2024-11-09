@@ -8,38 +8,6 @@
     <link rel="stylesheet" href="view/css/handbook.css">
 </head>
 <body>
-
-
-<%--<!-- Pop-up Login Form -->--%>
-<%--<div id="login-popup" class="popup-overlay d-none">--%>
-<%--    <div class="popup-content rounded shadow">--%>
-<%--        <button class="close-popup">&times;</button> <!-- Nút đóng -->--%>
-<%--        <h2 class="text-center">Login</h2>--%>
-<%--        <form>--%>
-<%--            <input type="text" class="form-control mb-3" placeholder="Username" required>--%>
-<%--            <input type="password" class="form-control mb-3" placeholder="Password" required>--%>
-<%--            <button type="submit" class="btn btn-dark w-100">Login</button> <!-- Nút đen -->--%>
-<%--        </form>--%>
-<%--        <p class="text-center mt-3">Don't have an account? <a href="#" id="to-signup">Sign Up</a></p>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
-<%--<!-- Pop-up Sign Up Form -->--%>
-<%--<div id="signup-popup" class="popup-overlay d-none">--%>
-<%--    <div class="popup-content rounded shadow">--%>
-<%--        <button class="close-popup">&times;</button> <!-- Nút đóng -->--%>
-<%--        <h2 class="text-center">Sign Up</h2>--%>
-<%--        <form>--%>
-<%--            <input type="text" class="form-control mb-3" placeholder="Username" required>--%>
-<%--            <input type="email" class="form-control mb-3" placeholder="Email" required>--%>
-<%--            <input type="password" class="form-control mb-3" placeholder="Password" required>--%>
-<%--            <button type="submit" class="btn btn-dark w-100">Sign Up</button> <!-- Nút đen -->--%>
-<%--        </form>--%>
-<%--        <p class="text-center mt-3">Already have an account? <a href="#" id="to-login">Login</a></p>--%>
-<%--    </div>--%>
-<%--</div>--%>
-
-
 <section class="blog-section">
     <div class="blog-container">
         <div class="blog-item">

@@ -49,18 +49,18 @@
     <jsp:include page="view/header.jsp" />
     <%--header--%>
 
-<%--    <%@ page import="javax.servlet.http.HttpServletRequest" %>--%>
+    <%--    <%@ page import="javax.servlet.http.HttpServletRequest" %>--%>
 
     <%
         String currentPage = request.getParameter("currentPage") != null
                 ? request.getParameter("currentPage").trim()
-                : "aboutUs";
+                : "home";
 
         switch (currentPage) {
             case "home":
-    %><% response.sendRedirect("view/home.jsp"); %> <%
-            break;
-        case "aboutUs":
+                response.sendRedirect("view/home.jsp");
+                break;
+            case "aboutUs":
     %><jsp:include page="view/aboutUs.jsp" /> <%
             break;
         case "services":
@@ -78,11 +78,15 @@
         case "handbook":
     %><jsp:include page="view/handbook.jsp" /> <%
             break;
+        case "viewMoreLiz":
+    %><jsp:include page="view/viewMoreLiz.jsp" /> <%
+            break;
         default:
     %><jsp:include page="view/aboutUs.jsp" /> <%
-            break;
+                break;
         }
     %>
+
 
     <%--footer--%>
     <jsp:include page="view/footer.jsp" />
