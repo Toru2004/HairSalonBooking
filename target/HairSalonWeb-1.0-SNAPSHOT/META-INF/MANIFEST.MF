@@ -1,5 +1,9 @@
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
 Built-By: luutruongvan
+<<<<<<< HEAD
 Build-Jdk: Oracle OpenJDK 23.0.1 - aarch64
+=======
+Build-Jdk: Oracle OpenJDK 23 - aarch64
+>>>>>>> main
 
