@@ -1,23 +1,5 @@
-<<<<<<< HEAD
 Manifest-Version: 1.0
 Created-By: IntelliJ IDEA
-<<<<<<< HEAD
-<<<<<<< HEAD
 Built-By: rom
 Build-Jdk: Oracle OpenJDK 23.0.1
-=======
-Built-By: admin
-Build-Jdk: Oracle OpenJDK 23
->>>>>>> f2b0c35b420c294d2d7b903c89b178334c093354
-=======
-Built-By: Acer
-Build-Jdk: Oracle OpenJDK 23.0.1
->>>>>>> 10ebb2a65a6e729265316812727df59319d10829
 
-=======
-Manifest-Version: 1.0
-Created-By: IntelliJ IDEA
-Built-By: luutruongvan
-Build-Jdk: Oracle OpenJDK 23.0.1 - aarch64
-
->>>>>>> a7f54d07392f27cba47eb581481f2f6617946ea3

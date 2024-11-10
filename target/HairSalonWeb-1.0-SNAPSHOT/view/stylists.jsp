@@ -20,8 +20,10 @@
                 <p><strong>Owner/Master Stylist</strong></p> <!-- Title -->
                 <!-- Buttons for View More and Book Now -->
                 <div class="button-container">
-                    <button onclick="location.href='viewMoreLiz.html'">View More</button> <!-- Link to a detailed page for Liz -->
-                    <button onclick="location.href='bookNow.html'">Book Now</button> <!-- Link to the booking page -->
+                    <button onclick="location.href='${pageContext.request.contextPath}/index.jsp?currentPage=viewMoreLiz'">View More</button> <!-- Link to a detailed page for Liz -->
+                    <button onclick="location.href='${pageContext.request.contextPath}/index.jsp?currentPage=bookNow'">Book Now</button> <!-- Link to the booking page -->
+
+
                 </div>
             </div>
 
@@ -31,8 +33,8 @@
                 <p><strong>Salon Stylist</strong></p> <!-- Title -->
                 <!-- Buttons for View More and Book Now -->
                 <div class="button-container">
-                    <button onclick="location.href='viewMoreAyva.html'">View More</button> <!-- Link to a detailed page for Ayva -->
-                    <button onclick="location.href='bookNow.html'">Book Now</button> <!-- Link to the booking page -->
+                    <button onclick="location.href='${pageContext.request.contextPath}/index.jsp?currentPage=viewMoreAyva'">View More</button> <!-- Link to a detailed page for Ayva -->
+                    <button onclick="location.href='../index.jsp?currentPage=bookNow'">Book Now</button> <!-- Link to the booking page -->
                 </div>
             </div>
 
@@ -43,7 +45,7 @@
                 <!-- Buttons for View More and Book Now -->
                 <div class="button-container">
                     <button onclick="location.href='viewMoreHelen.html'">View More</button> <!-- Link to a detailed page for Helen -->
-                    <button onclick="location.href='bookNow.html'">Book Now</button> <!-- Link to the booking page -->
+                    <button onclick="location.href='../index.jsp?currentPage=bookNow'">Book Now</button> <!-- Link to the booking page -->
                 </div>
             </div>
             <!-- Add more stylists if needed -->
