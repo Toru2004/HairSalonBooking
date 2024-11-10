@@ -202,7 +202,7 @@
             <img src="../images/anhphan3-3.jpg" alt="Illustration 3" class="illustration">
         </div>
     </div>
-   
+
 <%--   SLIDE SHOW STYLIST--%>
     <!-- First Carousel for Stylist -->
     <div id="stylist-carousel" class="carousel slide" data-ride="carousel">
