@@ -42,7 +42,14 @@ public class CustomerController {
         customerService.save(customer); // Lưu thông tin khách hàng
         return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng sau khi lưu
     }
-
+    // Hiển thị form để chỉnh sửa khách hàng
+    @GetMapping("/manageCustomers/edit/{id}")
+    public String showEditCustomerForm(@PathVariable("id") Integer id, Model model) {
+        Customer customer = customerService.get(id); // Lấy thông tin khách hàng theo ID
+        model.addAttribute("customer", customer);
+        model.addAttribute("users", userService.listAll());  // Truyền danh sách người dùng
+        return "customer_form";  // Trả về trang form chỉnh sửa
+    }
     // Xóa khách hàng
     @GetMapping("/manageCustomers/delete/{id}")
     public String deleteCustomer(@PathVariable("id") Integer id) {
