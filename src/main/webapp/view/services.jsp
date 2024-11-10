@@ -79,43 +79,22 @@
 
         <!-- Service Details -->
         <div id="haircut-info" class="service-info">
+            <h4>Haircut Service Details</h4>
+            <p>Our professional stylists offer a variety of hairstyles, from simple to complex, suitable for different face shapes, hair types, and personal styles. We understand that a good haircut not only enhances appearance but also boosts confidence, and we strive to bring out the best look for each client. With a focus on precision and attention to detail, our stylists stay updated on the latest trends and techniques to deliver modern, stylish cuts. Whether you're looking for a fresh everyday look or a bold transformation, we’re here to ensure you leave feeling satisfied and confident.</p>
 
-            <div class="box-wrapper">
-                <h3>Staff for Hair Cut</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff1.jpg" alt="Staff 1">
-                        <div class="staff-name">Lưu Trường Văn</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 8 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff2.jpg" alt="Staff 2">
-                        <div class="staff-name">Trần Thành Đông</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff3.jpg" alt="Staff 3">
-                        <div class="staff-name">Đỗ Tấn Phát</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 10 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff4.jpg" alt="Staff 4">
-                        <div class="staff-name">Lê Nguyễn Minh Phúc</div>
-                        <div class="staff-info">Age: 20</div>
-                        <div class="staff-info">Experience: 9 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+
+            <!-- Illustration Image -->
+            <div class="service-image">
+                <img src="images/haircut-banner.jpg" alt="Haircut service image" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Service Steps</h4>
+                <ul>
+                    <li>Step 1: Consultation to determine a hairstyle that suits your face.</li>
+                    <li>Step 2: Cutting and styling as per the client's request.</li>
+                    <li>Step 3: Finishing and after-cut care.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
@@ -140,47 +119,32 @@
                 </table>
             </div>
 
+            <!-- Booking Button -->
+            <div class="booking-button">
+                <a href="index.jsp?currentPage=bookNow"  class="btn-booking">Click here to book</a>
+            </div>
         </div>
 
         <!-- Makeup Section -->
         <div id="makeup-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Makeup</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff5.jpg" alt="Staff 5">
-                        <div class="staff-name">Sarah Lee</div>
-                        <div class="staff-info">Age: 29</div>
-                        <div class="staff-info">Experience: 7 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff6.jpg" alt="Staff 6">
-                        <div class="staff-name">Chris Green</div>
-                        <div class="staff-info">Age: 33</div>
-                        <div class="staff-info">Experience: 9 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff7.jpg" alt="Staff 7">
-                        <div class="staff-name">Anna Black</div>
-                        <div class="staff-info">Age: 31</div>
-                        <div class="staff-info">Experience: 8 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff8.jpg" alt="Staff 8">
-                        <div class="staff-name">Tom Blue</div>
-                        <div class="staff-info">Age: 34</div>
-                        <div class="staff-info">Experience: 10 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Makeup Service Details</h4>
+            <p>Our professional makeup team will transform you into the most beautiful version of yourself. We offer a variety of makeup styles tailored to different occasions, including natural, everyday looks, glamorous evening makeup, and sophisticated bridal makeup. Our makeup artists are skilled in enhancing your unique features, using high-quality products that suit your skin type and tone. With a focus on precision and artistry, we ensure a flawless finish that complements your style and the occasion. Whether you need a fresh look for a business event, a dramatic transformation for a night out, or an elegant touch for your wedding day, our team is here to make you look and feel exceptional.</p>
+
+
+            <!-- Illustration Image -->
+            <div class="service-image">
+                <img src="images/makeup-banner.jpg" alt="Makeup service image" />
             </div>
+
+            <div class="additional-info">
+                <h4>Service Steps</h4>
+                <ul>
+                    <li>Step 1: Consultation to choose a makeup style that suits you.</li>
+                    <li>Step 2: Applying makeup as requested.</li>
+                    <li>Step 3: Finishing and thorough check before completion.</li>
+                </ul>
+            </div>
+
             <div class="box-wrapper">
                 <h4>Makeup Service Price List</h4>
                 <table class="price-table">
@@ -189,7 +153,7 @@
                         <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Wedding Makeup</td>
+                        <td>Bridal Makeup</td>
                         <td>800,000</td>
                     </tr>
                     <tr>
@@ -203,46 +167,30 @@
                 </table>
             </div>
 
+            <!-- Booking Button -->
+            <div class="booking-button">
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
+            </div>
         </div>
 
         <!-- Massage Section -->
         <div id="massage-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Massage</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff9.jpg" alt="Staff 9">
-                        <div class="staff-name">Nguyễn Văn A</div>
-                        <div class="staff-info">Age: 30</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff10.jpg" alt="Staff 10">
-                        <div class="staff-name">Trần Thị B</div>
-                        <div class="staff-info">Age: 28</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff11.jpg" alt="Staff 11">
-                        <div class="staff-name">Lê Văn C</div>
-                        <div class="staff-info">Age: 35</div>
-                        <div class="staff-info">Experience: 7 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff12.jpg" alt="Staff 12">
-                        <div class="staff-name">Phạm Thị D</div>
-                        <div class="staff-info">Age: 32</div>
-                        <div class="staff-info">Experience: 9 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Massage Service Details</h4>
+            <p>Our professional team provides relaxing massage therapies designed to relieve stress, alleviate pain, and promote overall well-being. With a variety of techniques, including Swedish, deep tissue, hot stone, and aromatherapy massage, we customize each session to meet your unique needs and preferences. Our skilled therapists use gentle, effective methods to reduce muscle tension, improve circulation, and create a tranquil environment for ultimate relaxation. We are committed to offering a rejuvenating experience that helps you escape from daily stress, reset your mind, and restore balance to your body. Whether you're looking for relief from chronic pain, a soothing experience after a busy week, or simply some time to unwind, our massage therapies provide the care and comfort you deserve.</p>
+
+
+            <!-- Illustration Image -->
+            <div class="service-image">
+                <img src="images/massage-banner.jpg" alt="Massage service image" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Service Steps</h4>
+                <ul>
+                    <li>Step 1: Consultation to determine client needs.</li>
+                    <li>Step 2: Applying massage therapy as requested.</li>
+                    <li>Step 3: Completion and client satisfaction check.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
@@ -253,7 +201,7 @@
                         <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Relaxation Massage</td>
+                        <td>Relaxing Massage</td>
                         <td>300,000</td>
                     </tr>
                     <tr>
@@ -267,46 +215,30 @@
                 </table>
             </div>
 
+            <!-- Booking Button -->
+            <div class="booking-button">
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
+            </div>
         </div>
 
         <!-- Head Washing Section -->
         <div id="headwashing-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Head Washing</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff13.jpg" alt="Staff 13">
-                        <div class="staff-name">Nguyễn Văn E</div>
-                        <div class="staff-info">Age: 27</div>
-                        <div class="staff-info">Experience: 4 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff14.jpg" alt="Staff 14">
-                        <div class="staff-name">Lê Thị F</div>
-                        <div class="staff-info">Age: 29</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff15.jpg" alt="Staff 15">
-                        <div class="staff-name">Trần Văn G</div>
-                        <div class="staff-info">Age: 31</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff16.jpg" alt="Staff 16">
-                        <div class="staff-name">Phạm Thị H</div>
-                        <div class="staff-info">Age: 26</div>
-                        <div class="staff-info">Experience: 3 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Head Washing Service Details</h4>
+            <p>Our head washing service is designed to offer a soothing and refreshing experience that goes beyond basic cleansing. By using professional techniques and high-quality products, we gently massage the scalp to stimulate circulation, promote relaxation, and nourish your hair from root to tip. Our skilled team ensures that each session leaves you feeling rejuvenated and stress-free, with hair that looks and feels revitalized. Whether you need a quick refresh or a relaxing scalp massage, our head washing service provides the perfect way to unwind and treat yourself to a little extra care.</p>
+
+
+            <!-- Illustration Image -->
+            <div class="service-image">
+                <img src="images/headwashing-banner.jpg" alt="Head washing service image" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Service Steps</h4>
+                <ul>
+                    <li>Step 1: Consultation to determine head washing needs.</li>
+                    <li>Step 2: Washing and scalp massage using professional techniques.</li>
+                    <li>Step 3: Using suitable hair care products post-wash.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
@@ -327,46 +259,30 @@
                 </table>
             </div>
 
+            <!-- Booking Button -->
+            <div class="booking-button">
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
+            </div>
         </div>
 
         <!-- Hair Dying Section -->
         <div id="hairdying-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Hair Dying</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff17.jpg" alt="Staff 17">
-                        <div class="staff-name">Nguyễn Văn I</div>
-                        <div class="staff-info">Age: 28</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff18.jpg" alt="Staff 18">
-                        <div class="staff-name">Lê Thị J</div>
-                        <div class="staff-info">Age: 34</div>
-                        <div class="staff-info">Experience: 8 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff19.jpg" alt="Staff 19">
-                        <div class="staff-name">Trần Văn K</div>
-                        <div class="staff-info">Age: 30</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff20.jpg" alt="Staff 20">
-                        <div class="staff-name">Phạm Thị L</div>
-                        <div class="staff-info">Age: 25</div>
-                        <div class="staff-info">Experience: 4 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Hair Dyeing Service Details</h4>
+            <p>We offer professional hair dyeing services featuring an extensive palette of colors and advanced techniques to meet every client's unique style. From classic single-color applications to artistic styles like Ombre, Balayage, and Highlights, our team of experienced colorists is dedicated to delivering vibrant and lasting results. Using high-quality, salon-grade products, we prioritize hair health while ensuring rich color depth and shine. Whether you’re looking to enhance your natural shade or try a bold new look, our experts are here to help you achieve a personalized color that complements your individual style.</p>
+
+
+            <!-- Illustration Image -->
+            <div class="service-image">
+                <img src="images/hairdying-banner.jpg" alt="Hair dyeing service image" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Service Steps</h4>
+                <ul>
+                    <li>Step 1: Consultation to determine suitable color and dyeing style.</li>
+                    <li>Step 2: Performing the dyeing process as selected.</li>
+                    <li>Step 3: Finishing and post-dyeing hair care.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
@@ -377,60 +293,44 @@
                         <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Standard Hair Dye</td>
+                        <td>Standard Hair Dyeing</td>
                         <td>600,000</td>
                     </tr>
                     <tr>
-                        <td>Ombre Dye</td>
+                        <td>Ombre Dyeing</td>
                         <td>1,200,000</td>
                     </tr>
                     <tr>
-                        <td>Balayage Dye</td>
+                        <td>Balayage Dyeing</td>
                         <td>1,500,000</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- Booking Button -->
+            <div class="booking-button">
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
+            </div>
         </div>
 
         <!-- Hair Curling Section -->
         <div id="haircurling-info" class="service-info">
-            <div class="box-wrapper">
-                <h3>Staff for Hair Curling</h3>
-                <div class="staff-box-container">
-                    <div class="staff-box">
-                        <img src="images/staff21.jpg" alt="Staff 21">
-                        <div class="staff-name">Nguyễn Văn M</div>
-                        <div class="staff-info">Age: 26</div>
-                        <div class="staff-info">Experience: 4 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff22.jpg" alt="Staff 22">
-                        <div class="staff-name">Lê Thị N</div>
-                        <div class="staff-info">Age: 29</div>
-                        <div class="staff-info">Experience: 5 years</div>
-                        <div class="star-rating">★★★★★</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff23.jpg" alt="Staff 23">
-                        <div class="staff-name">Trần Văn O</div>
-                        <div class="staff-info">Age: 32</div>
-                        <div class="staff-info">Experience: 6 years</div>
-                        <div class="star-rating">★★★☆☆</div>
-                        <button>Select</button>
-                    </div>
-                    <div class="staff-box">
-                        <img src="images/staff24.jpg" alt="Staff 24">
-                        <div class="staff-name">Phạm Thị P</div>
-                        <div class="staff-info">Age: 28</div>
-                        <div class="staff-info">Experience: 7 years</div>
-                        <div class="star-rating">★★★★☆</div>
-                        <button>Select</button>
-                    </div>
-                </div>
+            <h4>Hair Curling Service Details</h4>
+            <p>We offer professional hair curling services tailored to create a variety of stunning looks, from voluminous curls to effortless beach waves. Our stylists use advanced techniques and high-quality tools to craft curls that are bouncy, long-lasting, and suited to your unique style. Whether you’re looking for soft, natural waves or glamorous, defined curls, our team ensures a personalized result that enhances your beauty and complements your face shape. Experience the transformation with curls that add texture, volume, and elegance to your look.</p>
+
+
+            <!-- Illustration Image -->
+            <div class="service-image">
+                <img src="images/haircurling-banner.jpg" alt="Hair curling service image" />
+            </div>
+
+            <div class="additional-info">
+                <h4>Service Steps</h4>
+                <ul>
+                    <li>Step 1: Consultation to determine suitable curl style.</li>
+                    <li>Step 2: Curling and styling as requested.</li>
+                    <li>Step 3: Finishing and post-curling care.</li>
+                </ul>
             </div>
 
             <div class="box-wrapper">
@@ -441,22 +341,26 @@
                         <th>Price (VND)</th>
                     </tr>
                     <tr>
-                        <td>Voluminous Curl</td>
+                        <td>Volume Curling</td>
+                        <td>500,000</td>
+                    </tr>
+                    <tr>
+                        <td>Beach Waves</td>
                         <td>800,000</td>
-                    </tr>
-                    <tr>
-                        <td>End Curl</td>
-                        <td>600,000</td>
-                    </tr>
-                    <tr>
-                        <td>Water Wave Curl</td>
-                        <td>1,000,000</td>
                     </tr>
                 </table>
             </div>
 
+            <!-- Booking Button -->
+            <div class="booking-button">
+                <a href="index.jsp?currentPage=bookNow" class="btn-booking">Click here to book</a>
+            </div>
         </div>
+
+
+
     </div>
+</div>
 </div>
 
 
