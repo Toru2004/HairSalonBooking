@@ -1,64 +1,52 @@
 package com.admin.controller;
 
 import com.admin.model.Customer;
-import com.admin.exception.UserNotFoundException;
 import com.admin.service.CustomerService;
+import com.admin.service.UserService;
+import com.admin.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
 public class CustomerController {
-    @Autowired private CustomerService service;
 
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private UserService userService;
+
+    // Hiển thị danh sách khách hàng
     @GetMapping("/manageCustomers")
     public String showCustomerList(Model model) {
-        List<Customer> listCustomers = service.listAll();
-        model.addAttribute("listCustomers", listCustomers);
-
-        return "manageCustomers";
+        List<Customer> customers = customerService.listAll(); // Lấy danh sách khách hàng
+        model.addAttribute("customers", customers); // Truyền danh sách khách hàng vào view
+        return "manageCustomers"; // Trả về view manageCustomers.html
     }
 
+    // Hiển thị form thêm mới khách hàng
     @GetMapping("/manageCustomers/new")
-    public String showNewForm(Model model) {
-        model.addAttribute("customer", new Customer());
-        model.addAttribute("pageTitle", "Add New Customer");
-        return "customer_form";
+    public String showNewCustomerForm(Model model) {
+        model.addAttribute("customer", new Customer()); // Tạo đối tượng mới cho Customer
+        model.addAttribute("users", userService.listAll()); // Truyền danh sách người dùng
+        return "customer_form"; // Trả về form thêm mới khách hàng
     }
 
+    // Lưu thông tin khách hàng
     @PostMapping("/manageCustomers/save")
-    public String saveCustomer(Customer customer, RedirectAttributes ra) {
-        service.save(customer);
-        ra.addFlashAttribute("message", "The customer has been saved successfully.");
-        return "redirect:/manageCustomers";
+    public String saveCustomer(Customer customer) {
+        customerService.save(customer); // Lưu thông tin khách hàng
+        return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng sau khi lưu
     }
 
-    @GetMapping("/manageCustomers/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
-        try {
-            Customer customer = service.get(id);
-            model.addAttribute("customer", customer);
-            model.addAttribute("pageTitle", "Edit Customer (ID: " + id + ")");
-
-            return "customer_form";
-        } catch (UserNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-            return "redirect:/manageCustomers";
-        }
-    }
-
+    // Xóa khách hàng
     @GetMapping("/manageCustomers/delete/{id}")
-    public String deleteCustomer(@PathVariable("id") Integer id, RedirectAttributes ra) {
-        try {
-            service.delete(id);
-            ra.addFlashAttribute("message", "The customer ID " + id + " has been deleted.");
-        } catch (UserNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage());
-        }
-        return "redirect:/manageCustomers";
+    public String deleteCustomer(@PathVariable("id") Integer id) {
+        customerService.delete(id); // Xóa khách hàng theo id
+        return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng sau khi xóa
     }
 }
