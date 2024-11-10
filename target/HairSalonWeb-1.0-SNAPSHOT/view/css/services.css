@@ -145,21 +145,11 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.staff-box:hover {
-    transform: scale(1.15); /* Tăng kích thước lên 20% khi hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    background-color:rgb(187, 187, 187);
-    border:1.5px solid black;
-    img{
-        border:1px solid black;
-    }
-
-}
-
-.staff-box img {
-    width: 100%;
-    height: 220px;
-    margin-bottom: 10px;
+.additional-info {
+    margin-top: 40px; /* Khoảng cách trên phần thông tin thêm */
+    padding: 15px;
+    background-color: #e7f3fe; /* Màu nền cho phần ưu đãi */
+    border-left: 5px solid #2196F3; /* Đường viền bên trái màu xanh */
 }
 
 .staff-name {
@@ -218,6 +208,44 @@ th:hover {
     background-color: #444444; /* Màu nền cho tiêu đề khi hover */
 }
 
+.service-image {
+    text-align: center; /* Căn giữa hình ảnh */
+    margin: 20px 0; /* Khoảng cách trên và dưới hình ảnh */
+    width:100%;
+}
+
+.service-image img {
+    width: 100%; /* Đảm bảo hình ảnh không vượt quá độ rộng của phần chứa */
+    height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
+    border-radius: 8px; /* Bo góc cho hình ảnh */
+    height:400px;
+}
+
+.box-wrapper{
+    margin-top:40px;
+}
+
+.booking-button {
+    text-align: center; /* Căn giữa nút */
+    margin-top: 20px; /* Khoảng cách trên nút */
+}
+
+.btn-booking {
+    display: inline-block; /* Hiển thị dạng inline-block để có thể tùy chỉnh kích thước */
+    padding: 10px 20px; /* Khoảng cách trong nút */
+    background-color: #000000; /* Màu nền của nút */
+    color: #fff; /* Màu chữ */
+    text-decoration: none; /* Bỏ gạch chân */
+    border-radius: 5px; /* Bo góc cho nút */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền khi hover */
+}
+
+.btn-booking:hover {
+    background-color: #595858; /* Màu nền khi hover */
+    color:white;
+    text-decoration: none; /* Bỏ gạch chân */
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .header-container {
@@ -250,37 +278,4 @@ th:hover {
     .service-section img {
         margin-bottom: 20px;
     }
-}
-
-.staff-box button {
-    background-color: #000000; /* Màu nền đen */
-    color: white; /* Màu chữ trắng */
-    border: none; /* Không có viền */
-    padding: 10px 20px; /* Khoảng cách bên trong */
-    text-align: center; /* Canh giữa chữ */
-    text-decoration: none; /* Không gạch chân chữ */
-    display: inline-block; /* Hiển thị như một khối nội tuyến */
-    font-size: 16px; /* Kích thước chữ */
-    margin: 10px 0; /* Khoảng cách trên và dưới */
-    cursor: pointer; /* Hiệu ứng con trỏ */
-    border-radius: 5px; /* Bo góc nút */
-    transition: background-color 0.3s; /* Hiệu ứng chuyển đổi màu nền */
-}
-
-.staff-box button:hover {
-    background-color: #5f5d5d; /* Màu nền khi hover */
-}
-
-
-.box-wrapper {
-    background-color: #f9f9f9; /* Màu nền hộp bọc */
-    border: 1px solid #000000; /* Viền cho hộp bọc */
-    border-radius: 10px; /* Bo góc cho hộp bọc */
-    padding: 20px; /* Khoảng cách bên trong */
-    margin-bottom: 20px; /* Khoảng cách dưới cùng */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng cho hộp bọc */
-}
-
-.box-wrapper:hover {
-    box-shadow: 0 8px 16px rgba(0.4, 0.4, 0.4, 0.4); /* Tăng bóng khi hover */
 }
