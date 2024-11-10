@@ -134,7 +134,7 @@
 }
 
 .additional-info {
-    margin-top: 20px; /* Khoảng cách trên phần thông tin thêm */
+    margin-top: 40px; /* Khoảng cách trên phần thông tin thêm */
     padding: 15px;
     background-color: #e7f3fe; /* Màu nền cho phần ưu đãi */
     border-left: 5px solid #2196F3; /* Đường viền bên trái màu xanh */
@@ -195,12 +195,18 @@ th:hover {
 .service-image {
     text-align: center; /* Căn giữa hình ảnh */
     margin: 20px 0; /* Khoảng cách trên và dưới hình ảnh */
+    width:100%;
 }
 
 .service-image img {
-    max-width: 100%; /* Đảm bảo hình ảnh không vượt quá độ rộng của phần chứa */
+    width: 100%; /* Đảm bảo hình ảnh không vượt quá độ rộng của phần chứa */
     height: auto; /* Tự động điều chỉnh chiều cao để giữ tỷ lệ */
     border-radius: 8px; /* Bo góc cho hình ảnh */
+    height:400px;
+}
+
+.box-wrapper{
+    margin-top:40px;
 }
 
 .booking-button {
@@ -211,7 +217,7 @@ th:hover {
 .btn-booking {
     display: inline-block; /* Hiển thị dạng inline-block để có thể tùy chỉnh kích thước */
     padding: 10px 20px; /* Khoảng cách trong nút */
-    background-color: #2196F3; /* Màu nền của nút */
+    background-color: #000000; /* Màu nền của nút */
     color: #fff; /* Màu chữ */
     text-decoration: none; /* Bỏ gạch chân */
     border-radius: 5px; /* Bo góc cho nút */
@@ -219,7 +225,9 @@ th:hover {
 }
 
 .btn-booking:hover {
-    background-color: #1976D2; /* Màu nền khi hover */
+    background-color: #595858; /* Màu nền khi hover */
+    color:white;
+    text-decoration: none; /* Bỏ gạch chân */
 }
 
 /* Responsive Design */
@@ -251,4 +259,3 @@ th:hover {
         margin-bottom: 20px;
     }
 }
-
