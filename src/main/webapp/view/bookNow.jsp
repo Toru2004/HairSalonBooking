@@ -106,4 +106,3 @@ serviceInputs.forEach(input => {
     input.addEventListener('change', toggleActiveClass);
 });
 </script>
-
