@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class UserController {
     @Autowired private UserService service;
-    
+
     @GetMapping("/manageUsers")
     public String showUserList(Model model) {
         List<User> listUsers = service.listAll();
@@ -31,6 +31,7 @@ public class UserController {
         model.addAttribute("pageTitle", "Add New User");
         return "user_form";
     }
+
 
     @PostMapping("/manageUsers/save")
     public String saveUser(User user, RedirectAttributes ra) {
