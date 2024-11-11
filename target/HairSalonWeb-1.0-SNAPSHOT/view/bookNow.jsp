@@ -51,7 +51,7 @@
                     <input type="checkbox" id="service-haircurling" name="service" value="haircurling" onchange="toggleStaffSelection()">
                     <label for="service-haircurling">Hair Curling</label>
                 </div>
-<div>Văn</div>
+                <div>Văn</div>
                 <div id="staff-selection" style="display: none;">
                     <label for="staff" style="font-size:18px;">Select Staff:</label>
                     <select id="staff" name="staff" required onchange="displayStaffProfile()">
