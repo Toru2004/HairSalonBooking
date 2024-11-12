@@ -1,4 +1,5 @@
 package com.admin.service;
+/*
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,7 @@ public class ServiceService {
 
     private final ServiceRepository serviceRepository;
 
-    @Autowired // Tự động tiêm (inject) repository để sử dụng trong lớp này.
+    @Autowired // Tự động (inject) repository để sử dụng trong lớp này.
     public ServiceService(ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
     }
@@ -46,3 +47,5 @@ public class ServiceService {
         serviceRepository.deleteById(id); // Xóa dịch vụ khỏi CSDL.
     }
 }
+
+*/
