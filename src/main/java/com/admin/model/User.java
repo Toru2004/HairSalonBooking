@@ -33,6 +33,10 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
 
+    // Quan hệ một-một với Stylist (mỗi User có thể là Stylist)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+
+    private Stylist stylist;
     // Getter và Setter cho từng thuộc tính của User
     public Integer getId() {
         return id;
@@ -92,6 +96,14 @@ public class User {
         if (customer != null) {
             customer.setUser(this);
         }
+    }
+//
+public Stylist getStylist() {
+    return stylist;
+}
+
+    public void setStylist(Stylist stylist) {
+        this.stylist = stylist;
     }
 
     // Phương thức toString để hiển thị thông tin User dưới dạng chuỗi

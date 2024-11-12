@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle}"></title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 th:text="${pageTitle}">Stylist Form</h2>
+    <form th:action="@{/manageStylists/save}" th:object="${stylist}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" th:field="*{user.username}" id="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" th:field="*{user.email}" id="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number</label>
+            <input type="text" th:field="*{user.phoneNumber}" id="phoneNumber" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="specialties" class="form-label">Specialties</label>
+            <textarea th:field="*{specialties}" id="specialties" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="available" class="form-label">Available</label>
+            <input type="checkbox" th:field="*{available}" id="available">
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
