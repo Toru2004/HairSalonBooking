@@ -1,8 +1,8 @@
 package com.admin.service;
 
-import com.admin.exception.StylistNotFoundException;
 import com.admin.model.Stylist;
 import com.admin.repository.StylistRepository;
+import com.admin.exception.StylistNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +14,15 @@ public class StylistService {
 
     @Autowired
     private StylistRepository stylistRepository;
+
+    // Phương thức để lấy username của stylist
+    public String getUsernameOfStylist(Integer stylistId) {
+        // Lấy Stylist từ cơ sở dữ liệu
+        Stylist stylist = stylistRepository.findById(stylistId).orElseThrow(() -> new RuntimeException("Stylist not found"));
+
+        // Truy xuất username từ User liên kết
+        return stylist.getUser().getUsername();
+    }
 
     public List<Stylist> listAll() {
         return (List<Stylist>) stylistRepository.findAll();
@@ -28,13 +37,13 @@ public class StylistService {
         if (result.isPresent()) {
             return result.get();
         }
-        throw new StylistNotFoundException("Could not find any stylists with ID " + id);
+        throw new StylistNotFoundException("Could not find any stylist with ID " + id);
     }
 
     public void delete(Integer id) throws StylistNotFoundException {
         Long count = stylistRepository.countById(id);
         if (count == null || count == 0) {
-            throw new StylistNotFoundException("Could not find any stylists with ID " + id);
+            throw new StylistNotFoundException("Could not find any stylist with ID " + id);
         }
         stylistRepository.deleteById(id);
     }

@@ -12,24 +12,13 @@ public class Stylist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // Tạo liên kết một-một với bảng User
+
+    // Thiết lập quan hệ một-một với thực thể User, tạo khóa ngoại "user_id" tham chiếu đến cột "id" của bảng User
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    private User user;  // Khóa ngoại liên kết đến bảng User
 
-    // Thuộc tính bổ sung
-    private String specialties;
-    private boolean available;
-
-    // Getters và Setters
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
+    // Getter và Setter cho thuộc tính 'user'
     public User getUser() {
         return user;
     }
@@ -38,14 +27,32 @@ public class Stylist {
         this.user = user;
     }
 
-    public String getSpecialties() {
-        return specialties;
+    // Getter và Setter cho thuộc tính 'id'
+    public Integer getId() {
+        return id;
     }
 
-    public void setSpecialties(String specialties) {
-        this.specialties = specialties;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
+
+    // Định nghĩa cột 'enabled' để lưu trạng thái kích hoạt của tài khoản (true = kích hoạt)
+    private boolean enabled;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    // Các thuộc tính riêng biệt khác của Stylist
+    private boolean available;
+    private String specialization;
+
+    // Getter và Setter cho các thuộc tính khác của Stylist
     public boolean isAvailable() {
         return available;
     }
@@ -54,14 +61,25 @@ public class Stylist {
         this.available = available;
     }
 
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    // Phương thức toString để hiển thị thông tin Stylist dưới dạng chuỗi
     @Override
     public String toString() {
         return "Stylist{" +
                 "id=" + id +
                 ", user id=" + user.getId() +
-                ", user=" + user.getUsername() +
-                ", specialties='" + specialties + '\'' +
+                ", username=" + user.getUsername() + '\'' +
+                ", email='" + user.getEmail() + '\'' +
+                ", phone number='" + user.getPhoneNumber() + '\'' +
                 ", available=" + available +
+                ", specialization='" + specialization + '\'' +
                 '}';
     }
 }
