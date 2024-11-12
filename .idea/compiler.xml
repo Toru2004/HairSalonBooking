@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="HairSalonWeb" />
         <module name="MyWebApp" />
       </profile>
     </annotationProcessing>
@@ -15,6 +16,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="HairSalonWeb" options="-parameters" />
       <module name="MyWebApp" options="-parameters" />
     </option>
   </component>
