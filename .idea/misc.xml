@@ -10,6 +10,7 @@
   </component>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
 <<<<<<< HEAD
 >>>>>>> c6bed604a8c8c734d90efcf33d7e27fd5a0e2c16
@@ -23,4 +24,7 @@
 =======
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 >>>>>>> 6025019877fb8683e55454be2fe8e9bc217dc84e
+=======
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+>>>>>>> 3fb8f06fdb3e1da803794732fb64d8bd2cb5bb27
 </project>

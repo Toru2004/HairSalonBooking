@@ -51,8 +51,9 @@
                         <thead class="table-dark">
                         <tr>
                             <th>ID</th>
-                            <th>Email</th>
                             <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone number</th>
                             <th>Enabled</th>
                             <th>Actions</th>
                         </tr>
@@ -61,8 +62,9 @@
                         <th:block th:each="user : ${listUsers}">
                             <tr>
                                 <td>[[${user.id}]]</td>
-                                <td>[[${user.email}]]</td>
                                 <td>[[${user.username}]]</td>
+                                <td>[[${user.email}]]</td>
+                                <td>[[${user.phoneNumber}]]</td>
                                 <td>[[${user.enabled}]]</td>
                                 <td>
                                     <a class="btn btn-sm btn-outline-info" th:href="@{'/manageUsers/edit/' + ${user.id}}">Edit</a>
