@@ -33,6 +33,12 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Customer customer;
 
+    // Quan hệ một-một với Stylist
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Stylist stylist;
+
+
+
     // Getter và Setter cho từng thuộc tính của User
     public Integer getId() {
         return id;
@@ -91,6 +97,16 @@ public class User {
         this.customer = customer;
         if (customer != null) {
             customer.setUser(this);
+        }
+    }
+    public Stylist getStylist() {
+        return stylist;
+    }
+
+    public void setStylist(Stylist stylist) {
+        this.stylist = stylist;
+        if (stylist != null) {
+            stylist.setUser(this);
         }
     }
 

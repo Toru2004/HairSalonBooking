@@ -28,9 +28,9 @@
     <!-- Main Content Area -->
     <main class="content">
         <div class="container-fluid text-center">
-            <div><h2>Manage Users</h2></div>
+            <div><h2>Manage Services</h2></div>
             <div class="m-2">
-                <a class="h3" th:href="@{/users/new}">Add New User</a>
+                <a class="h3" th:href="@{/services/new}">Add New Service</a>
             </div>
 
             <div th:if="${message}" class="alert alert-success text-center">
@@ -42,25 +42,24 @@
                     <thead class="thead-dark">
                     <tr>
                         <th>ID</th>
-                        <th>E-mail</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Enabled</th>
-                        <th>aaaaa</th>
+                        <th>Service Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Duration (mins)</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <th:block th:each="user : ${listUsers}">
+                    <th:block th:each="service : ${listServices}">
                         <tr>
-                            <td>[[${user.id}]]</td>
-                            <td>[[${user.email}]]</td>
-                            <td>[[${user.firstName}]]</td>
-                            <td>[[${user.lastName}]]</td>
-                            <td>[[${user.enabled}]]</td>
+                            <td>[[${service.id}]]</td>
+                            <td>[[${service.name}]]</td>
+                            <td>[[${service.description}]]</td>
+                            <td>[[${service.price}]]</td>
+                            <td>[[${service.duration}]]</td>
                             <td>
-                                <a class="h4 mr-3" th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
-                                <a class="h4" th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
+                                <a class="h4 mr-3" th:href="@{'/services/edit/' + ${service.id}}">Edit</a>
+                                <a class="h4" th:href="@{'/services/delete/' + ${service.id}}">Delete</a>
                             </td>
                         </tr>
                     </th:block>

@@ -1,4 +1,4 @@
-package com.admin.service;
+package com.admin.model;
 import javax.persistence.*;
 
 @Entity
@@ -36,4 +36,5 @@ public class Service {
     public Double getPrice() { return price; }
     public void setPrice(Double price) { this.price = price; }
 }
+
 
