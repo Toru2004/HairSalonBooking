@@ -19,7 +19,7 @@ public class StylistController {
     @Autowired
     private StylistService stylistService;
 
-   
+
     // Hiển thị danh sách tất cả stylist
     @GetMapping("/manageStylists")
     public String showStylistList(Model model) {
