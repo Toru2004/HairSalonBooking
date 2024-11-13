@@ -34,7 +34,7 @@ public class User {
     private Customer customer;
 
     // Quan hệ một-một với Stylist
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Stylist stylist;
 
 
