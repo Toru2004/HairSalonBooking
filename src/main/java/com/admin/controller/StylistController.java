@@ -19,11 +19,7 @@ public class StylistController {
     @Autowired
     private StylistService stylistService;
 
-    // Endpoint để lấy username của stylist
-    @GetMapping("/username/{id}")
-    public String getStylistUsername(@PathVariable Integer id) {
-        return stylistService.getUsernameOfStylist(id);
-    }
+   
     // Hiển thị danh sách tất cả stylist
     @GetMapping("/manageStylists")
     public String showStylistList(Model model) {

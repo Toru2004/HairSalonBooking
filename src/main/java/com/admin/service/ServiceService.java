@@ -1,30 +1,28 @@
 package com.admin.service;
-
+/*
 import com.admin.exception.ServiceNotFoundException;
 import com.admin.model.Service;
 import com.admin.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
-@Service // Marks this class as a Spring service.
+
+@Service
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
 
-    @Autowired // Autowires the repository for use in this class.
+    @Autowired
     public ServiceService(ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
     }
 
-    // Retrieve all services
+
     public List<Service> getAllServices() {
-        return serviceRepository.findAll(); // Find all services in the database.
+        return serviceRepository.findAll();
     }
 
-    // Retrieve a service by ID with error handling
+
     public Service getServiceById(Long id) throws ServiceNotFoundException {
         return serviceRepository.findById(id)
                 .orElseThrow(() -> new ServiceNotFoundException("Could not find any service with ID " + id));
@@ -55,3 +53,4 @@ public class ServiceService {
         serviceRepository.deleteById(id); // Delete service from the database.
     }
 }
+*/

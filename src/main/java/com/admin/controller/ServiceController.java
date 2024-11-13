@@ -1,8 +1,12 @@
 package com.admin.controller;
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import com.admin.model.Service;
+import com.admin.service.ServiceService;
+import com.admin.exception.ServiceNotFoundException;
 
 @RestController
 @RequestMapping("/api/services")
@@ -51,3 +55,4 @@ public class ServiceController {
         return ResponseEntity.noContent().build();
     }
 }
+*/
