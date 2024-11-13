@@ -41,7 +41,7 @@ public class Customer {
         return "Customer{" +
                 "id=" + id +
                 ", user id=" + user.getId() +
-                ", user=" + user.getUsername() +
+                ", username=" + user.getUsername() +
                 ", email='" + user.getEmail() + '\'' +
                 ", phone number='" + user.getPhoneNumber() + '\'' +
                 ", enabled=" + user.isEnabled() +
