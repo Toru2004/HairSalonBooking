@@ -1,4 +1,4 @@
-package com.admin.service;
+package com.admin.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ServiceRepository extends JpaRepository<Service, Long> {
