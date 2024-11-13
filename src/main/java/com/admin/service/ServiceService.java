@@ -1,51 +1,57 @@
 package com.admin.service;
-/*
 
+import com.admin.exception.ServiceNotFoundException;
+import com.admin.model.Service;
+import com.admin.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
 
-@Service // Đánh dấu lớp này là một lớp service trong Spring.
+import java.util.List;
+import java.util.Optional;
+
+@Service // Marks this class as a Spring service.
 public class ServiceService {
 
     private final ServiceRepository serviceRepository;
 
-    @Autowired // Tự động (inject) repository để sử dụng trong lớp này.
+    @Autowired // Autowires the repository for use in this class.
     public ServiceService(ServiceRepository serviceRepository) {
         this.serviceRepository = serviceRepository;
     }
 
-    // Lấy danh sách tất cả các dịch vụ
+    // Retrieve all services
     public List<Service> getAllServices() {
-        return serviceRepository.findAll(); // Tìm tất cả dịch vụ trong CSDL.
+        return serviceRepository.findAll(); // Find all services in the database.
     }
 
-    // Tìm dịch vụ theo ID
-    public Service getServiceById(Long id) {
-        return serviceRepository.findById(id).orElse(null); // Trả về dịch vụ hoặc null nếu không tìm thấy.
+    // Retrieve a service by ID with error handling
+    public Service getServiceById(Long id) throws ServiceNotFoundException {
+        return serviceRepository.findById(id)
+                .orElseThrow(() -> new ServiceNotFoundException("Could not find any service with ID " + id));
     }
 
-    // Tạo mới một dịch vụ
+    // Create a new service
     public Service createService(Service service) {
-        return serviceRepository.save(service); // Lưu dịch vụ mới vào CSDL.
+        return serviceRepository.save(service); // Save the new service to the database.
     }
 
-    // Cập nhật một dịch vụ dựa trên ID
-    public Service updateService(Long id, Service updatedService) {
-        Service service = getServiceById(id); // Tìm dịch vụ theo ID.
-        if (service != null) {
-            service.setName(updatedService.getName()); // Cập nhật tên dịch vụ.
-            service.setDescription(updatedService.getDescription()); // Cập nhật mô tả dịch vụ.
-            service.setPrice(updatedService.getPrice()); // Cập nhật giá dịch vụ.
-            return serviceRepository.save(service); // Lưu thay đổi vào CSDL.
+    // Update a service by ID with error handling
+    public Service updateService(Long id, Service updatedService) throws ServiceNotFoundException {
+        Service existingService = getServiceById(id); // Find service by ID or throw an exception.
+
+        // Update fields in the existing service
+        existingService.setName(updatedService.getName());
+        existingService.setDescription(updatedService.getDescription());
+        existingService.setPrice(updatedService.getPrice());
+
+        return serviceRepository.save(existingService); // Save changes to the database.
+    }
+
+    // Delete a service by ID with error handling
+    public void deleteService(Long id) throws ServiceNotFoundException {
+        if (!serviceRepository.existsById(id)) {
+            throw new ServiceNotFoundException("Could not find any service with ID " + id);
         }
-        return null; // Trả về null nếu dịch vụ không tồn tại.
-    }
-
-    // Xóa một dịch vụ theo ID
-    public void deleteService(Long id) {
-        serviceRepository.deleteById(id); // Xóa dịch vụ khỏi CSDL.
+        serviceRepository.deleteById(id); // Delete service from the database.
     }
 }
-
-*/
