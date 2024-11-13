@@ -15,10 +15,19 @@
 
 <div class="container-fluid">
   <div class="row">
+    <!-- Sidebar Menu -->
     <aside class="col-md-2 sidebar">
-      <!-- Sidebar menu -->
+      <ul class="nav flex-column">
+        <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/manageDichVus}">Manage Services</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
+      </ul>
     </aside>
 
+    <!-- Main Content Area -->
     <main class="col-md-10 p-4">
       <div class="container">
         <div class="text-center mb-4">
@@ -53,8 +62,8 @@
                 <a class="btn btn-sm btn-outline-info" th:href="@{'/manageDichVus/edit/' + ${dichVu.id}}">Edit</a>
 
                 <!-- Delete button -->
-                <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageDichVus/delete/' + ${dichVu.id}}"
-                   onclick="return confirm('Are you sure you want to delete this service?')">Delete</a>
+                <a class="btn btn-sm btn-outline-danger" th:href="@{/manageDichVus/delete/{id}(id=${dichVu.id})}"
+                   onclick="return confirm('Are you sure you want to delete this service?');">Delete</a>
               </td>
 
             </tr>

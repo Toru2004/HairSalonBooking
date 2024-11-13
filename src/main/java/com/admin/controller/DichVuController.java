@@ -37,14 +37,14 @@ public class DichVuController {
     }
 
     // Lưu thông tin dịch vụ
-    @PostMapping("/manageDichVus/save")
+    @PostMapping("/save")
     public String saveDichVu(DichVu dichVu, RedirectAttributes ra) {
         if (dichVu.getId() != null) {
-            // Nếu có ID, gọi phương thức update
+            // Gọi phương thức update nếu có ID
             dichVuService.update(dichVu);
             ra.addFlashAttribute("message", "The service has been updated successfully.");
         } else {
-            // Nếu không có ID, gọi phương thức save (thêm mới dịch vụ)
+            // Gọi phương thức save nếu không có ID (tạo mới)
             dichVuService.save(dichVu);
             ra.addFlashAttribute("message", "The service has been added successfully.");
         }
@@ -56,33 +56,35 @@ public class DichVuController {
 
 
 
+
     // Hiển thị form để chỉnh sửa thông tin dịch vụ
     @GetMapping("/edit/{id}")
     public String showEditDichVuForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) throws DichVuNotFoundException {
         try {
-            // Lấy dịch vụ từ cơ sở dữ liệu
             DichVu dichVu = dichVuService.get(id);
             model.addAttribute("dichVu", dichVu); // Truyền dịch vụ vào model
             model.addAttribute("pageTitle", "Edit Service (ID: " + id + ")");
             return "dichvu_form"; // Trả về view form để chỉnh sửa
         } catch (DichVuNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage()); // Thông báo nếu không tìm thấy dịch vụ
-            return "redirect:/manageDichVus"; // Quay lại trang danh sách dịch vụ
+            ra.addFlashAttribute("message", e.getMessage());
+            return "redirect:/manageDichVus";
         }
     }
+
 
 
     // Xóa dịch vụ
-    @GetMapping("/manageDichVus/delete/{id}")
+    @GetMapping("/delete/{id}")
     public String deleteDichVu(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             dichVuService.delete(id); // Gọi phương thức xóa dịch vụ
-            ra.addFlashAttribute("message", "The service has been deleted successfully."); // Thông báo xóa thành công
+            ra.addFlashAttribute("message", "The service has been deleted successfully.");
         } catch (Exception e) {
-            ra.addFlashAttribute("message", "Error: " + e.getMessage()); // Thông báo lỗi nếu có
+            ra.addFlashAttribute("message", "Error: " + e.getMessage());
         }
         return "redirect:/manageDichVus"; // Chuyển hướng về trang danh sách dịch vụ
     }
+
 
 
 
