@@ -15,14 +15,6 @@ public class StylistService {
     @Autowired
     private StylistRepository stylistRepository;
 
-    // Phương thức để lấy username của stylist
-    public String getUsernameOfStylist(Integer stylistId) {
-        // Lấy Stylist từ cơ sở dữ liệu
-        Stylist stylist = stylistRepository.findById(stylistId).orElseThrow(() -> new RuntimeException("Stylist not found"));
-
-        // Truy xuất username từ User liên kết
-        return stylist.getUser().getUsername();
-    }
 
     public List<Stylist> listAll() {
         return (List<Stylist>) stylistRepository.findAll();
