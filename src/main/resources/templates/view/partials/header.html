@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header th:fragment="header">
+  <div class="header-container">
+    <div class="logo">
+      <!-- Sử dụng th:href cho hình ảnh -->
+      <a th:href="@{/page/home}"><img th:src="@{/images/logo.png}" alt="Logo"></a>
+    </div>
+    <div class="search-container">
+      <input type="text" placeholder="Search services or businesses">
+      <input type="text" placeholder="Where?">
+      <input type="text" placeholder="When?">
+    </div>
+    <div class="user-section">
+      <a href="#" id="open-login">Log In / Sign Up</a>
+    </div>
+  </div>
+  <nav class="nav-links">
+    <!-- Sử dụng th:href cho các liên kết -->
+    <a th:href="@{/page/aboutUs}">About Us</a>
+    <a th:href="@{/page/services}">Services</a>
+    <a th:href="@{/page/stylists}">Stylists</a>
+    <a th:href="@{/page/bookNow}">Book Now</a>
+    <a th:href="@{/page/contact}">Contact</a>
+    <a th:href="@{/page/handbook}">Handbook</a>
+  </nav>
+</header>
+</body>
+</html>
