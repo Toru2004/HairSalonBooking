@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Appointment Form</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<header class="text-center">
+    <h2>Admin Panel</h2>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Menu -->
+        <aside class="col-md-2 sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageServices}">Manage Services</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="col-md-10 p-4">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 th:text="${pageTitle}">Create/Edit Appointment</h2>
+                </div>
+
+                <form action="#" th:action="@{/manageAppointments/save}" th:object="${appointment}" method="post">
+                    <div class="mb-3">
+                        <label for="customerName" class="form-label">Customer Name</label>
+                        <input type="text" id="customerName" th:field="*{customerName}" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="serviceName" class="form-label">Service</label>
+                        <input type="text" id="serviceName" th:field="*{serviceName}" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="stylistName" class="form-label">Stylist</label>
+                        <input type="text" id="stylistName" th:field="*{stylistName}" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="appointmentTime" class="form-label">Appointment Time</label>
+                        <input type="datetime-local" id="appointmentTime" th:field="*{appointmentTime}" class="form-control" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Status</label>
+                        <select id="status" th:field="*{status}" class="form-control">
+                            <option value="Scheduled">Scheduled</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Save Appointment</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Footer Content -->
+<footer>
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
