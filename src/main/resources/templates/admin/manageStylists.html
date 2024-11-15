@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage Users</title>
+<<<<<<< HEAD:src/main/resources/templates/manageStylists.html
+    <title>Admin - Manage Stylists</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <style>
-
+        /* Các kiểu CSS có thể cần thiết */
     </style>
+=======
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+>>>>>>> a25602d22ff85e7ef0cbcd45618a71f784756140:src/main/resources/templates/admin/manageStylists.html
 </head>
 <body>
 
@@ -35,11 +40,11 @@
         <main class="col-md-10 p-4">
             <div class="container">
                 <div class="text-center mb-4">
-                    <h2>Manage Users</h2>
+                    <h2>Manage Stylists</h2>
                 </div>
 
                 <div class="text-end mb-3">
-                    <a class="btn btn-primary" th:href="@{/manageUsers/new}">Add New User</a>
+                    <a class="btn btn-primary" th:href="@{/manageStylists/new}">Add New Stylist</a>
                 </div>
 
                 <div th:if="${message}" class="alert alert-success text-center">
@@ -54,21 +59,23 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>Phone number</th>
-                            <th>Enabled</th>
+                            <th>Available</th>
+                            <th>Specialization</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="user : ${listUsers}">
+                        <th:block th:each="stylist : ${listStylists}">
                             <tr>
-                                <td>[[${user.id}]]</td>
-                                <td>[[${user.username}]]</td>
-                                <td>[[${user.email}]]</td>
-                                <td>[[${user.phoneNumber}]]</td>
-                                <td>[[${user.enabled}]]</td>
+                                <td>[[${stylist.id}]]</td>
+                                <td>[[${stylist.user.username}]]</td>
+                                <td>[[${stylist.user.email}]]</td>
+                                <td>[[${stylist.user.phoneNumber}]]</td>
+                                <td>[[${stylist.available}]]</td>
+                                <td>[[${stylist.specialization}]]</td>
                                 <td>
-                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageUsers/edit/' + ${user.id}}">Edit</a>
-                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageUsers/delete/' + ${user.id}}">Delete</a>
+                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStylists/edit/' + ${stylist.id}}">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStylists/delete/' + ${stylist.id}}">Delete</a>
                                 </td>
                             </tr>
                         </th:block>

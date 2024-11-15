@@ -24,7 +24,7 @@ public class UserController {
         List<User> listUsers = userService.listAll(); // Lấy danh sách người dùng từ dịch vụ
         model.addAttribute("listUsers", listUsers); // Đưa danh sách vào model để hiển thị trong view
 
-        return "manageUsers"; // Trả về view manageUsers.html
+        return "admin/manageUsers"; // Trả về view manageUsers.html
     }
 
     // Hiển thị form để thêm người dùng mới
@@ -32,7 +32,7 @@ public class UserController {
     public String showNewForm(Model model) {
         model.addAttribute("user", new User()); // Tạo đối tượng User mới cho form
         model.addAttribute("pageTitle", "Add New User"); // Thiết lập tiêu đề trang
-        return "user_form"; // Trả về view user_form.html để thêm người dùng
+        return "admin/user_form"; // Trả về view user_form.html để thêm người dùng
     }
 
     // Lưu thông tin người dùng
