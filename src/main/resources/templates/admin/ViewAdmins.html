@@ -1,0 +1,93 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Admin - Manage Admins</title>-->
+<!--  <link rel="stylesheet" th:href="@{/css-admin/style.css}">-->
+<!--  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />-->
+<!--  <style>-->
+<!--    /* Thêm bất kỳ style tùy chỉnh nào nếu cần */-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+
+<!--<header class="text-center">-->
+<!--  <h2>Admin Panel</h2>-->
+<!--</header>-->
+
+<!--<div class="container-fluid">-->
+<!--  <div class="row">-->
+<!--    &lt;!&ndash; Sidebar Menu &ndash;&gt;-->
+<!--    <aside class="col-md-2 sidebar">-->
+<!--      <ul class="nav flex-column">-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/manageDichVus}">Manage Services</a></li>-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>-->
+<!--        <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>-->
+<!--      </ul>-->
+<!--    </aside>-->
+
+<!--    &lt;!&ndash; Main Content Area &ndash;&gt;-->
+<!--    <main class="col-md-10 p-4">-->
+<!--      <div class="container">-->
+<!--        <div class="text-center mb-4">-->
+<!--          <h2>Manage Admins</h2>-->
+<!--        </div>-->
+
+<!--        <div class="text-end mb-3">-->
+<!--          <a class="btn btn-primary" th:href="@{/ViewAdmins/new}">Add New Admin</a>-->
+
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Message alert &ndash;&gt;-->
+<!--        <div th:if="${message}" class="alert alert-success text-center">-->
+<!--          [[${message}]]-->
+<!--        </div>-->
+
+<!--        &lt;!&ndash; Admin Table &ndash;&gt;-->
+<!--        <div class="table-responsive">-->
+<!--          <table class="table table-striped table-bordered">-->
+<!--            <thead class="table-dark">-->
+<!--            <tr>-->
+<!--              <th>ID</th>-->
+<!--              <th>Username</th>-->
+<!--              <th>Email</th>-->
+<!--              <th>Phone number</th>-->
+<!--              <th>Actions</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <th:block th:each="admin : ${listAdmins}">-->
+<!--              <tr>-->
+<!--                <td>[[${admin.id}]]</td>-->
+<!--                <td>[[${admin.user.username}]]</td>-->
+<!--                <td>[[${admin.user.email}]]</td>-->
+<!--                <td>[[${admin.user.phoneNumber}]]</td>-->
+<!--                <td>-->
+<!--                  <a class="btn btn-sm btn-outline-info" th:href="@{'/ViewAdmins/edit/' + ${admin.id}}">Edit</a>-->
+<!--                  <a class="btn btn-sm btn-outline-danger" th:href="@{'/ViewAdmins/delete/' + ${admin.id}}">Delete</a>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--            </th:block>-->
+<!--            </tbody>-->
+<!--          </table>-->
+<!--        </div>-->
+<!--      </div>  -->
+<!--    </main>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Footer Content &ndash;&gt;-->
+<!--<footer>-->
+<!--  <p>&copy; 2024 Hair Salon. All rights reserved.</p>-->
+<!--</footer>-->
+
+<!--<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>-->
+
+<!--</body>-->
+<!--</html>-->

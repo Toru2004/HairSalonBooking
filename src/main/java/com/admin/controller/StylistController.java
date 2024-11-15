@@ -25,15 +25,15 @@ public class StylistController {
     public String showStylistList(Model model) {
         List<Stylist> listStylists = stylistService.listAll();
         model.addAttribute("listStylists", listStylists);
-        return "manageStylists";
+        return "admin/manageStylists";//trả về trang html
     }
 
     // Hiển thị form thêm mới stylist
     @GetMapping("/manageStylists/new")
     public String showNewForm(Model model) {
         model.addAttribute("stylist", new Stylist());
-//        model.addAttribute("pageTitle", "Add New Stylist");
-        return "stylist_form";
+        model.addAttribute("pageTitle", "Add New Stylist");
+        return "admin/stylist_form";//trả về form stylist
     }
 
     // Lưu thông tin stylist
@@ -51,7 +51,7 @@ public class StylistController {
             Stylist stylist = stylistService.get(id);
             model.addAttribute("stylist", stylist);
             model.addAttribute("pageTitle", "Edit Stylist (ID: " + id + ")");
-            return "stylist_form";
+            return "admin/stylist_form";
         } catch (StylistNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/manageStylists";

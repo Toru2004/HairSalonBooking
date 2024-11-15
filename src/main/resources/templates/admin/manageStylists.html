@@ -3,18 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<<<<<<< HEAD:src/main/resources/templates/manageStylists.html
-    <title>Admin - Manage Stylists</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Admin - Manage Stylits</title>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <style>
-        /* Các kiểu CSS có thể cần thiết */
+
     </style>
-=======
-    <title>Admin</title>
-    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
->>>>>>> 023aecf970a55c47196debe3ccf3e1d6719b92af:src/main/resources/templates/admin/manageStylists.html
-</head>
 <body>
 
 <header class="text-center">
@@ -27,9 +21,10 @@
         <aside class="col-md-2 sidebar">
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageServices}">Manage Services</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageDichVus}">Manage Services</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>

@@ -38,7 +38,7 @@ public class Customer {
     // Phương thức toString để hiển thị thông tin Customer dưới dạng chuỗi
     @Override
     public String toString() {
-        return "Customer{" +
+       return "Customer{" +
                 "id=" + id +
                 ", user id=" + user.getId() +
                 ", username=" + user.getUsername() +

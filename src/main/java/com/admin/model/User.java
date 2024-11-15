@@ -37,6 +37,21 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Stylist stylist;
 
+    //Quan hệ 1-1 với admin
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Admin admin;
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+        if (admin != null) {
+            admin.setUser(this);
+        }
+    }
+
 
 
     // Getter và Setter cho từng thuộc tính của User
