@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${pageTitle}">Dịch Vụ</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<header>
+  <h2 class="text-center" th:text="${pageTitle}">Add or Edit Service</h2>
+</header>
+
+<div class="container">
+  <form th:action="@{/manageDichVus/save}" th:object="${dichVu}" method="post">
+    <!-- Thêm trường ẩn cho ID -->
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-group">
+      <label for="name">Service Name</label>
+      <input type="text" id="name" th:field="*{name}" class="form-control" required/>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" id="price" th:field="*{price}" class="form-control" required/>
+    </div>
+
+    <div class="form-group mt-3">
+      <button type="submit" class="btn btn-success">Save Service</button>
+      <a href="/manageDichVus" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
