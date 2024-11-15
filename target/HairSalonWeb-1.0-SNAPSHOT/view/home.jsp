@@ -1,13 +1,14 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title}">Default Title</title>
-    <link rel="icon" th:src="@{/images/logo.png}">
-    <link rel="stylesheet" th:href="@{/css-user/footer.css}">
-    <link rel="stylesheet" th:href="@{/css-user/home.css}">
-    <link rel="stylesheet" th:href="@{/css-user/popUp.css}">
+    <title>New Era Hair Salon</title>
+    <link rel="icon" href="../images/logo.png">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/popUp.css">
+    <link rel="stylesheet" href="css/footer.css">
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -24,11 +25,42 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
+    <!-- CSS của AOS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <!-- Các CSS khác của bạn -->
+    <link rel="stylesheet" href="veiw/css/home.css">
 
 
 </head>
 <body>
-<div th:replace="view/partials/popUpForms :: popUpForms"></div>
+<!-- Pop-up Login Form -->
+<div id="login-popup" class="popup-overlay d-none">
+    <div class="popup-content rounded shadow">
+        <button class="close-popup">&times;</button> <!-- Nút đóng -->
+        <h2 class="text-center">Login</h2>
+        <form>
+            <input type="text" class="form-control mb-3" placeholder="Username" required>
+            <input type="password" class="form-control mb-3" placeholder="Password" required>
+            <button type="submit" class="btn btn-dark w-100">Login</button> <!-- Nút đen -->
+        </form>
+        <p class="text-center mt-3">Don't have an account? <a href="#" id="to-signup">Sign Up</a></p>
+    </div>
+</div>
+
+<!-- Pop-up Sign Up Form -->
+<div id="signup-popup" class="popup-overlay d-none">
+    <div class="popup-content rounded shadow">
+        <button class="close-popup">&times;</button> <!-- Nút đóng -->
+        <h2 class="text-center">Sign Up</h2>
+        <form>
+            <input type="text" class="form-control mb-3" placeholder="Username" required>
+            <input type="email" class="form-control mb-3" placeholder="Email" required>
+            <input type="password" class="form-control mb-3" placeholder="Password" required>
+            <button type="submit" class="btn btn-dark w-100">Sign Up</button> <!-- Nút đen -->
+        </form>
+        <p class="text-center mt-3">Already have an account? <a href="#" id="to-login">Login</a></p>
+    </div>
+</div>
 
 <!-- Header với video background -->
 
@@ -63,12 +95,12 @@
         <!-- Menu điều hướng -->
         <nav class="nav link">
             <ul id="main-menu">
-                <li><a th:href="@{/page/aboutUs}">About Us</a></li>
-                <li><a th:href="@{/page/services}">Services</a></li>
-                <li><a th:href="@{/page/stylists}">Stylists</a></li>
-                <li><a th:href="@{/page/bookNow}">Book Now</a></li>
-                <li><a th:href="@{/page/contact}">Contact</a></li>
-                <li><a th:href="@{/page/handbook}">Handbook</a></li>
+                <li><a href="../index.jsp?currentPage=aboutUs">About Us</a></li>
+                <li><a href="../index.jsp?currentPage=services">Services</a></li>
+                <li><a href="../index.jsp?currentPage=stylists">Stylists</a></li>
+                <li><a href="../index.jsp?currentPage=bookNow">Book Now</a></li>
+                <li><a href="../index.jsp?currentPage=contact">Contact</a></li>
+                <li><a href="../index.jsp?currentPage=handbook">Handbook</a></li>
             </ul>
         </nav>
     </div>
@@ -171,7 +203,7 @@
         </div>
     </div>
 
-    <!--SLIDE SHOW STYLIST-->
+<%--   SLIDE SHOW STYLIST--%>
     <!-- First Carousel for Stylist -->
     <div id="stylist-carousel" class="carousel slide" data-ride="carousel">
         <h2>STYLIST</h2>
@@ -265,8 +297,14 @@
     </div>
 </div>
 
-<!-- Footer -->
-<div th:replace="view/partials/footer :: footer"></div>
+
+
+
+
+
+<%--footer--%>
+<jsp:include page="footer.jsp" />
+<%--footer--%>
 
 </body>
 </html>
@@ -277,7 +315,13 @@
 
 <!-- JavaScript của AOS -->
 <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
+<script>
+    AOS.init({
+        duration: 1200, // Thời gian hiệu ứng
+        easing: 'ease-in-out', // Đường cong chuyển động
+        once: true // Chỉ kích hoạt hiệu ứng một lần khi cuộn
+    });
+</script>
 
 <script>
     // Danh sách các cụm từ cần hiển thị
@@ -333,5 +377,5 @@
     };
 </script>
 
-<!-- Cập nhật lại đường dẫn JS với th:src -->
-<script th:src="@{/js-user/popup-manage.js}"></script>
+
+<script src="js/popup-manage.js"></script>

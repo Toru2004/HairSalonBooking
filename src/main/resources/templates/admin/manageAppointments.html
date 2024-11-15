@@ -1,39 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Manage Appointments</title>
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
-<header>
-    <h2>Admin</h2>
+
+<header class="text-center">
+    <h2>Admin Panel - Manage Appointments</h2>
 </header>
 
-<div class="container">
-    <!-- Sidebar Menu -->
-    <aside class="sidebar">
-        <ul>
-            <li><a href="manageUsers.html">Manage users</a></li>
-            <li><a href="manageStylists.html">Manage stylists</a></li>
-            <li><a href="manageServices.html">Manage services</a></li>
-            <li><a href="manageAppointments.html">Manage appointments</a></li>
-            <li><a href="manageOrders.html">Manage orders</a></li>
-            <li><a href="manageFeedbacks.html">Manage feedbacks</a></li>
-        </ul>
-    </aside>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Menu -->
+        <aside class="col-md-2 sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageCares}">Manage Services</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
+            </ul>
+        </aside>
 
-    <!-- Main Content Area -->
-    <main class="content">
-        <h3>Appointment Management</h3>
-        <p>Manage appointments. View scheduled appointments, approve or reject requests.</p>
-    </main>
+        <!-- Main Content Area -->
+        <main class="col-md-10 p-4">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2>Manage Appointments</h2>
+                </div>
+
+                <div class="text-end mb-3">
+                    <a class="btn btn-primary" th:href="@{/manageAppointments/new}">Add New Appointment</a>
+                </div>
+
+                <div th:if="${message}" class="alert alert-success text-center">
+                    [[${message}]]
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Appointment ID</th>
+                            <th>Customer</th>
+                            <th>Stylist</th>
+                            <th>Services</th>
+                            <th>Total Price</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="appointment : ${listAppointments}">
+                            <td th:text="${appointment.id}">ID</td>
+                            <td th:text="${appointment.customer.name}">Customer Name</td>
+                            <td th:text="${appointment.stylist.name}">Stylist Name</td>
+                            <td>
+                                <ul>
+                                    <li th:each="service : ${appointment.services}" th:text="${service.name}">Service Name</li>
+                                </ul>
+                            </td>
+                            <td th:text="${appointment.totalPrice}">Total Price</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-info" th:href="@{'/manageAppointments/edit/' + ${appointment.id}}">Edit</a>
+                                <a class="btn btn-sm btn-outline-danger" th:href="@{/manageAppointments/delete/{id}(id=${appointment.id})}"
+                                   onclick="return confirm('Are you sure you want to delete this appointment?');">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
 </div>
 
-<!-- Footer Content -->
-<footer>
-    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
-</footer>
+<script src="js/app.js"></script>
 </body>
 </html>

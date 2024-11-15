@@ -1,23 +1,22 @@
+
 package com.admin.model;
 
 import javax.persistence.*;
 
-// Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "customers"
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "admins")
+public class Admin {
 
-    // Định nghĩa cột khóa chính với giá trị tự động tăng
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // Thiết lập quan hệ một-một với thực thể User, tạo khóa ngoại "user_id" tham chiếu đến cột "id" của bảng User
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;  // Khóa ngoại liên kết đến bảng User
+    private User user;
 
-    // Getter và Setter cho thuộc tính 'id'
+    private boolean enabled;
+
     public Integer getId() {
         return id;
     }
@@ -26,7 +25,6 @@ public class Customer {
         this.id = id;
     }
 
-    // Getter và Setter cho thuộc tính 'user'
     public User getUser() {
         return user;
     }
@@ -35,10 +33,17 @@ public class Customer {
         this.user = user;
     }
 
-    // Phương thức toString để hiển thị thông tin Customer dưới dạng chuỗi
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
-       return "Customer{" +
+        return "Admin{" +
                 "id=" + id +
                 ", user id=" + user.getId() +
                 ", username=" + user.getUsername() +

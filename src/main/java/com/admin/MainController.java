@@ -46,3 +46,5 @@ public class MainController {
         return "view/pages/" + pageName; // Chạy "pageName".html
     }
 }
+
+

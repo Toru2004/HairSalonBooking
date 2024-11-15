@@ -3,8 +3,8 @@ package com.admin.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "dichvu")
-public class DichVu {
+@Table(name = "care")
+public class Care {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +43,7 @@ public class DichVu {
 
     @Override
     public String toString() {
-        return "DichVu{" +
+        return "Care{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
