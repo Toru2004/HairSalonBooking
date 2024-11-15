@@ -59,11 +59,14 @@
                         <tbody>
                         <tr th:each="appointment : ${listAppointments}">
                             <td th:text="${appointment.id}">ID</td>
-                            <td th:text="${appointment.customer.name}">Customer Name</td>
-                            <td th:text="${appointment.stylist.name}">Stylist Name</td>
+                            <!-- Ensure 'customer' is a 'User' object with 'name' property -->
+                            <td th:text="${appointment.customer?.username}">Customer Username</td>
+                            <!-- Sử dụng 'username' thay vì 'name' nếu 'stylist' kế thừa từ 'User' -->
+                            <td th:text="${appointment.stylist?.username}">Stylist Username</td>
                             <td>
                                 <ul>
-                                    <li th:each="service : ${appointment.services}" th:text="${service.name}">Service Name</li>
+                                    <!-- Ensure 'services' is a list of 'Care' objects, each with a 'name' property -->
+                                    <span th:text="${appointment.care?.name}">Care Name</span>
                                 </ul>
                             </td>
                             <td th:text="${appointment.totalPrice}">Total Price</td>
@@ -73,6 +76,7 @@
                                    onclick="return confirm('Are you sure you want to delete this appointment?');">Delete</a>
                             </td>
                         </tr>
+
                         </tbody>
                     </table>
                 </div>

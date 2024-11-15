@@ -38,23 +38,40 @@ public class AppointmentController {
     // Hiển thị danh sách tất cả Appointment
     @GetMapping("/manageAppointments")
     public String showAppointmentList(Model model) {
+        // Gọi phương thức listAll() để lấy danh sách tất cả các cuộc hẹn
         List<Appointment> listAppointments = appointmentService.listAll();
         model.addAttribute("listAppointments", listAppointments);
         return "admin/manageAppointments"; // Trả về view manageAppointments.html
     }
-
-    // Hiển thị form để thêm Appointment mới
     @GetMapping("/manageAppointments/new")
     public String showNewAppointmentForm(Model model) {
-        model.addAttribute("appointment", new Appointment());
-        model.addAttribute("stylistList", stylistService.listAll());
-        model.addAttribute("customerList", customerService.listAll());
-        model.addAttribute("careList", careService.listAll());
+        Appointment appointment = new Appointment();
+
+        // Lấy dữ liệu từ service
+        List<Customer> customers = customerService.listAll();  // Lấy danh sách khách hàng
+        List<Stylist> stylists = stylistService.listAll();  // Lấy danh sách stylist
+        List<Care> cares = careService.listAll();  // Lấy danh sách dịch vụ
+
+        // Kiểm tra nếu danh sách không rỗng
+        if (customers.isEmpty()) {
+            System.out.println("Customer list is empty");
+        }
+        if (stylists.isEmpty()) {
+            System.out.println("Stylist list is empty");
+        }
+        if (cares.isEmpty()) {
+            System.out.println("Care list is empty");
+        }
+
+        // Truyền dữ liệu vào model
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("customerList", customers);  // Truyền customer list vào model
+        model.addAttribute("stylistList", stylists);  // Truyền stylist list vào model
+        model.addAttribute("careList", cares);  // Truyền care list vào model
         model.addAttribute("pageTitle", "Add New Appointment");
+
         return "admin/appointment_form"; // Trả về view appointment_form.html
     }
-
-
     // Lưu thông tin Appointment
     @PostMapping("/manageAppointments/save")
     public String saveAppointment(Appointment appointment, RedirectAttributes ra) {
@@ -86,6 +103,7 @@ public class AppointmentController {
             return "redirect:/manageAppointments"; // Chuyển hướng về trang danh sách appointment
         }
     }
+
 
     // Xóa Appointment
     @GetMapping("/manageAppointments/delete/{id}")

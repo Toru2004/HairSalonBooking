@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "appointment")
+@Table(name = "appointments")
 public class Appointment {
 
     @Id
@@ -30,9 +30,32 @@ public class Appointment {
     public Integer getId() {
         return id;
     }
+    public enum Status {
+        SCHEDULED, COMPLETED, CANCELLED
+    }
+
+    private Status status;  // Enum Status
+
+    // Getters and Setters
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    private Double totalPrice;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Stylist getStylist() {
