@@ -1,9 +1,8 @@
 package com.admin.controller;
 
-import com.admin.exception.CustomerNotFoundException;
 import com.admin.model.Customer;
+import com.admin.exception.CustomerNotFoundException;
 import com.admin.service.CustomerService;
-import com.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,60 +15,57 @@ import java.util.List;
 
 @Controller
 public class CustomerController {
+
     @Autowired
     private CustomerService customerService;
 
-    @Autowired
-    private UserService userService;
-
-    // Hiển thị danh sách tất cả khách hàng
+    // Display all customers
     @GetMapping("/manageCustomers")
     public String showCustomerList(Model model) {
-        List<Customer> listCustomers = customerService.listAll(); // Lấy danh sách tất cả khách hàng
-        model.addAttribute("listCustomers", listCustomers); // Đưa danh sách khách hàng vào model để hiển thị trong view
-        return "manageCustomers"; // Trả về view manageCustomers.html
+        List<Customer> listCustomers = customerService.listAll();
+        model.addAttribute("listCustomers", listCustomers);
+        return "admin/manageCustomers";
     }
 
-    // Hiển thị form để thêm khách hàng mới
+    // Show form to add a new customer
     @GetMapping("/manageCustomers/new")
-    public String showNewCustomerForm(Model model) {
-        model.addAttribute("customer", new Customer()); // Tạo đối tượng Customer mới để sử dụng trong form
-        model.addAttribute("pageTitle", "Add New Customer"); // Thiết lập tiêu đề trang
-        return "customer_form"; // Trả về view customer_form.html để thêm mới khách hàng
+    public String showNewForm(Model model) {
+        model.addAttribute("customer", new Customer());
+        model.addAttribute("pageTitle", "Add New Customer");
+        return "admin/customer_form";
     }
 
-    // Lưu thông tin khách hàng
+    // Save customer information
     @PostMapping("/manageCustomers/save")
     public String saveCustomer(Customer customer, RedirectAttributes ra) {
-        customerService.save(customer); // Lưu thông tin khách hàng vào cơ sở dữ liệu
-        ra.addFlashAttribute("message", "The customer has been saved successfully."); // Thông báo lưu thành công
-        return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng
+        customerService.save(customer);
+        ra.addFlashAttribute("message", "The customer has been saved successfully.");
+        return "redirect:/manageCustomers";
     }
 
-    // Hiển thị form để chỉnh sửa thông tin khách hàng
+    // Show form to edit an existing customer
     @GetMapping("/manageCustomers/edit/{id}")
-    public String showEditCustomerForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
-            Customer customer = customerService.get(id); // Lấy thông tin khách hàng theo ID
-            model.addAttribute("customer", customer); // Đưa thông tin khách hàng vào model để hiển thị trong form
-            model.addAttribute("pageTitle", "Edit Customer (ID: " + id + ")"); // Thiết lập tiêu đề trang
-
-            return "customer_form";  // Trả về view customer_form.html để chỉnh sửa khách hàng
+            Customer customer = customerService.get(id);
+            model.addAttribute("customer", customer);
+            model.addAttribute("pageTitle", "Edit Customer (ID: " + id + ")");
+            return "admin/customer_form";
         } catch (CustomerNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage()); // Thông báo lỗi nếu không tìm thấy khách hàng
-            return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng
+            ra.addFlashAttribute("message", e.getMessage());
+            return "redirect:/manageCustomers";
         }
     }
 
-    // Xóa khách hàng theo ID
+    // Delete customer by ID
     @GetMapping("/manageCustomers/delete/{id}")
     public String deleteCustomer(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
-            customerService.delete(id); // Xóa khách hàng theo ID
-            ra.addFlashAttribute("message", "The customer ID " + id + " has been deleted."); // Thông báo xóa thành công
+            customerService.delete(id);
+            ra.addFlashAttribute("message", "The customer ID " + id + " has been deleted.");
         } catch (CustomerNotFoundException e) {
-            ra.addFlashAttribute("message", e.getMessage()); // Thông báo lỗi nếu không tìm thấy khách hàng
+            ra.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng
+        return "redirect:/manageCustomers";
     }
 }

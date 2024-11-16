@@ -2,31 +2,22 @@ package com.admin.model;
 
 import javax.persistence.*;
 
-// This class represents a customer entity in the database with a "customers" table
+// Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "manages"
 @Entity
-@Table(name = "customers")
-public class Customer {
+@Table(name = "manages")
+public class Manage {
 
-    // Define the primary key column with auto-incrementing value
+    // Định nghĩa cột khóa chính với giá trị tự động tăng
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // Define a one-to-one relationship with the User entity, which holds information such as username, email, etc.
+    // Thiết lập quan hệ một-một với thực thể User, tạo khóa ngoại "user_id" tham chiếu đến cột "id" của bảng User
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    private User user;  // Khóa ngoại liên kết đến bảng User
 
-    // Getter and Setter for 'id'
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    // Getter and Setter for 'user'
+    // Getter và Setter cho thuộc tính 'user'
     public User getUser() {
         return user;
     }
@@ -35,7 +26,16 @@ public class Customer {
         this.user = user;
     }
 
-    // A flag to indicate whether the customer is active (enabled)
+    // Getter và Setter cho thuộc tính 'id'
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    // Các thuộc tính riêng biệt khác của Manage (nếu cần, nếu không thì bỏ qua)
     private boolean enabled;
 
     public boolean isEnabled() {
@@ -46,9 +46,10 @@ public class Customer {
         this.enabled = enabled;
     }
 
+    // Phương thức toString để hiển thị thông tin Manage dưới dạng chuỗi
     @Override
     public String toString() {
-        return "Customer{" +
+        return "Manage{" +
                 "id=" + id +
                 ", user id=" + user.getId() +
                 ", username=" + user.getUsername() + '\'' +
