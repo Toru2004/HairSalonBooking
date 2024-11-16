@@ -2,24 +2,22 @@ package com.admin.model;
 
 import javax.persistence.*;
 
+// Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "customers"
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer  {
+
+    // Định nghĩa cột khóa chính với giá trị tự động tăng
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToOne
+    // Thiết lập quan hệ một-một với thực thể User, tạo khóa ngoại "user_id" tham chiếu đến cột "id" của bảng User
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;  // Foreign key to User table
+    private User user;  // Khóa ngoại liên kết đến bảng User
 
-    @Column(length = 20)
-    private String phone;
-
-    @Column(length = 100)
-    private String address;
-
-    // Getters and setters
+    // Getter và Setter cho thuộc tính 'id'
     public Integer getId() {
         return id;
     }
@@ -28,6 +26,7 @@ public class Customer {
         this.id = id;
     }
 
+    // Getter và Setter cho thuộc tính 'user'
     public User getUser() {
         return user;
     }
@@ -36,29 +35,16 @@ public class Customer {
         this.user = user;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
+    // Phương thức toString để hiển thị thông tin Customer dưới dạng chuỗi
     @Override
     public String toString() {
-        return "Customer{" +
+       return "Customer{" +
                 "id=" + id +
-                ", user=" + user +
-                ", phone='" + phone + '\'' +
-                ", address='" + address + '\'' +
+                ", user id=" + user.getId() +
+                ", username=" + user.getUsername() +
+                ", email='" + user.getEmail() + '\'' +
+                ", phone number='" + user.getPhoneNumber() + '\'' +
+                ", enabled=" + user.isEnabled() +
                 '}';
     }
 }

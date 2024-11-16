@@ -1,62 +1,103 @@
 package com.admin.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "appointment")
+@Table(name = "appointments")
 public class Appointment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, unique = true, length = 45)
-    private String name;
+    @ManyToOne
+    @JoinColumn(name = "stylist_id")
+    private Stylist stylist;
 
-    @Column(length = 255)
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
-    private boolean enabled;
+    @ManyToOne
+    @JoinColumn(name = "care_id")
+    private Care care;
 
-    // Getters and Setters
+    @Column(name = "appointment_date")
+    private LocalDateTime appointmentDate;
+
+    // Getter and Setter
     public Integer getId() {
         return id;
+    }
+    public enum Status {
+        SCHEDULED, COMPLETED, CANCELLED
+    }
+
+    private Status status;  // Enum Status
+
+    // Getters and Setters
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
+    private Double totalPrice;
 
-    public String getName() {
-        return name;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public String getDescription() {
-        return description;
+    public Stylist getStylist() {
+        return stylist;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setStylist(Stylist stylist) {
+        this.stylist = stylist;
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Care getCare() {
+        return care;
+    }
+
+    public void setCare(Care care) {
+        this.care = care;
+    }
+
+    public LocalDateTime getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public void setAppointmentDate(LocalDateTime appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
 
     @Override
     public String toString() {
         return "Appointment{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", enabled=" + enabled +
+                ", stylist=" + stylist +
+                ", customer=" + customer +
+                ", care=" + care +
+                ", appointmentDate=" + appointmentDate +
                 '}';
     }
 }
