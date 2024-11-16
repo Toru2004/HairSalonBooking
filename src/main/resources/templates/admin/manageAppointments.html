@@ -53,30 +53,44 @@
                             <th>Stylist</th>
                             <th>Services</th>
                             <th>Total Price</th>
+                            <th>Appointment Date</th>
+                            <th>Status</th> <!-- Cột trạng thái -->
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="appointment : ${listAppointments}">
                             <td th:text="${appointment.id}">ID</td>
-                            <!-- Ensure 'customer' is a 'User' object with 'name' property -->
-                            <td th:text="${appointment.customer?.username}">Customer Username</td>
-                            <!-- Sử dụng 'username' thay vì 'name' nếu 'stylist' kế thừa từ 'User' -->
-                            <td th:text="${appointment.stylist?.username}">Stylist Username</td>
+                            <td th:text="${appointment.customer != null ? appointment.customer.user.username : 'N/A'}">Customer Username</td>
+                            <td th:text="${appointment.stylist != null ? appointment.stylist.user.username : 'N/A'}">Stylist Username</td>
                             <td>
                                 <ul>
-                                    <!-- Ensure 'services' is a list of 'Care' objects, each with a 'name' property -->
-                                    <span th:text="${appointment.care?.name}">Care Name</span>
+                                    <li th:each="care : ${appointment.cares}">
+                                        <span th:text="${care.name}">Care Name</span> -
+                                        <span th:text="${care.price}">Price</span>
+                                    </li>
                                 </ul>
                             </td>
                             <td th:text="${appointment.totalPrice}">Total Price</td>
+                            <td th:text="${appointment.appointmentDate}">Appointment Date</td>
+
+                            <!-- Dropdown cho trạng thái -->
                             <td>
-                                <a class="btn btn-sm btn-outline-info" th:href="@{'/manageAppointments/edit/' + ${appointment.id}}">Edit</a>
-                                <a class="btn btn-sm btn-outline-danger" th:href="@{/manageAppointments/delete/{id}(id=${appointment.id})}"
-                                   onclick="return confirm('Are you sure you want to delete this appointment?');">Delete</a>
+                                <select th:field="*{statuses}" class="form-control"
+                                        th:disabled="${appointment.status == 'COMPLETED' or appointment.status == 'CANCELED'}">
+                                    <option th:each="status : ${statuses}"
+                                            th:value="${status.name()}"
+                                            th:text="${status}"
+                                            th:selected="${appointment.status == status}"></option>
+                                </select>
+                            </td>
+
+
+                            <td>
+                                <a class="btn btn-warning" th:href="@{/manageAppointments/edit/{id}(id=${appointment.id})}">Edit</a>
+                                <a class="btn btn-danger" th:href="@{/manageAppointments/delete/{id}(id=${appointment.id})}">Delete</a>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -85,6 +99,5 @@
     </div>
 </div>
 
-<script src="js/app.js"></script>
 </body>
 </html>
