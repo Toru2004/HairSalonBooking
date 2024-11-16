@@ -56,6 +56,7 @@
                             <th>Phone number</th>
                             <th>Available</th>
                             <th>Specialization</th>
+                            <th>Avatar</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -68,6 +69,10 @@
                                 <td>[[${stylist.user.phoneNumber}]]</td>
                                 <td>[[${stylist.available}]]</td>
                                 <td>[[${stylist.specialization}]]</td>
+                                <td><img
+                                        th:src="@{${stylist.id}}"
+                                         alt="Profile Picture" width="50" height="50" />
+                                </td>
                                 <td>
                                     <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStylists/edit/' + ${stylist.id}}">Edit</a>
                                     <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStylists/delete/' + ${stylist.id}}">Delete</a>

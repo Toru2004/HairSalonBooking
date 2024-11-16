@@ -16,7 +16,9 @@ public class Stylist {
     // Thiết lập quan hệ một-một với thực thể User, tạo khóa ngoại "user_id" tham chiếu đến cột "id" của bảng User
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;  // Khóa ngoại liên kết đến bảng User
+    private User user;  // Khóa ngoại liên kết đến bảng
+
+
 
     // Getter và Setter cho thuộc tính 'user'
     public User getUser() {
@@ -48,9 +50,19 @@ public class Stylist {
         this.enabled = enabled;
     }
 
+
+
     // Các thuộc tính riêng biệt khác của Stylist
     private boolean available;
     private String specialization;
+
+    @Lob
+    @Column(name = "profile_picture", columnDefinition = "LONGBLOB")
+    private byte[] profilePicture;
+
+
+    private String description; // Mô tả chi tiết của stylist
+
 
     // Getter và Setter cho các thuộc tính khác của Stylist
     public boolean isAvailable() {
@@ -69,6 +81,26 @@ public class Stylist {
         this.specialization = specialization;
     }
 
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    // Getter và Setter cho thuộc tính 'description'
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+
+
+
     // Phương thức toString để hiển thị thông tin Stylist dưới dạng chuỗi
     @Override
     public String toString() {
@@ -80,6 +112,8 @@ public class Stylist {
                 ", phone number='" + user.getPhoneNumber() + '\'' +
                 ", available=" + available +
                 ", specialization='" + specialization + '\'' +
+                ", profilePicture='" + profilePicture + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }
