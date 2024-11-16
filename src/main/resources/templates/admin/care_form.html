@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${pageTitle}">Add or Edit Service</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container mt-5">
+  <!-- Tiêu đề -->
+  <div class="text-center mb-4">
+    <h2 th:text="${pageTitle}">Add or Edit Service</h2>
+  </div>
+
+  <!-- Form bắt đầu -->
+  <form th:action="@{/manageCares/save}" method="post" enctype="multipart/form-data" th:object="${care}" style="max-width: 600px; margin: 0 auto;">
+    <!-- Trường ẩn ID -->
+    <input type="hidden" th:field="*{id}">
+
+    <!-- Tên dịch vụ -->
+    <div class="form-group mb-3">
+      <label for="name" class="form-label">Service Name:</label>
+      <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter the service name" required>
+    </div>
+
+    <!-- Giá dịch vụ -->
+    <div class="form-group mb-3">
+      <label for="price" class="form-label">Price:</label>
+      <input type="number" id="price" th:field="*{price}" class="form-control" step="0.01" placeholder="Enter the price (e.g., 19.99)" required>
+    </div>
+
+    <!-- Ảnh đại diện -->
+    <div class="form-group mb-3">
+      <label for="imageFile" class="form-label">Profile Picture:</label>
+      <input type="file" id="imageFile" name="imageFile" class="form-control" accept="image/*">
+      <!-- Hiển thị ảnh hiện tại nếu có -->
+      <div class="mt-2" th:if="*{profilePicture}">
+        <label>Current Picture:</label>
+        <img th:src="@{/manageCares/image/{id}(id=*{id})}" alt="Profile Picture" style="max-width: 100%; height: auto; margin-top: 10px;">
+      </div>
+    </div>
+
+    <!-- Mô tả dịch vụ -->
+    <div class="form-group mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea id="description" th:field="*{description}" class="form-control" rows="4" placeholder="Enter a brief description"></textarea>
+    </div>
+
+
+
+    <!-- Nút hành động -->
+    <div class="text-center">
+      <button type="submit" class="btn btn-success m-2">Save</button>
+      <a th:href="@{/manageCares}" class="btn btn-secondary m-2">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<!-- Thêm Bootstrap JS nếu cần -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

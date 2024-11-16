@@ -1,8 +1,9 @@
 package com.admin.service;
 
-import com.admin.exception.AppointmentNotFoundException; // Import exception
 import com.admin.model.Appointment;
+import com.admin.exception.AppointmentNotFoundException;
 import com.admin.repository.AppointmentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,41 +12,29 @@ import java.util.Optional;
 
 @Service
 public class AppointmentService {
+    @Autowired private AppointmentRepository repo;
 
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-
-    // Phương thức lấy danh sách tất cả các cuộc hẹn
     public List<Appointment> listAll() {
-        return (List<Appointment>) appointmentRepository.findAll();
+        return (List<Appointment>) repo.findAll();
     }
 
-    // Phương thức lưu một cuộc hẹn
     public void save(Appointment appointment) {
-        appointmentRepository.save(appointment);
+        repo.save(appointment);
     }
 
-    // Phương thức cập nhật một cuộc hẹn
-    public void update(Appointment appointment) {
-        appointmentRepository.save(appointment);
-    }
-
-    // Phương thức lấy một cuộc hẹn theo ID
     public Appointment get(Integer id) throws AppointmentNotFoundException {
-        Optional<Appointment> result = appointmentRepository.findById(id);
+        Optional<Appointment> result = repo.findById(id);
         if (result.isPresent()) {
             return result.get();
         }
-        throw new AppointmentNotFoundException("Could not find appointment with ID " + id);
+        throw new AppointmentNotFoundException("Could not find any appointments with ID " + id);
     }
 
-    // Phương thức xóa một cuộc hẹn
     public void delete(Integer id) throws AppointmentNotFoundException {
-        Optional<Appointment> result = appointmentRepository.findById(id);
-        if (result.isPresent()) {
-            appointmentRepository.deleteById(id);
-        } else {
-            throw new AppointmentNotFoundException("Could not find appointment with ID " + id);
+        Long count = repo.countById(id);
+        if (count == null || count == 0) {
+            throw new AppointmentNotFoundException("Could not find any appointments with ID " + id);
         }
+        repo.deleteById(id);
     }
 }

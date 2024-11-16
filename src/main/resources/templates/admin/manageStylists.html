@@ -24,7 +24,7 @@
                 <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageDichVus}">Manage Services</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageCares}">Manage Services</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
@@ -55,7 +55,8 @@
                             <th>Email</th>
                             <th>Phone number</th>
                             <th>Available</th>
-                            <th>Specialization</th>
+                            <th>Description</th>
+                            <th>Avatar</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -67,7 +68,11 @@
                                 <td>[[${stylist.user.email}]]</td>
                                 <td>[[${stylist.user.phoneNumber}]]</td>
                                 <td>[[${stylist.available}]]</td>
-                                <td>[[${stylist.specialization}]]</td>
+                                <td>[[${stylist.description}]]</td>
+                                <td><img
+                                        th:src="@{${stylist.id}}"
+                                         alt="Profile Picture" width="50" height="50" />
+                                </td>
                                 <td>
                                     <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStylists/edit/' + ${stylist.id}}">Edit</a>
                                     <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStylists/delete/' + ${stylist.id}}">Delete</a>

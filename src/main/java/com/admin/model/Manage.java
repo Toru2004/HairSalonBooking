@@ -2,16 +2,15 @@ package com.admin.model;
 
 import javax.persistence.*;
 
-// Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "stylists"
+// Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "manages"
 @Entity
-@Table(name = "stylists")
-public class Stylist {
+@Table(name = "manages")
+public class Manage {
 
     // Định nghĩa cột khóa chính với giá trị tự động tăng
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
 
     // Thiết lập quan hệ một-một với thực thể User, tạo khóa ngoại "user_id" tham chiếu đến cột "id" của bảng User
     @OneToOne(cascade = CascadeType.ALL)
@@ -36,8 +35,7 @@ public class Stylist {
         this.id = id;
     }
 
-
-    // Định nghĩa cột 'enabled' để lưu trạng thái kích hoạt của tài khoản (true = kích hoạt)
+    // Các thuộc tính riêng biệt khác của Manage (nếu cần, nếu không thì bỏ qua)
     private boolean enabled;
 
     public boolean isEnabled() {
@@ -48,38 +46,16 @@ public class Stylist {
         this.enabled = enabled;
     }
 
-    // Các thuộc tính riêng biệt khác của Stylist
-    private boolean available;
-    private String specialization;
-
-    // Getter và Setter cho các thuộc tính khác của Stylist
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
-
-    // Phương thức toString để hiển thị thông tin Stylist dưới dạng chuỗi
+    // Phương thức toString để hiển thị thông tin Manage dưới dạng chuỗi
     @Override
     public String toString() {
-        return "Stylist{" +
+        return "Manage{" +
                 "id=" + id +
                 ", user id=" + user.getId() +
                 ", username=" + user.getUsername() + '\'' +
                 ", email='" + user.getEmail() + '\'' +
                 ", phone number='" + user.getPhoneNumber() + '\'' +
-                ", available=" + available +
-                ", specialization='" + specialization + '\'' +
+                ", enabled=" + enabled +
                 '}';
     }
 }
