@@ -37,12 +37,16 @@ public class AppointmentController {
 
     // Hiển thị danh sách tất cả Appointment
     @GetMapping("/manageAppointments")
-    public String showAppointments(Model model) {
-        List<Appointment> appointments = appointmentService.getAllAppointments();
-        model.addAttribute("appointments", appointments);
-        return "appointments";  // Trả về trang danh sách cuộc hẹn
-    }
+    public String showAppointmentList(Model model) {
+        // Gọi phương thức listAll() để lấy danh sách tất cả các cuộc hẹn
+        List<Appointment> listAppointments = appointmentService.listAll();
+        model.addAttribute("listAppointments", listAppointments);
 
+        // Thêm danh sách các trạng thái vào model
+        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values()));
+
+        return "admin/manageAppointments"; // Trả về view manageAppointments.html
+    }
 
     @GetMapping("/manageAppointments/new")
     public String showNewAppointmentForm(Model model) {
@@ -132,7 +136,6 @@ public class AppointmentController {
         return "redirect:/manageAppointments"; // Chuyển hướng về trang danh sách appointment
     }
 
-    // Xử lý cập nhật trạng thái khi form được submit
     @PostMapping("/manageAppointments/updateStatus")
     public String updateAppointmentStatus(@RequestParam("appointmentId") Integer appointmentId,
                                           @RequestParam("status") String status,
@@ -143,12 +146,15 @@ public class AppointmentController {
 
             // Cập nhật trạng thái cho Appointment
             Appointment.Status newStatus = Appointment.Status.valueOf(status);
-            appointment.changeStatus(newStatus);  // Gọi phương thức changeStatus từ class Appointment
 
-            // Lưu lại vào database
-            appointmentService.update(appointment);
-
-            ra.addFlashAttribute("message", "Appointment status updated successfully.");
+            // Thử thay đổi trạng thái của cuộc hẹn
+            try {
+                appointment.changeStatus(newStatus);  // Gọi phương thức changeStatus từ class Appointment
+                appointmentService.update(appointment);
+                ra.addFlashAttribute("message", "Appointment status updated successfully.");
+            } catch (IllegalStateException e) {
+                ra.addFlashAttribute("message", e.getMessage());
+            }
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while updating status: " + e.getMessage());
         }

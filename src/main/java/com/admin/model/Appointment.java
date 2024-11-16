@@ -157,13 +157,13 @@ public class Appointment {
     }
 
     public void changeStatus(Status newStatus) {
-        if (this.status == Status.FINISHED) {
-            throw new IllegalStateException("Cannot change status of finished appointment.");
+        if (canChangeStatus(newStatus)) {
+            this.status = newStatus;
+        } else {
+            throw new IllegalStateException("Cannot change to the new status from the current one.");
         }
-        this.status = newStatus;
-        // Lưu trạng thái mới vào database
-        appointmentRepository.save(this);
     }
+
 
     // Phương thức kiểm tra có thể chuyển sang trạng thái mới hay không
     public boolean canChangeStatus(Status newStatus) {
