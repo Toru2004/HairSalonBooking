@@ -52,6 +52,8 @@
               <th>Service ID</th>
               <th>Service Name</th>
               <th>Price</th>
+              <th>Description</th>
+              <th>Avatar</th>
               <th>Actions</th>
             </tr>
             </thead>
@@ -59,7 +61,13 @@
             <tr th:each="care : ${listCares}">
               <td th:text="${care.id}">ID</td>
               <td th:text="${care.name}">Service Name</td>
-              <td th:text="${care.price}">Price</td>
+              <td th:text="${#numbers.formatDecimal(care.price, 1, 2)}">Price</td>
+              <td>
+                <span th:title="${care.description}">[[${#strings.abbreviate(care.description, 30)}]]</span>
+              </td>
+              <td>
+                <img th:src="@{/manageCares/image/{id}(id=${care.id})}" alt="Profile Picture" width="50" height="50" />
+              </td>
               <td>
                 <!-- Edit button -->
                 <a class="btn btn-sm btn-outline-info" th:href="@{'/manageCares/edit/' + ${care.id}}">Edit</a>

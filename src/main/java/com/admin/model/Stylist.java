@@ -72,14 +72,7 @@ public class Stylist  {
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
+    
 
     public byte[] getProfilePicture() {
         return profilePicture;
@@ -111,7 +104,6 @@ public class Stylist  {
                 ", email='" + user.getEmail() + '\'' +
                 ", phone number='" + user.getPhoneNumber() + '\'' +
                 ", available=" + available +
-                ", specialization='" + specialization + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +
                 ", description='" + description + '\'' +
                 '}';
