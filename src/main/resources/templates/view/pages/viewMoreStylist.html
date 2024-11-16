@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Default Title</title>
+    <link rel="icon" th:src="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css-user/header.css}">
+    <link rel="stylesheet" th:href="@{/css-user/footer.css}">
+    <link rel="stylesheet" th:href="@{/css-user/popUp.css}">
+    <link rel="stylesheet" th:href="@{/css-user/stylists.css}">
+    <link rel="stylesheet" th:href="@{/css-user/viewMore.css}">
+    <!-- css của login/signup-->
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}">
+
+</head>
+<body>
+    <!--Login/Signup-->
+    <div th:replace="view/partials/popUpForms :: popUpForms"></div>
+    <!-- Header-->
+    <div th:replace="view/partials/header :: header"></div>
+
+    <section class="stylist-details">
+        <div class="stylist-info">
+            <img src="../images/liz.webp" alt="Liz" /> <!-- Image of Liz -->
+            <div class="details">
+                <h2>Liz</h2>
+                <p><strong>Owner/Master Stylist</strong></p>
+                <p><strong>Experience:</strong> Over 40 years in the beauty and wellness business.</p>
+                <p><strong>Bio:</strong> Liz comes from a family of hairstylists and has owned salons in three provinces.
+                    Her extensive experience includes a 25-year relationship with Aveda and owning an
+                    Aveda Concept Salon. She is known for her exceptional client experience and unwavering integrity.</p>
+            </div>
+        </div>
+        <div class="services">
+            <h3>Services Offered</h3>
+            <ul>
+                <li>Haircuts</li>
+                <li>Coloring</li>
+                <li>Styling</li>
+                <li>Extensions</li>
+                <li>Consultations</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div th:replace="view/partials/footer :: footer"></div>
+
+</body>
+</html>
+
+<!-- Cập nhật lại đường dẫn JS với th:src -->
+<script th:src="@{/js-user/popup-manage.js}"></script>

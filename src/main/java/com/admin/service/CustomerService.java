@@ -1,7 +1,7 @@
 package com.admin.service;
 
+import com.admin.exception.CustomerNotFoundException;
 import com.admin.model.Customer;
-import com.admin.model.User;
 import com.admin.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,22 +11,29 @@ import java.util.Optional;
 
 @Service
 public class CustomerService {
-    @Autowired private CustomerRepository customerRepo;
+    @Autowired private CustomerRepository customerRepository;
 
     public List<Customer> listAll() {
-        return (List<Customer>) customerRepo.findAll();
+        return (List<Customer>) customerRepository.findAll();
     }
 
     public void save(Customer customer) {
-        customerRepo.save(customer);
+        customerRepository.save(customer);
     }
 
-    public Customer get(Integer id) {
-        Optional<Customer> result = customerRepo.findById(id);
-        return result.orElse(null);  // Return null if not found
+    public Customer get(Integer id) throws CustomerNotFoundException {
+        Optional<Customer> result = customerRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        }
+        throw new CustomerNotFoundException("Could not find any customers with ID " + id);
     }
 
-    public void delete(Integer id) {
-        customerRepo.deleteById(id);
+    public void delete(Integer id) throws CustomerNotFoundException {
+        Long count = customerRepository.countById(id);
+        if (count == null || count == 0) {
+            throw new CustomerNotFoundException("Could not find any customers with ID " + id);
+        }
+        customerRepository.deleteById(id);
     }
 }
