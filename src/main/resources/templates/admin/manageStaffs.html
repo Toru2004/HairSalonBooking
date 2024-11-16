@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Staff</title>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<header class="text-center">
+    <h2>Admin Panel - Manage Staff</h2>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-md-2 sidebar">
+            <!-- Sidebar content -->
+        </aside>
+
+        <main class="col-md-10 p-4">
+            <div class="container">
+                <div class="text-end mb-3">
+                    <a class="btn btn-primary" th:href="@{/manageStaffs/new}">Add New Staff</a>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone number</th>
+                            <th>Enabled</th>
+                            <th>Manager</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="staff : ${listStaff}">
+                            <td>[[${staff.id}]]</td>
+                            <td>[[${staff.user.username}]]</td>
+                            <td>[[${staff.user.email}]]</td>
+                            <td>[[${staff.user.phoneNumber}]]</td>
+                            <td>[[${staff.user.enabled}]]</td>
+                            <td>[[${staff.manager.user.username}]]</td>
+                            <td>
+                                <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStaff/edit/' + ${staff.id}}">Edit</a>
+                                <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStaff/delete/' + ${staff.id}}">Delete</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

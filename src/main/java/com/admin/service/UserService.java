@@ -12,6 +12,9 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired private UserRepository userRepository;
+    public Long countById(Integer id) {
+        return userRepository.countById(id);
+    }
 
     public List<User> listAll() {
         return (List<User>) userRepository.findAll();
