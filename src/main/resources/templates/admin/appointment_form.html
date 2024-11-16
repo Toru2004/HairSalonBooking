@@ -18,10 +18,10 @@
             <div class="form-group row">
                 <label for="customer" class="col-sm-4 col-form-label">Customer:</label>
                 <div class="col-sm-8">
-                    <select id="customer" th:field="*{customer}" class="form-control" required>
+                    <select id="customer" th:field="*{customer.id}" class="form-control" required>
                         <option th:each="customer : ${customerList}"
                                 th:value="${customer.id}"
-                                th:text="${customer.username}"></option>
+                                th:text="${customer.user.username}"></option>
                     </select>
                 </div>
             </div>
@@ -29,10 +29,10 @@
             <div class="form-group row">
                 <label for="stylist" class="col-sm-4 col-form-label">Stylist:</label>
                 <div class="col-sm-8">
-                    <select id="stylist" th:field="*{stylist}" class="form-control" required>
+                    <select id="stylist" th:field="*{stylist.id}" class="form-control" required>
                         <option th:each="stylist : ${stylistList}"
                                 th:value="${stylist.id}"
-                                th:text="${stylist.username}"></option>
+                                th:text="${stylist.user.username}"></option>
                     </select>
                 </div>
             </div>
@@ -40,7 +40,7 @@
             <div class="form-group row">
                 <label for="care" class="col-sm-4 col-form-label">Service:</label>
                 <div class="col-sm-8">
-                    <select id="care" th:field="*{care}" class="form-control" required>
+                    <select id="care" th:field="*{care.id}" class="form-control" required>
                         <option th:each="care : ${careList}" th:value="${care.id}" th:text="${care.name}"></option>
                     </select>
                 </div>
