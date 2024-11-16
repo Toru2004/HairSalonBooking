@@ -2,82 +2,69 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Appointment Form</title>
-    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <title th:text="${pageTitle}">Add or Edit Appointment</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
-
-<header class="text-center">
-    <h2>Admin Panel</h2>
-</header>
-
 <div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar Menu -->
-        <aside class="col-md-2 sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageServices}">Manage Services</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
-            </ul>
-        </aside>
-
-        <!-- Main Content Area -->
-        <main class="col-md-10 p-4">
-            <div class="container">
-                <div class="text-center mb-4">
-                    <h2 th:text="${pageTitle}">Create/Edit Appointment</h2>
-                </div>
-
-                <form action="#" th:action="@{/manageAppointments/save}" th:object="${appointment}" method="post">
-                    <div class="mb-3">
-                        <label for="customerName" class="form-label">Customer Name</label>
-                        <input type="text" id="customerName" th:field="*{customerName}" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="serviceName" class="form-label">Service</label>
-                        <input type="text" id="serviceName" th:field="*{serviceName}" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="stylistName" class="form-label">Stylist</label>
-                        <input type="text" id="stylistName" th:field="*{stylistName}" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="appointmentTime" class="form-label">Appointment Time</label>
-                        <input type="datetime-local" id="appointmentTime" th:field="*{appointmentTime}" class="form-control" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="status" class="form-label">Status</label>
-                        <select id="status" th:field="*{status}" class="form-control">
-                            <option value="Scheduled">Scheduled</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                    </div>
-
-                    <div class="text-end">
-                        <button type="submit" class="btn btn-primary">Save Appointment</button>
-                    </div>
-                </form>
-            </div>
-        </main>
+    <div class="text-center">
+        <h2 th:text="${pageTitle}">Add or Edit Appointment</h2>
     </div>
+
+    <form th:action="@{/appointment/save}" method="post" th:object="${appointment}" style="max-width: 500px; margin: 0 auto;">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="border border-secondary rounded p-3">
+            <div class="form-group row">
+                <label for="customer" class="col-sm-4 col-form-label">Customer:</label>
+                <div class="col-sm-8">
+                    <select id="customer" th:field="*{customer}" class="form-control" required>
+                        <option th:each="customer : ${customerList}"
+                                th:value="${customer.id}"
+                                th:text="${customer.username}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="stylist" class="col-sm-4 col-form-label">Stylist:</label>
+                <div class="col-sm-8">
+                    <select id="stylist" th:field="*{stylist}" class="form-control" required>
+                        <option th:each="stylist : ${stylistList}"
+                                th:value="${stylist.id}"
+                                th:text="${stylist.username}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="care" class="col-sm-4 col-form-label">Service:</label>
+                <div class="col-sm-8">
+                    <select id="care" th:field="*{care}" class="form-control" required>
+                        <option th:each="care : ${careList}" th:value="${care.id}" th:text="${care.name}"></option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="appointmentDate" class="col-sm-4 col-form-label">Appointment Date:</label>
+                <div class="col-sm-8">
+                    <input type="datetime-local" id="appointmentDate" th:field="*{appointmentDate}" class="form-control" required/>
+                </div>
+            </div>
+
+            <div class="form-group text-center mt-3">
+                <button type="submit" class="btn btn-success m-2">Save</button>
+                <a href="/appointments" class="btn btn-secondary m-2">Cancel</a>
+            </div>
+        </div>
+    </form>
 </div>
 
-<!-- Footer Content -->
-<footer>
-    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
-</footer>
-
-<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/appointments}]]";
+    }
+</script>
 </body>
 </html>

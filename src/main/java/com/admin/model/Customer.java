@@ -5,7 +5,7 @@ import javax.persistence.*;
 // Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "customers"
 @Entity
 @Table(name = "customers")
-public class Customer {
+public class Customer  {
 
     // Định nghĩa cột khóa chính với giá trị tự động tăng
     @Id

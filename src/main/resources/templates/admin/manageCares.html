@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Manage Services</title>
-  <<link rel="stylesheet" th:href="@{/css-admin/style.css}">
+  <title>Manage Cares</title>
+  <link rel="stylesheet" th:href="@{/css-admin/style.css}">
   <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
@@ -16,13 +16,14 @@
 <div class="container-fluid">
   <div class="row">
     <!-- Sidebar Menu -->
+    <!-- Thêm mục 'Manage Admins' vào danh sách điều hướng -->
     <aside class="col-md-2 sidebar">
       <ul class="nav flex-column">
         <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
-        <li class="nav-item"><a class="nav-link" th:href="@{/manageDichVus}">Manage Services</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/manageCares}">Manage Services</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
         <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
@@ -33,11 +34,11 @@
     <main class="col-md-10 p-4">
       <div class="container">
         <div class="text-center mb-4">
-          <h2>Manage Services</h2>
+          <h2>Manage Service</h2>
         </div>
 
         <div class="text-end mb-3">
-          <a class="btn btn-primary" th:href="@{/manageDichVus/new}">Add New Service</a>
+          <a class="btn btn-primary" th:href="@{/manageCares/new}">Add New Service</a>
         </div>
 
         <div th:if="${message}" class="alert alert-success text-center">
@@ -55,19 +56,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="dichVu : ${listDichVus}">
-              <td th:text="${dichVu.id}">ID</td>
-              <td th:text="${dichVu.name}">Service Name</td>
-              <td th:text="${dichVu.price}">Price</td>
+            <tr th:each="care : ${listCares}">
+              <td th:text="${care.id}">ID</td>
+              <td th:text="${care.name}">Service Name</td>
+              <td th:text="${care.price}">Price</td>
               <td>
                 <!-- Edit button -->
-                <a class="btn btn-sm btn-outline-info" th:href="@{'/manageDichVus/edit/' + ${dichVu.id}}">Edit</a>
+                <a class="btn btn-sm btn-outline-info" th:href="@{'/manageCares/edit/' + ${care.id}}">Edit</a>
 
                 <!-- Delete button -->
-                <a class="btn btn-sm btn-outline-danger" th:href="@{/manageDichVus/delete/{id}(id=${dichVu.id})}"
-                   onclick="return confirm('Are you sure you want to delete this service?');">Delete</a>
+                <a class="btn btn-sm btn-outline-danger" th:href="@{/manageCares/delete/{id}(id=${care.id})}"
+                   onclick="return confirm('Are you sure you want to delete this care?');">Delete</a>
               </td>
-
             </tr>
             </tbody>
           </table>
