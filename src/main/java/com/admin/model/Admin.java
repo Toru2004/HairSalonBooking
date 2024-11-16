@@ -1,3 +1,4 @@
+
 package com.admin.model;
 
 import javax.persistence.*;

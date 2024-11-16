@@ -1,3 +1,4 @@
+
 package com.admin.controller;
 
 import com.admin.model.Admin;
@@ -50,3 +51,4 @@ public class AdminController {
         return "redirect:/ViewAdmins";
     }
 }
+

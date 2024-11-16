@@ -27,7 +27,7 @@ public class CustomerController {
     public String showCustomerList(Model model) {
         List<Customer> listCustomers = customerService.listAll(); // Lấy danh sách tất cả khách hàng
         model.addAttribute("listCustomers", listCustomers); // Đưa danh sách khách hàng vào model để hiển thị trong view
-        return "manageCustomers"; // Trả về view manageCustomers.html
+        return "admin/manageCustomers"; // Trả về view manageCustomers.html
     }
 
     // Hiển thị form để thêm khách hàng mới
@@ -35,7 +35,7 @@ public class CustomerController {
     public String showNewCustomerForm(Model model) {
         model.addAttribute("customer", new Customer()); // Tạo đối tượng Customer mới để sử dụng trong form
         model.addAttribute("pageTitle", "Add New Customer"); // Thiết lập tiêu đề trang
-        return "customer_form"; // Trả về view customer_form.html để thêm mới khách hàng
+        return "admin/customer_form"; // Trả về view customer_form.html để thêm mới khách hàng
     }
 
     // Lưu thông tin khách hàng

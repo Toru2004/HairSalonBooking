@@ -1,3 +1,4 @@
+
 package com.admin.exception;
 
 public class AdminNotFoundException extends Throwable {
@@ -5,3 +6,4 @@ public class AdminNotFoundException extends Throwable {
         super(message);
     }
 }
+
