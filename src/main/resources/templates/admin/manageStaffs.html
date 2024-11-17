@@ -3,25 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage Staff</title>
+    <title>Admin - Manage Staffs</title>
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <style>
+
+    </style>
 </head>
 <body>
+
 <header class="text-center">
-    <h2>Admin Panel - Manage Staff</h2>
+    <h2>Admin Panel</h2>
 </header>
 
 <div class="container-fluid">
     <div class="row">
+        <!-- Sidebar Menu -->
         <aside class="col-md-2 sidebar">
-            <!-- Sidebar content -->
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageStaffs}">Manage Staffs</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageDichVus}">Manage Services</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
+            </ul>
         </aside>
 
+        <!-- Main Content Area -->
         <main class="col-md-10 p-4">
             <div class="container">
+                <div class="text-center mb-4">
+                    <h2>Manage Staffs</h2>
+                </div>
+
                 <div class="text-end mb-3">
                     <a class="btn btn-primary" th:href="@{/manageStaffs/new}">Add New Staff</a>
+                </div>
+
+                <div th:if="${message}" class="alert alert-success text-center">
+                    [[${message}]]
                 </div>
 
                 <div class="table-responsive">
@@ -33,23 +57,23 @@
                             <th>Email</th>
                             <th>Phone number</th>
                             <th>Enabled</th>
-                            <th>Manager</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="staff : ${listStaff}">
-                            <td>[[${staff.id}]]</td>
-                            <td>[[${staff.user.username}]]</td>
-                            <td>[[${staff.user.email}]]</td>
-                            <td>[[${staff.user.phoneNumber}]]</td>
-                            <td>[[${staff.user.enabled}]]</td>
-                            <td>[[${staff.manager.user.username}]]</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStaff/edit/' + ${staff.id}}">Edit</a>
-                                <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStaff/delete/' + ${staff.id}}">Delete</a>
-                            </td>
-                        </tr>
+                        <th:block th:each="staff : ${listStaffs}">
+                            <tr>
+                                <td>[[${staff.id}]]</td>
+                                <td>[[${staff.user.username}]]</td>
+                                <td>[[${staff.user.email}]]</td>
+                                <td>[[${staff.user.phoneNumber}]]</td>
+                                <td>[[${staff.user.enabled}]]</td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStaffs/edit/' + ${staff.id}}">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStaffs/delete/' + ${staff.id}}">Delete</a>
+                                </td>
+                            </tr>
+                        </th:block>
                         </tbody>
                     </table>
                 </div>
@@ -57,6 +81,11 @@
         </main>
     </div>
 </div>
+
+<!-- Footer Content -->
+<footer>
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
 
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>

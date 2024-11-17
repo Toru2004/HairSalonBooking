@@ -19,6 +19,9 @@ public class StaffService {
     @Autowired
     private ManagerService managerService;  // Thêm ManagerService vào để sử dụng merge
 
+    @Autowired
+    private UserService userService;  // Inject UserService
+
     // Lấy tất cả Staff
     public List<Staff> listAll() {
         return (List<Staff>) staffRepository.findAll();
@@ -26,11 +29,24 @@ public class StaffService {
 
     // Lưu Staff (kể cả khi có Manager đã bị detached)
     public void save(Staff staff) {
+        // Kiểm tra và lưu User nếu chưa có ID
+        if (staff.getUser() != null && staff.getUser().getId() == null) {
+            userService.save(staff.getUser());  // Lưu User nếu chưa có ID
+        }
+
+        // Kiểm tra và gán User cho Manager nếu Manager có User null
+        if (staff.getManager() != null && staff.getManager().getUser() == null) {
+            // Gán User cho Manager nếu chưa có
+            staff.getManager().setUser(staff.getUser());
+        }
+
+        // Nếu Manager là thực thể đã có, cần chắc chắn rằng Manager không bị detached
         if (staff.getManager() != null && staff.getManager().getId() != null) {
-            // Kiểm tra và đính kèm Manager nếu nó đã bị detached
             staff.setManager(managerService.merge(staff.getManager()));  // Merge Manager vào session
         }
-        staffRepository.save(staff);  // Lưu Staff
+
+        // Lưu staff
+        staffRepository.save(staff);
     }
 
     // Lấy Staff theo ID
@@ -51,3 +67,4 @@ public class StaffService {
         staffRepository.deleteById(id);
     }
 }
+

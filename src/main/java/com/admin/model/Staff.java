@@ -9,12 +9,12 @@ public class Staff {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)  // Cascade ALL để tự động persist, merge
+    @ManyToOne
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
 
-    @ManyToOne(cascade = CascadeType.ALL)  // Cascade ALL để tự động persist, merge
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne // No cascade here, User already exists in the users table
+    @JoinColumn(name = "user_id", nullable = false) // Ensure user_id is not null
     private User user;
 
     public Integer getId() {
@@ -45,11 +45,12 @@ public class Staff {
     public String toString() {
         return "Staff{" +
                 "id=" + id +
-                ", manager=" + manager.getId() +
+                ", manager=" + (manager != null ? manager.getId() : "No Manager") +
                 ", user=" + user.getUsername() +
                 ", email='" + user.getEmail() + '\'' +
-                ", phone number='" + user.getPhoneNumber() + '\'' +
-                ", available=" + user.isEnabled() +
+                ", phoneNumber='" + user.getPhoneNumber() + '\'' +
+                ", enabled=" + user.isEnabled() +
                 '}';
     }
 }
+

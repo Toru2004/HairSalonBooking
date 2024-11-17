@@ -36,11 +36,12 @@ public class StaffController {
         return "admin/manageStaffs";
     }
 
-    // Hiển thị form thêm mới staff
     @GetMapping("/manageStaffs/new")
     public String showNewForm(Model model) {
-        List<Manager> listManagers = managerService.listAll();
+        List<User> listUsers = userService.listAll();  // Lấy danh sách users từ service
+        List<Manager> listManagers = managerService.listAll();  // Lấy danh sách managers
         model.addAttribute("staff", new Staff());
+        model.addAttribute("listUsers", listUsers);  // Gửi danh sách users vào form
         model.addAttribute("listManagers", listManagers);
         model.addAttribute("pageTitle", "Add New Staff");
         return "admin/staff_form";
@@ -53,15 +54,12 @@ public class StaffController {
             userService.save(staff.getUser());  // Lưu user nếu chưa có ID
         }
 
-        // Nếu Manager là thực thể đã có, cần chắc chắn rằng Manager không bị detached
-        if (staff.getManager() != null && staff.getManager().getId() != null) {
-            managerService.save(staff.getManager());  // Lưu hoặc merge Manager nếu cần
-        }
-
+        // Lưu staff sau khi lưu user (User đã có ID hoặc mới được lưu)
         staffService.save(staff);  // Lưu staff
         ra.addFlashAttribute("message", "The staff has been saved successfully.");
         return "redirect:/manageStaffs";
     }
+
 
 
 
