@@ -1,33 +1,31 @@
 package com.admin.service;
 
 import com.admin.model.User;
-import com.admin.model.Manager;
-import com.admin.model.Staff;
 import com.admin.repository.UserRepository;
-import com.admin.repository.ManagerRepository;
-import com.admin.repository.StaffRepository;
 import com.admin.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private ManagerRepository managerRepository;
-
-    @Autowired
-    private StaffRepository staffRepository;
-
-    // Các phương thức hiện tại
-    public Long countById(Integer id) {
-        return userRepository.countById(id);
+    // Mã hóa mật khẩu thủ công
+    private String encodePassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] bytes = md.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 
     public List<User> listAll() {
@@ -54,36 +52,32 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    // Thêm phương thức để tạo Manager
-    public Manager createManager(User user) {
-        Manager manager = new Manager();
-        manager.setUser(user);  // Set User cho Manager
-        return managerRepository.save(manager);
-    }
-
-    // Thêm phương thức để tạo Staff
-    public Staff createStaff(User user, Manager manager) {
-        Staff staff = new Staff();
-        staff.setUser(user);  // Set User cho Staff
-        staff.setManager(manager);  // Set Manager cho Staff
-        return staffRepository.save(staff);
-    }
-
-    // Lấy thông tin Manager của Staff
-    public Manager getManagerForStaff(Integer staffId) throws UserNotFoundException {
-        Optional<Staff> staff = staffRepository.findById(staffId);
-        if (staff.isPresent()) {
-            return staff.get().getManager();
+    public String registerUser(User user) throws NoSuchAlgorithmException {
+        // Kiểm tra xem người dùng đã tồn tại chưa
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return "Username already exists";
         }
-        throw new UserNotFoundException("Could not find any staff with ID " + staffId);
+
+        user.setRole("customer");
+
+        // Mã hóa mật khẩu trước khi lưu (dùng MD5, có thể thay thế với bcrypt nếu cần)
+//        String encodedPassword = encodePassword(user.getPassword());
+//        user.setPassword(encodedPassword);
+
+        // Lưu người dùng vào cơ sở dữ liệu
+        userRepository.save(user);
+        return "User registered successfully";
     }
 
-    // Lấy thông tin User cho Manager hoặc Staff
-    public User getUserForManagerOrStaff(Integer id) throws UserNotFoundException {
-        Optional<User> user = userRepository.findById(id);
+    public Optional<User> loginUser(String email, String password) throws NoSuchAlgorithmException {
+        Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
-            return user.get();
+            // Kiểm tra mật khẩu sau khi mã hóa
+//            String encodedPassword = encodePassword(password);
+            if (password.equals(user.get().getPassword())) {
+                return user;
+            }
         }
-        throw new UserNotFoundException("Could not find any user with ID " + id);
+        return Optional.empty();
     }
 }

@@ -48,35 +48,47 @@
                     <table class="table table-striped table-bordered">
                         <thead class="table-dark">
                         <tr>
-                            <th>Appointment ID</th>
-                            <th>Customer</th>
-                            <th>Stylist</th>
-                            <th>Services</th>
-                            <th>Total Price</th>
-                            <th>Actions</th>
+                            <th class="text-center">Appointment ID</th>
+                            <th class="text-center">Customer</th>
+                            <th class="text-center">Services</th> <!-- Dịch vụ lên trước Stylist -->
+                            <th class="text-center">Stylist</th>
+                            <th class="text-center">Appointment Date</th> <!-- Ngày hẹn lên trước Tổng tiền -->
+                            <th class="text-center">Total Price</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="appointment : ${listAppointments}">
-                            <td th:text="${appointment.id}">ID</td>
-                            <!-- Ensure 'customer' is a 'User' object with 'name' property -->
-                            <td th:text="${appointment.customer?.username}">Customer Username</td>
-                            <!-- Sử dụng 'username' thay vì 'name' nếu 'stylist' kế thừa từ 'User' -->
-                            <td th:text="${appointment.stylist?.username}">Stylist Username</td>
-                            <td>
+                            <td class="text-center" th:text="${appointment.id}">ID</td>
+                            <td class="text-center" th:text="${appointment.customer != null ? appointment.customer.user.username : 'N/A'}">Customer Username</td>
+                            <td class="text-center">
                                 <ul>
-                                    <!-- Ensure 'services' is a list of 'Care' objects, each with a 'name' property -->
-                                    <span th:text="${appointment.care?.name}">Care Name</span>
+                                    <li th:each="care : ${appointment.cares}">
+                                        <span th:text="${care.name}">Care Name</span> -
+                                        <span th:text="${care.price}">Price</span>
+                                    </li>
                                 </ul>
                             </td>
-                            <td th:text="${appointment.totalPrice}">Total Price</td>
-                            <td>
-                                <a class="btn btn-sm btn-outline-info" th:href="@{'/manageAppointments/edit/' + ${appointment.id}}">Edit</a>
-                                <a class="btn btn-sm btn-outline-danger" th:href="@{/manageAppointments/delete/{id}(id=${appointment.id})}"
-                                   onclick="return confirm('Are you sure you want to delete this appointment?');">Delete</a>
+                            <td class="text-center" th:text="${appointment.stylist != null ? appointment.stylist.user.username : 'N/A'}">Stylist Username</td>
+                            <td class="text-center" th:text="${appointment.appointmentDate}">Appointment Date</td>
+                            <td class="text-center" th:text="${appointment.totalPrice}">Total Price</td>
+
+                            <!-- Dropdown cho trạng thái -->
+                            <td class="text-center">
+                                <select class="form-control status-dropdown"
+                                        th:disabled="${appointment.status == 'COMPLETED' or appointment.status == 'CANCELED'}">
+                                    <option th:each="status : ${statuses}"
+                                            th:value="${status.name()}"
+                                            th:text="${status}"></option>
+                                </select>
+                            </td>
+
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-outline-info" style="margin:5px 0;" th:href="@{/manageAppointments/edit/{id}(id=${appointment.id})}">Edit</a>
+                                <a class="btn btn-sm btn-outline-danger" style="margin:5px 0;" th:href="@{/manageAppointments/delete/{id}(id=${appointment.id})}">Delete</a>
                             </td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
@@ -85,6 +97,63 @@
     </div>
 </div>
 
-<script src="js/app.js"></script>
 </body>
+<script>
+    // Định nghĩa thứ tự trạng thái
+    const statusOrder = {
+        PENDING: 1,
+        APPROVED: 2,
+        IN_PROGRESS: 3,
+        COMPLETED: 4,
+        CANCELED: 5
+    };
+
+    // Hàm lưu trạng thái từng appointment
+    function saveAppointmentStatus(appointmentId, status) {
+        const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
+        statuses[appointmentId] = status;
+        localStorage.setItem('appointmentStatuses', JSON.stringify(statuses));
+    }
+
+    // Hàm tải trạng thái từng appointment
+    function loadAppointmentStatus(appointmentId) {
+        const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
+        return statuses[appointmentId] || null; // Trả về trạng thái nếu có, nếu không trả về null
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const rows = document.querySelectorAll('tbody tr'); // Chọn tất cả các dòng trong bảng
+        rows.forEach(row => {
+            const appointmentId = row.querySelector('td').textContent.trim(); // Lấy Appointment ID
+            const dropdown = row.querySelector('select');
+            let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
+
+            // Đặt trạng thái ban đầu cho dropdown (nếu có)
+            if (savedStatus) {
+                dropdown.value = savedStatus;
+            }
+
+            // Ngăn chỉnh quay lùi trạng thái
+            dropdown.addEventListener('change', (event) => {
+                const selectedStatus = event.target.value;
+
+                // Kiểm tra nếu trạng thái hiện tại là đã hoàn thành hoặc đã hủy
+                // Nếu có, không cho phép thay đổi trạng thái nữa
+                if (savedStatus === 'COMPLETED' || savedStatus === 'CANCELLED') {
+                    alert(`Bạn không thể chỉnh trạng thái khi ở ${savedStatus}!`);
+                    event.target.value = savedStatus; // Reset về trạng thái cũ
+                }
+                    // Kiểm tra nếu trạng thái mới thấp hơn trạng thái đã lưu (quay lùi)
+                // Nếu trạng thái mới có thứ tự thấp hơn trạng thái đã lưu, không cho phép quay lùi
+                else if (statusOrder[selectedStatus] < statusOrder[savedStatus]) {
+                    alert('Không thể quay lại trạng thái trước!');
+                    event.target.value = savedStatus; // Reset về trạng thái cũ
+                } else {
+                    saveAppointmentStatus(appointmentId, selectedStatus); // Lưu trạng thái mới
+                    savedStatus = selectedStatus; // Cập nhật trạng thái đã lưu
+                }
+            });
+        });
+    });
+</script>
 </html>
