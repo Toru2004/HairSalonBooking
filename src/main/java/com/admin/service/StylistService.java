@@ -14,16 +14,17 @@
     public class StylistService {
 
 
-
-
-
     @Autowired
     private StylistRepository stylistRepository;
 
 
-            public List<Stylist> listAll() {
+    public List<Stylist> listAll() {
                 return (List<Stylist>) stylistRepository.findAll();
             }
+
+            public List<Stylist> findEnabledStylists() {
+            return (List<Stylist>) stylistRepository.findAllByUserEnabled(true); // Lọc stylist có enabled = true
+        }
 
         public void save(Stylist stylist) {
             if (stylist.getUser() != null) {

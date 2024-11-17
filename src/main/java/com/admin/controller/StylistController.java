@@ -52,10 +52,19 @@ public class StylistController {
     // Hiển thị danh sách stylist cho khách hàng
     @GetMapping("/page/stylists")
     public String listStylists(Model model) {
-        List<Stylist> listStylists = stylistService.listAll();
-        model.addAttribute("listStylists", listStylists); // Gán danh sách stylists vào model
-        return "view/pages/stylists"; // Tên file Thymeleaf view
+        List<Stylist> listStylists = stylistService.findEnabledStylists();
+        model.addAttribute("listStylists", listStylists);
+        return "view/pages/stylists";
     }
+
+    @GetMapping("/page/bookNow")
+    public String showBookNowPage() {
+        return "view/pages/bookNow"; // Đường dẫn đến file bookNow.html
+    }
+
+
+
+
 
     // Hiển thị form thêm mới stylist
     @GetMapping("/manageStylists/new")
