@@ -5,15 +5,34 @@ import com.admin.model.Appointment;
 import com.admin.repository.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
+import java.util.HashMap;
 
 @Service
 public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+    public List<Appointment> getAllAppointments() {
+        // Truy vấn tất cả các appointments từ cơ sở dữ liệu
+        return appointmentRepository.findAll();
+    }
+    public Map<String, Double> calculateMonthlyRevenue(List<Appointment> appointments) {
+        Map<String, Double> revenueByMonth = new HashMap<>();
+
+        // Nhóm doanh thu theo tháng
+        for (Appointment appointment : appointments) {
+            String month = appointment.getDate().getMonth().toString(); // Chuyển ngày thành tháng
+            Double revenue = appointment.getTotalPrice();
+
+            // Cộng doanh thu vào từng tháng
+            revenueByMonth.merge(month, revenue, Double::sum);
+        }
+
+        return revenueByMonth;
+    }
 
     // Phương thức lấy danh sách tất cả các cuộc hẹn
     public List<Appointment> listAll() {

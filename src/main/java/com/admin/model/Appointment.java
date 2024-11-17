@@ -2,7 +2,7 @@ package com.admin.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
+import java.time.LocalDate;
 @Entity
 @Table(name = "appointments")
 public class Appointment {
@@ -26,6 +26,12 @@ public class Appointment {
     @Column(name = "appointment_date")
     private LocalDateTime appointmentDate;
 
+    private LocalDate date; // Nếu là LocalDate, hoặc có thể là Date hoặc Timestamp.
+
+    public LocalDate getDate() {
+        return date;
+    }
+
     // Getter and Setter
     public Integer getId() {
         return id;
@@ -37,6 +43,7 @@ public class Appointment {
     private Status status;  // Enum Status
 
     // Getters and Setters
+
     public Status getStatus() {
         return status;
     }
