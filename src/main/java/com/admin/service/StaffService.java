@@ -6,6 +6,7 @@ import com.admin.repository.StaffRepository;
 import com.admin.exception.StaffNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.admin.exception.ManagerNotFoundException;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,6 @@ public class StaffService {
         return (List<Staff>) staffRepository.findAll();
     }
 
-    // Lưu Staff (kể cả khi có Manager đã bị detached)
     public void save(Staff staff) {
         // Kiểm tra và lưu User nếu chưa có ID
         if (staff.getUser() != null && staff.getUser().getId() == null) {
@@ -40,14 +40,25 @@ public class StaffService {
             staff.getManager().setUser(staff.getUser());
         }
 
-        // Nếu Manager là thực thể đã có, cần chắc chắn rằng Manager không bị detached
+        // Kiểm tra xem Manager đã có user hay chưa, không thay đổi User ID của Manager
         if (staff.getManager() != null && staff.getManager().getId() != null) {
-            staff.setManager(managerService.merge(staff.getManager()));  // Merge Manager vào session
+            try {
+                Manager existingManager = managerService.get(staff.getManager().getId()); // Get existing manager
+                if (existingManager.getUser() == null) {
+                    existingManager.setUser(staff.getUser());  // Set user if it's null (but don't change the user ID)
+                }
+                staff.setManager(existingManager); // Attach the existing manager with its user (no modification on user_id)
+            } catch (ManagerNotFoundException e) {
+                // Handle the case when the manager is not found, e.g., logging the error or rethrowing
+                throw new RuntimeException("Manager not found for ID: " + staff.getManager().getId(), e);
+            }
         }
 
-        // Lưu staff
+        // Lưu staff (Staff sẽ có Manager và User đã được gán đúng)
         staffRepository.save(staff);
     }
+
+
 
     // Lấy Staff theo ID
     public Staff get(Integer id) throws StaffNotFoundException {

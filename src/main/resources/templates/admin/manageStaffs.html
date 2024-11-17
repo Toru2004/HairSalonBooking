@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <style>
-
+        /* Add any custom styles here */
     </style>
 </head>
 <body>
@@ -57,6 +57,7 @@
                             <th>Email</th>
                             <th>Phone number</th>
                             <th>Enabled</th>
+                            <th>Manager</th> <!-- Added Manager column -->
                             <th>Actions</th>
                         </tr>
                         </thead>
@@ -68,6 +69,11 @@
                                 <td>[[${staff.user.email}]]</td>
                                 <td>[[${staff.user.phoneNumber}]]</td>
                                 <td>[[${staff.user.enabled}]]</td>
+                                <td>
+                                    <!-- Display Manager's name or details -->
+                                    <span th:text="|${staff.manager.user.username}|">Manager's Name</span>
+                                    <!-- You can display additional manager details like email or phone number -->
+                                </td>
                                 <td>
                                     <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStaffs/edit/' + ${staff.id}}">Edit</a>
                                     <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStaffs/delete/' + ${staff.id}}">Delete</a>
