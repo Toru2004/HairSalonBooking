@@ -12,17 +12,19 @@ import java.util.Optional;
 @Service
 public class StylistService {
 
-    @Autowired
-    private StylistRepository stylistRepository;
+        @Autowired
+        private StylistRepository stylistRepository;
 
 
-    public List<Stylist> listAll() {
-        return (List<Stylist>) stylistRepository.findAll();
-    }
 
-    public void save(Stylist stylist) {
-        stylistRepository.save(stylist);
-    }
+
+        public List<Stylist> listAll() {
+            return (List<Stylist>) stylistRepository.findAll();
+        }
+
+        public void save(Stylist stylist) {
+            stylistRepository.save(stylist);
+        }
 
     public Stylist get(Integer id) throws StylistNotFoundException {
         Optional<Stylist> result = stylistRepository.findById(id);
