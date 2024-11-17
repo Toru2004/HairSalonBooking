@@ -6,12 +6,27 @@ import com.admin.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-    @Autowired private UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    // Mã hóa mật khẩu thủ công
+    private String encodePassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] bytes = md.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
 
     public List<User> listAll() {
         return (List<User>) userRepository.findAll();
@@ -35,5 +50,34 @@ public class UserService {
             throw new UserNotFoundException("Could not find any users with ID " + id);
         }
         userRepository.deleteById(id);
+    }
+
+    public String registerUser(User user) throws NoSuchAlgorithmException {
+        // Kiểm tra xem người dùng đã tồn tại chưa
+        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+            return "Username already exists";
+        }
+
+        user.setRole("customer");
+
+        // Mã hóa mật khẩu trước khi lưu (dùng MD5, có thể thay thế với bcrypt nếu cần)
+//        String encodedPassword = encodePassword(user.getPassword());
+//        user.setPassword(encodedPassword);
+
+        // Lưu người dùng vào cơ sở dữ liệu
+        userRepository.save(user);
+        return "User registered successfully";
+    }
+
+    public Optional<User> loginUser(String email, String password) throws NoSuchAlgorithmException {
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            // Kiểm tra mật khẩu sau khi mã hóa
+//            String encodedPassword = encodePassword(password);
+            if (password.equals(user.get().getPassword())) {
+                return user;
+            }
+        }
+        return Optional.empty();
     }
 }

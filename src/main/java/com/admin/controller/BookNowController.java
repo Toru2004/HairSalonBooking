@@ -1,5 +1,5 @@
 package com.admin.controller;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import com.admin.model.Stylist;
 import com.admin.model.Care;
 import com.admin.service.StylistService;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.ui.Model;
 import java.util.List;
 
 @RestController
@@ -26,6 +26,10 @@ public class BookNowController {
     public List<Stylist> getStylists() {
         return stylistService.listAll();
     }
+
+
+
+
 
     // Lấy danh sách care services
     @GetMapping("/cares")
