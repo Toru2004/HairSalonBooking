@@ -13,9 +13,12 @@ Dự án **Hair Salon Booking** là một trang web đặt lịch hẹn cho salo
 - **HTML:** Để xây dựng cấu trúc trang web.
 - **CSS:** Để thiết kế giao diện và cải thiện trải nghiệm người dùng.
 - **JavaScript:** Để xử lý tương tác và các chức năng động trên trang web.
-- **XAMPP:** Môi trường máy chủ để phát triển và kiểm tra ứng dụng.
+- **Spring Boot:** Framework để phát triển ứng dụng web.
+- **IntelliJ IDEA:** IDE sử dụng để phát triển ứng dụng.
+- **MySQL:** Cơ sở dữ liệu để lưu trữ thông tin về lịch hẹn, dịch vụ và các chuyên gia.
 
 ## Cài đặt
+
 Để chạy dự án này trên máy tính của bạn, hãy làm theo các bước sau:
 
 1. **Clone kho lưu trữ:**
