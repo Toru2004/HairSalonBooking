@@ -97,6 +97,9 @@ public class StylistController {
             if (!imageFile.isEmpty()) {
                 stylist.setProfilePicture(imageFile.getBytes()); // Lưu ảnh dưới dạng byte[]
             }
+            if (stylist.getUser() != null) {
+                stylist.getUser().setRole("STYLIST"); // Đặt role là "STYLIST"
+            }
         } catch (IOException e) {
             ra.addFlashAttribute("message", "Error uploading image: " + e.getMessage());
             return "redirect:/manageStylists";
@@ -106,6 +109,7 @@ public class StylistController {
         ra.addFlashAttribute("message", "The stylist has been saved successfully.");
         return "redirect:/manageStylists";
     }
+
 
 
 

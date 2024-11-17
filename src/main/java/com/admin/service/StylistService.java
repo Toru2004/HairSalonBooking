@@ -1,6 +1,6 @@
     package com.admin.service;
 
-    import java.util.ArrayList;
+
     import com.admin.model.Stylist;
     import com.admin.repository.StylistRepository;
     import com.admin.exception.StylistNotFoundException;
@@ -9,47 +9,29 @@
 
     import java.util.List;
     import java.util.Optional;
-    import java.util.Collection; // Thêm import cho Collection
+
     @Service
     public class StylistService {
 
-<<<<<<< HEAD
-            @Autowired
-            private StylistRepository stylistRepository;
 
-        public List<Stylist> getAllStylists() {
-            // Chuyển Iterable thành List
-            Iterable<Stylist> stylistIterable = stylistRepository.findAll();
-            return new ArrayList<>((Collection<? extends Stylist>) stylistIterable);
-        }
 
-=======
+
+
     @Autowired
     private StylistRepository stylistRepository;
 
-    public List<Stylist> getAllStylists() {
-        // Chuyển Iterable thành List
-        Iterable<Stylist> stylistIterable = stylistRepository.findAll();
-        return new ArrayList<>((Collection<? extends Stylist>) stylistIterable);
-    }
-
-
-    public List<Stylist> listAll() {
-        return (List<Stylist>) stylistRepository.findAll();
-    }
-
-    public void save(Stylist stylist) {
-        stylistRepository.save(stylist);
-    }
->>>>>>> afa7c39f4be4628f8c584a20b4fdeb0ce6995100
 
             public List<Stylist> listAll() {
                 return (List<Stylist>) stylistRepository.findAll();
             }
 
-            public void save(Stylist stylist) {
-                stylistRepository.save(stylist);
+        public void save(Stylist stylist) {
+            if (stylist.getUser() != null) {
+                stylist.getUser().setRole("STYLIST"); // Đặt role là "STYLIST"
             }
+            stylistRepository.save(stylist);
+        }
+
 
         public Stylist get(Integer id) throws StylistNotFoundException {
             Optional<Stylist> result = stylistRepository.findById(id);
@@ -67,7 +49,3 @@
             stylistRepository.deleteById(id);
         }
     }
-<<<<<<< HEAD
-=======
-}
->>>>>>> afa7c39f4be4628f8c584a20b4fdeb0ce6995100

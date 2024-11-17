@@ -54,7 +54,7 @@ public class Stylist  {
 
     // Các thuộc tính riêng biệt khác của Stylist
     private boolean available;
-    private String specialization;
+
 
     @Lob
     @Column(name = "profile_picture", columnDefinition = "LONGBLOB")
