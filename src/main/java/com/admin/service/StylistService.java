@@ -22,13 +22,6 @@ public class StylistService {
         return new ArrayList<>((Collection<? extends Stylist>) stylistIterable);
     }
 
-<<<<<<< HEAD
-=======
-    public List<Stylist> listAll() {
-        return (List<Stylist>) stylistRepository.findAll();  // Kiểm tra lại phương thức này
-    }
->>>>>>> 8d6cccb27b28e0af70355f90cfba6daa5b5f689d
-
 
         public List<Stylist> listAll() {
             return (List<Stylist>) stylistRepository.findAll();
