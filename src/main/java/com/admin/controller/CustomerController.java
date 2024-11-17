@@ -41,6 +41,7 @@ public class CustomerController {
     // Lưu thông tin khách hàng
     @PostMapping("/manageCustomers/save")
     public String saveCustomer(Customer customer, RedirectAttributes ra) {
+        customer.getUser().setRole("customer");
         customerService.save(customer); // Lưu thông tin khách hàng vào cơ sở dữ liệu
         ra.addFlashAttribute("message", "The customer has been saved successfully."); // Thông báo lưu thành công
         return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng

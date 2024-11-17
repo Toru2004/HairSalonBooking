@@ -28,7 +28,7 @@
 
 </head>
 <body>
-<div th:replace="view/partials/popUpForms :: popUpForms"></div>
+<!--<div th:replace="view/partials/popUpForms :: popUpForms"></div>-->
 
 <!-- Header với video background -->
 
@@ -47,7 +47,9 @@
                 <img src="../images/logo.png" alt="Booksy Logo">
             </div>
             <div class="login-signup">
-                <a href="#" id="open-login">Log In / Sign Up</a>
+<!--                <a th:href="@{/page/login}" id="open-login">Log In / Sign Up</a>-->
+                <a th:href="@{/page/login}">Log In / Sign Up</a>
+
             </div>
         </div>
 

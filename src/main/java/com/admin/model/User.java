@@ -26,6 +26,9 @@ public class User {
     @Column(length = 15, nullable = false)
     private String password;
 
+    @Column(length = 15, nullable = false)
+    private String role;  // Thêm thuộc tính role
+
     // Định nghĩa cột 'enabled' để lưu trạng thái kích hoạt của tài khoản (true = kích hoạt)
     private boolean enabled;
 
@@ -93,6 +96,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public boolean isEnabled() {
