@@ -1,5 +1,6 @@
 package com.admin.service;
 
+import java.util.ArrayList;
 import com.admin.model.Stylist;
 import com.admin.repository.StylistRepository;
 import com.admin.exception.StylistNotFoundException;
@@ -8,16 +9,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Collection; // Thêm import cho Collection
 @Service
 public class StylistService {
 
     @Autowired
     private StylistRepository stylistRepository;
 
+    public List<Stylist> getAllStylists() {
+        // Chuyển Iterable thành List
+        Iterable<Stylist> stylistIterable = stylistRepository.findAll();
+        return new ArrayList<>((Collection<? extends Stylist>) stylistIterable);
+    }
 
     public List<Stylist> listAll() {
-        return (List<Stylist>) stylistRepository.findAll();
+        return (List<Stylist>) stylistRepository.findAll();  // Kiểm tra lại phương thức này
     }
 
     public void save(Stylist stylist) {
