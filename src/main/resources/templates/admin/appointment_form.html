@@ -2,68 +2,79 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${pageTitle}">Add or Edit Appointment</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
+<div class="container-fluid">
+    <div class="text-center">
+        <h2 th:text="${pageTitle}">Add or Edit Appointment</h2>
+    </div>
 
-<header>
-    <h2 class="text-center" th:text="${pageTitle}">Add or Edit Appointment</h2>
-</header>
+    <!-- Form để lưu thông tin cuộc hẹn -->
+    <form th:action="@{/manageAppointments/save}" method="post" th:object="${appointment}"
+          style="max-width: 500px; margin: 0 auto;">
+        <!-- Ẩn ID nếu đang chỉnh sửa -->
+        <input type="hidden" th:field="*{id}">
 
-<div class="container">
-    <form th:action="@{/manageAppointments/save}" th:object="${appointment}" method="post">
-        <!-- Thêm trường ẩn cho ID -->
-        <input type="hidden" th:field="*{id}" />
+        <div class="border border-secondary rounded p-3">
+            <!-- Chọn khách hàng -->
+            <div class="form-group row">
+                <label for="customer" class="col-sm-4 col-form-label">Customer:</label>
+                <div class="col-sm-8">
+                    <select id="customer" th:field="*{customer.id}" class="form-control" required>
+                        <option th:each="customer : ${customerList}" th:value="${customer.id}"
+                                th:text="${customer.user.username}"></option>
+                    </select>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="customer">Customer</label>
-            <select id="customer" th:field="*{customer}" class="form-control" required>
-                <option th:each="customer : ${customers}" th:value="${customer.id}" th:text="${customer.name}"></option>
-            </select>
-        </div>
+            <!-- Chọn dịch vụ (dùng checkbox để chọn nhiều dịch vụ) -->
+            <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Services:</label>
+                <div class="col-sm-8">
+                    <div th:each="care : ${careList}">
+                        <div class="form-check">
+                            <input type="checkbox" th:field="*{cares}" th:value="${care.id}" class="form-check-input" />
+                            <label class="form-check-label" th:text="${care.name}"></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="stylist">Stylist</label>
-            <select id="stylist" th:field="*{stylist}" class="form-control" required>
-                <option th:each="stylist : ${stylists}" th:value="${stylist.id}" th:text="${stylist.name}"></option>
-            </select>
-        </div>
+            <!-- Chọn stylist -->
+            <div class="form-group row">
+                <label for="stylist" class="col-sm-4 col-form-label">Stylist:</label>
+                <div class="col-sm-8">
+                    <select id="stylist" th:field="*{stylist.id}" class="form-control" required>
+                        <option th:each="stylist : ${stylistList}" th:value="${stylist.id}"
+                                th:text="${stylist.user.username}"></option>
+                    </select>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="services">Services</label>
-            <select id="services" th:field="*{care}" class="form-control" multiple required>
-                <option th:each="service : ${care}" th:value="${care.id}" th:text="${care.name}">Service</option>
-            </select>
-        </div>
+            <!-- Ngày đặt lịch -->
+            <div class="form-group row">
+                <label for="appointmentDate" class="col-sm-4 col-form-label">Appointment Date:</label>
+                <div class="col-sm-8">
+                    <input type="datetime-local" id="appointmentDate" th:field="*{appointmentDate}" class="form-control" required />
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="totalPrice">Total Price</label>
-            <input type="number" id="totalPrice" th:field="*{totalPrice}" class="form-control" required readonly/>
-        </div>
-
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-success">Save</button>
-            <a href="/manageAppointments" class="btn btn-secondary">Cancel</a>
+            <!-- Nút lưu và hủy -->
+            <div class="form-group text-center mt-3">
+                <button type="submit" class="btn btn-success m-2">Save</button>
+                <button type="button" class="btn btn-secondary m-2" onclick="cancelForm()">Cancel</button>
+            </div>
         </div>
     </form>
 </div>
 
-<script src="js/app.js"></script>
-<script th:inline="javascript">
-    // Tính toán tổng giá trị khi chọn dịch vụ
-    var servicesSelect = document.getElementById("services");
-    var totalPriceField = document.getElementById("totalPrice");
-
-    servicesSelect.addEventListener('change', function() {
-        var totalPrice = 0;
-        Array.from(servicesSelect.selectedOptions).forEach(function(option) {
-            totalPrice += parseFloat(option.getAttribute('data-price'));
-        });
-        totalPriceField.value = totalPrice;
-    });
+<script type="text/javascript">
+    // Hàm xử lý hủy bỏ form và chuyển hướng về trang quản lý cuộc hẹn
+    function cancelForm() {
+        window.location.href = '/manageAppointments';
+    }
 </script>
-
 </body>
 </html>
