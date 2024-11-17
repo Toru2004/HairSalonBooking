@@ -19,6 +19,9 @@ public class CareService {
         return careRepository.findAll();
     }
 
+    public List<Care> getAllCares() {
+        return careRepository.findAll();
+    }
     // Lưu một care mới
     public void save(Care care) {
         careRepository.save(care);
