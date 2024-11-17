@@ -19,8 +19,8 @@
         <!-- Sidebar Menu -->
         <aside class="col-md-2 sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" th:href="@{/manager/revenue}">Revenue Overview</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manager/staff}">Manage Staff</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manager/RevenueOverview}">Revenue Overview</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manager/ManagerStaff}">Manage Staff</a></li>
             </ul>
         </aside>
 
@@ -105,7 +105,7 @@
         }
     });
 
-    function updateChart() {
+  /*  function updateChart() {
         const filterOption = document.getElementById('filter-option').value;
 
         const dailyData = { labels: ['Mon', 'Tue', 'Wed'], data: [120, 150, 180] };
@@ -122,7 +122,23 @@
         revenueChart.update();
     }
 
-    updateChart();
+   */
+
+    function updateChart() {
+        const filterOption = document.getElementById('filter-option').value;
+
+        fetch(`/manager/revenue?filter=${filterOption}`)  // Gửi yêu cầu tới server
+            .then(response => response.json())
+            .then(data => {
+                revenueChart.data.labels = data.labels;  // labels là tên các ngày, tháng, năm
+                revenueChart.data.datasets[0].data = data.revenue;  // revenue là mảng doanh thu
+                revenueChart.update();
+            })
+            .catch(error => console.error("Error fetching revenue data:", error));
+    }
+
+
+
 </script>
 </body>
 </html>

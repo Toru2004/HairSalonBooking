@@ -1,20 +1,40 @@
 package com.admin.service;
 
-import com.admin.exception.AppointmentNotFoundException; // Import exception
+import com.admin.exception.AppointmentNotFoundException;
 import com.admin.model.Appointment;
 import com.admin.repository.AppointmentRepository;
+import com.admin.utils.TimePeriodHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 @Service
 public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+    public Map<String, Object> getRevenueDataByFilter(String filter) {
+        Map<String, Object> revenueData = new HashMap<>();
+
+        LocalDateTime startDate = TimePeriodHelper.getStartDateForPeriod(filter);
+        LocalDateTime endDate = TimePeriodHelper.getEndDateForPeriod(filter);
+        System.out.println("Start Date: " + startDate);
+        System.out.println("End Date: " + endDate);
+
+
+        return revenueData;
+    }
+
+
+
+
+
     public List<Appointment> getAllAppointments() {
         // Truy vấn tất cả các appointments từ cơ sở dữ liệu
         return appointmentRepository.findAll();
@@ -67,4 +87,6 @@ public class AppointmentService {
             throw new AppointmentNotFoundException("Could not find appointment with ID " + id);
         }
     }
+
+
 }
