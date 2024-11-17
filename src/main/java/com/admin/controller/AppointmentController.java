@@ -110,8 +110,7 @@ public class AppointmentController {
             model.addAttribute("customerList", customerService.listAll());
             model.addAttribute("careList", careService.listAll());
 
-            // Truyền danh sách trạng thái dưới dạng enum
-            model.addAttribute("statuses", Arrays.asList(Appointment.Status.values()));
+
 
             model.addAttribute("pageTitle", "Edit Appointment (ID: " + id + ")");
             return "admin/appointment_form";
@@ -120,7 +119,6 @@ public class AppointmentController {
             return "redirect:/manageAppointments";
         }
     }
-
 
 
 
@@ -136,32 +134,7 @@ public class AppointmentController {
         return "redirect:/manageAppointments"; // Chuyển hướng về trang danh sách appointment
     }
 
-    @PostMapping("/manageAppointments/updateStatus")
-    public String updateAppointmentStatus(@RequestParam("appointmentId") Integer appointmentId,
-                                          @RequestParam("status") String status,
-                                          RedirectAttributes ra) {
-        try {
-            // Lấy Appointment theo ID
-            Appointment appointment = appointmentService.get(appointmentId);
 
-            // Cập nhật trạng thái cho Appointment
-            Appointment.Status newStatus = Appointment.Status.valueOf(status);
-
-            // Thử thay đổi trạng thái của cuộc hẹn
-            try {
-                appointment.changeStatus(newStatus);  // Gọi phương thức changeStatus từ class Appointment
-                appointmentService.update(appointment);
-                ra.addFlashAttribute("message", "Appointment status updated successfully.");
-            } catch (IllegalStateException e) {
-                ra.addFlashAttribute("message", e.getMessage());
-            }
-        } catch (Exception e) {
-            ra.addFlashAttribute("message", "Error while updating status: " + e.getMessage());
-        }
-
-        // Quay lại trang danh sách cuộc hẹn
-        return "redirect:/manageAppointments";
-    }
 
 
 }

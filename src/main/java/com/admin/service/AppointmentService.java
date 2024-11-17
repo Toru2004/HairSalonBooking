@@ -49,22 +49,6 @@ public class AppointmentService {
         }
     }
 
-    // Phương thức cập nhật trạng thái cuộc hẹn
-    public void updateStatus(Integer id, String status) throws AppointmentNotFoundException {
-        Optional<Appointment> result = appointmentRepository.findById(id);
-        if (result.isPresent()) {
-            Appointment appointment = result.get();
-            try {
-                // Chuyển đổi String thành enum Status
-                appointment.setStatus(Appointment.Status.valueOf(status));  // Chuyển đổi từ String sang Status enum
-                appointmentRepository.save(appointment);
-            } catch (IllegalArgumentException e) {
-                // Xử lý nếu giá trị String không khớp với bất kỳ enum nào
-                throw new AppointmentNotFoundException("Invalid status: " + status);
-            }
-        } else {
-            throw new AppointmentNotFoundException("Could not find appointment with ID " + id);
-        }
-    }
+ 
 
 }

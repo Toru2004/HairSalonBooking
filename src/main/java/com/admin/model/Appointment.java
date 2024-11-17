@@ -146,41 +146,6 @@ public class Appointment {
         }
     }
 
-    // Phương thức kiểm tra trạng thái cuộc hẹn có thể thay đổi hay không
-    public boolean canEdit() {
-        return !(status == Status.CANCELLED || status == Status.COMPLETED || status == Status.IN_PROGRESS);
-    }
-
-    // Phương thức kiểm tra trạng thái cuộc hẹn có thể xóa hay không
-    public boolean canDelete() {
-        return status != Status.IN_PROGRESS;
-    }
-
-    public void changeStatus(Status newStatus) {
-        if (canChangeStatus(newStatus)) {
-            this.status = newStatus;
-        } else {
-            throw new IllegalStateException("Cannot change to the new status from the current one.");
-        }
-    }
-
-
-    // Phương thức kiểm tra có thể chuyển sang trạng thái mới hay không
-    public boolean canChangeStatus(Status newStatus) {
-        if (this.status == Status.CANCELLED || this.status == Status.COMPLETED || this.status == Status.IN_PROGRESS) {
-            return false;  // Không thể chuyển lại từ trạng thái đã huỷ, đã hoàn thành hoặc đang thực hiện
-        }
-        if (this.status == Status.PENDING && newStatus == Status.APPROVED) {
-            return true;  // Từ Pending có thể chuyển sang Approved
-        }
-        if (this.status == Status.APPROVED && newStatus == Status.IN_PROGRESS) {
-            return true;  // Từ Approved có thể chuyển sang In Progress
-        }
-        if (this.status == Status.IN_PROGRESS && newStatus == Status.COMPLETED) {
-            return true;  // Từ In Progress có thể chuyển sang Completed
-        }
-        return false;  // Các trạng thái khác không hợp lệ
-    }
 
 
 }
