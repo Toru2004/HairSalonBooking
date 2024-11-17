@@ -6,6 +6,8 @@ import com.admin.repository.StylistRepository;
 import com.admin.exception.StylistNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +26,12 @@ public class StylistService {
 
 
 
-
+    public List<Stylist> getAllStylists() {
+        // Convert Iterable to List
+        Iterable<Stylist> stylistsIterable = stylistRepository.findAll();
+        return StreamSupport.stream(stylistsIterable.spliterator(), false)
+                .collect(Collectors.toList()); // Chuyển Iterable thành List
+    }
 
         public void save(Stylist stylist) {
             stylistRepository.save(stylist);
