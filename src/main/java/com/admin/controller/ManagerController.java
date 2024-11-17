@@ -20,7 +20,7 @@ public class ManagerController {
     @Autowired
     private StaffService staffService;
 
-    @GetMapping("/staff")
+    @GetMapping("/manager/managerStaff")
     public String viewStaff(Model model) {
         List<Staff> listStaff = staffService.findAll();  // Lấy tất cả nhân viên
         model.addAttribute("listStaff", listStaff);
@@ -28,7 +28,7 @@ public class ManagerController {
     }
 
     // Hiển thị form thêm hoặc sửa nhân viên
-    @GetMapping("/staff/form")
+    @GetMapping("/manager/staff_form")
     public String showStaffForm(@RequestParam(value = "id", required = false) Long id, Model model) {
         Staff staff = new Staff();
         if (id != null) {
@@ -40,14 +40,14 @@ public class ManagerController {
     }
 
     // Lưu nhân viên sau khi thêm hoặc chỉnh sửa
-    @PostMapping("/staff/save")
+    @PostMapping("/manager/managerStaff")
     public String saveStaff(@ModelAttribute Staff staff) {
         staffService.save(staff);
         return "redirect:/manager/managerStaff";
     }
 
     // Xóa nhân viên
-    @GetMapping("/staff/delete")
+    @GetMapping("/manager/managerStaff/delete")
     public String deleteStaff(@RequestParam("id") Long id) {
         staffService.delete(id);
         return "redirect:/manager/managerStaff";
@@ -56,11 +56,11 @@ public class ManagerController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @GetMapping("/manager/revenueOverview")
-    public String revenueOverview(Model model) {
+    @GetMapping("/manager/RevenueOverview")
+    public String RevenueOverview(Model model) {
         Map<String, Object> revenueData = appointmentService.getRevenueDataByFilter("monthly");  // Ví dụ, lấy doanh thu theo tháng
         model.addAttribute("revenueData", revenueData);
-        return "manager/revenueOverview";
+        return "/manager/RevenueOverview";
     }
 
 
