@@ -57,6 +57,8 @@
             return "view/pages/stylists"; // Tên file Thymeleaf view
         }
 
+
+
         // Hiển thị form thêm mới stylist
         @GetMapping("/manageStylists/new")
         public String showNewForm(Model model) {
@@ -135,5 +137,9 @@
             }
             return "redirect:/manageStylists";
         }
+
+      
+
+
 
     }

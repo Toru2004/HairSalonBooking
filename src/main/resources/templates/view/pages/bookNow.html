@@ -47,7 +47,15 @@
 
                 <div id="staff-selection" style="display: none;">
                     <h3>Choose a Stylist</h3>
-                    <div id="stylist-list"></div>
+                    <ul>
+                        <th:block th:each="stylist : ${listStylists}">
+                            <li>
+                                <p th:text="${stylist.user.username}">Stylist Name</p>
+                                <p th:text="${stylist.user.email}">Email</p>
+                                <p th:text="${stylist.user.phoneNumber}">Phone</p>
+                            </li>
+                        </th:block>
+                    </ul>
 
                     <!-- Staff Profile -->
                     <div id="staff-profile" class="staff-profile" style="display: none;">
@@ -113,48 +121,49 @@
         fetch('/api/booknow/stylists')
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.text();  // Sử dụng .text() để kiểm tra dữ liệu thô
+                return response.text(); // Đọc dữ liệu thô
             })
             .then(data => {
-                console.log('API Response: ', data);  // Kiểm tra dữ liệu trả về trong console
-
                 try {
-                    // Kiểm tra và parse JSON thủ công
-                    const stylists = JSON.parse(data);  // Cố gắng chuyển chuỗi thành JSON
-                    console.log("Stylists:", stylists); // Kiểm tra danh sách stylist
+                    // Ghi log dữ liệu phản hồi thô để kiểm tra
+                    console.log('Raw response:', data);
 
-                    // Lọc các stylist trùng lặp
-                    const uniqueStylists = Array.from(new Set(stylists.map(stylist => stylist.id)))
-                        .map(id => stylists.find(stylist => stylist.id === id));
+                    // Kiểm tra nếu phản hồi là JSON hợp lệ
+                    const stylists = JSON.parse(data);
+                    console.log("Parsed stylists data:", stylists); // Ghi log dữ liệu đã phân tích
 
                     const stylistList = document.getElementById('stylist-list');
-                    stylistList.innerHTML = '';  // Clear any existing content
+                    stylistList.innerHTML = '';
 
-                    if (uniqueStylists.length === 0) {
+                    if (!Array.isArray(stylists) || stylists.length === 0) {
                         stylistList.innerHTML = '<p>No stylists available.</p>';
-                    } else {
-                        uniqueStylists.forEach(stylist => {
+                        return;
+                    }
+
+                    stylists.forEach(stylist => {
+                        if (stylist.user && stylist.user.username) {
                             const stylistItem = document.createElement('div');
                             stylistItem.classList.add('stylist-item');
                             stylistItem.innerHTML = `
                             <p><strong>${stylist.user.username}</strong></p>
-                            <p>${stylist.user.email}</p>  <!-- Hiển thị email của stylist -->
-                            <p>${stylist.user.phoneNumber}</p>  <!-- Hiển thị số điện thoại -->
+                            <p>${stylist.user.email || 'N/A'}</p>
+
                         `;
-                            stylistItem.addEventListener('click', function() {
-                                // Khi chọn stylist, hiển thị thông tin chi tiết
+
+                            stylistItem.addEventListener('click', function () {
                                 displayStylistProfile(stylist);
                             });
-                            stylistList.appendChild(stylistItem);
-                        });
-                    }
 
-                    document.getElementById('staff-selection').style.display = 'block'; // Hiển thị phần chọn stylist
+                            stylistList.appendChild(stylistItem);
+                        }
+                    });
+
+                    document.getElementById('staff-selection').style.display = 'block';
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
-                    alert('Could not load stylist data. Please check the response format.');
+                    alert('Could not load stylists. Please check the server response.');
                 }
             })
             .catch(error => {
@@ -162,6 +171,7 @@
                 alert('Could not load stylists. Please try again later.');
             });
     }
+
 
 
 
