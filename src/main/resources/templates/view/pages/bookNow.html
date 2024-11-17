@@ -45,17 +45,10 @@
                 <h3>Choose a Service</h3>
                 <div id="care-list"></div>
 
-                <div id="staff-selection" style="display: none;">
+                <div id="staff-selection" >
                     <h3>Choose a Stylist</h3>
-                    <ul>
-                        <th:block th:each="stylist : ${listStylists}">
-                            <li>
-                                <p th:text="${stylist.user.username}">Stylist Name</p>
-                                <p th:text="${stylist.user.email}">Email</p>
-                                <p th:text="${stylist.user.phoneNumber}">Phone</p>
-                            </li>
-                        </th:block>
-                    </ul>
+                    <div id="stylist-list"></div> <!-- Phần tử để hiển thị danh sách stylists -->
+
 
                     <!-- Staff Profile -->
                     <div id="staff-profile" class="staff-profile" style="display: none;">
@@ -74,6 +67,24 @@
 <div th:replace="view/partials/footer :: footer"></div>
 
 <script>
+
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+
+        // Kiểm tra nếu các trường bắt buộc chưa được nhập
+        if (!name || !email || !phone || !date || !time) {
+            alert("All fields are required!");
+            return false; // Ngừng việc gửi form nếu có trường thiếu
+        }
+
+        // Có thể thêm các kiểm tra khác cho email, phone,...
+        return true; // Nếu mọi thứ hợp lệ thì form sẽ được gửi
+    }
+
     // Hàm để gọi API và hiển thị danh sách care services dưới dạng nút
     function loadCares() {
         fetch('/api/booknow/cares')
@@ -117,60 +128,55 @@
         console.log("Selected Services:", selectedServices);
     }
 
+    // Hàm để tải danh sách stylists
     function loadStylists() {
         fetch('/api/booknow/stylists')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.text(); // Đọc dữ liệu thô
+                return response.json(); // Đọc dữ liệu dưới dạng JSON
             })
-            .then(data => {
-                try {
-                    // Ghi log dữ liệu phản hồi thô để kiểm tra
-                    console.log('Raw response:', data);
+            .then(stylists => {
+                const stylistList = document.getElementById('stylist-list');  // Lấy phần tử để hiển thị danh sách stylist
 
-                    // Kiểm tra nếu phản hồi là JSON hợp lệ
-                    const stylists = JSON.parse(data);
-                    console.log("Parsed stylists data:", stylists); // Ghi log dữ liệu đã phân tích
-
-                    const stylistList = document.getElementById('stylist-list');
-                    stylistList.innerHTML = '';
-
-                    if (!Array.isArray(stylists) || stylists.length === 0) {
-                        stylistList.innerHTML = '<p>No stylists available.</p>';
-                        return;
-                    }
-
-                    stylists.forEach(stylist => {
-                        if (stylist.user && stylist.user.username) {
-                            const stylistItem = document.createElement('div');
-                            stylistItem.classList.add('stylist-item');
-                            stylistItem.innerHTML = `
-                            <p><strong>${stylist.user.username}</strong></p>
-                            <p>${stylist.user.email || 'N/A'}</p>
-
-                        `;
-
-                            stylistItem.addEventListener('click', function () {
-                                displayStylistProfile(stylist);
-                            });
-
-                            stylistList.appendChild(stylistItem);
-                        }
-                    });
-
-                    document.getElementById('staff-selection').style.display = 'block';
-                } catch (error) {
-                    console.error('Error parsing JSON:', error);
-                    alert('Could not load stylists. Please check the server response.');
+                if (!stylistList) {
+                    console.error('stylist-list element not found');
+                    return;
                 }
+
+                stylistList.innerHTML = ''; // Clear any existing content
+
+                if (!Array.isArray(stylists) || stylists.length === 0) {
+                    stylistList.innerHTML = '<p>No stylists available.</p>';
+                    return;
+                }
+
+                stylists.forEach(stylist => {
+                    if (stylist.user && stylist.user.username) {
+                        const stylistItem = document.createElement('div');
+                        stylistItem.classList.add('stylist-item');
+                        stylistItem.innerHTML = `
+                        <p><strong>${stylist.user.username}</strong></p>
+                        <p>${stylist.user.email || 'N/A'}</p>
+                    `;
+
+                        stylistItem.addEventListener('click', function () {
+                            displayStylistProfile(stylist);
+                        });
+
+                        stylistList.appendChild(stylistItem);
+                    }
+                });
+
+                document.getElementById('staff-selection').style.display = 'block'; // Hiển thị phần chọn stylist
             })
             .catch(error => {
                 console.error('Error loading stylists:', error);
                 alert('Could not load stylists. Please try again later.');
             });
     }
+
 
 
 
@@ -183,7 +189,7 @@
 
         staffProfile.style.display = 'block';
 
-        staffImage.src = stylist.profileImage || '';  // Giả sử stylist có thuộc tính profileImage
+
         staffDetails.innerHTML = `
             <p><strong>${stylist.user.username}</strong></p>
             <p>${stylist.description}</p>

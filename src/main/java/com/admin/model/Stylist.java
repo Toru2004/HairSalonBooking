@@ -72,7 +72,7 @@ public class Stylist  {
     public void setAvailable(boolean available) {
         this.available = available;
     }
-    
+
 
     public byte[] getProfilePicture() {
         return profilePicture;
