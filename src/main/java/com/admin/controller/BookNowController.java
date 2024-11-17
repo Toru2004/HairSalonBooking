@@ -1,5 +1,5 @@
 package com.admin.controller;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import com.admin.model.Stylist;
 import com.admin.model.Care;
 import com.admin.service.StylistService;
@@ -26,6 +26,9 @@ public class BookNowController {
     public List<Stylist> getStylists() {
         return stylistService.listAll();
     }
+
+
+
 
     // Lấy danh sách care services
     @GetMapping("/cares")

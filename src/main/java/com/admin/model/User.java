@@ -9,6 +9,7 @@ public class User {
     // Định nghĩa cột khóa chính với giá trị tự động tăng
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
     // Định nghĩa cột 'username' với độ dài tối đa là 45, không cho phép null
     @Column(length = 45, nullable = false, name = "username")

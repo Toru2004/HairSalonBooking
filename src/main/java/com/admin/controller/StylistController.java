@@ -135,4 +135,5 @@
             }
             return "redirect:/manageStylists";
         }
+
     }

@@ -16,16 +16,15 @@ public class StylistService {
         @Autowired
         private StylistRepository stylistRepository;
 
-    public List<Stylist> getAllStylists() {
-        // Chuyển Iterable thành List
-        Iterable<Stylist> stylistIterable = stylistRepository.findAll();
-        return new ArrayList<>((Collection<? extends Stylist>) stylistIterable);
+
+
+    public List<Stylist> listAll() {
+        return (List<Stylist>) stylistRepository.findAll();  // Kiểm tra lại phương thức này
     }
 
 
-        public List<Stylist> listAll() {
-            return (List<Stylist>) stylistRepository.findAll();
-        }
+
+
 
         public void save(Stylist stylist) {
             stylistRepository.save(stylist);
