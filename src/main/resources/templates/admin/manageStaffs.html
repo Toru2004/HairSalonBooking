@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage Users</title>
+    <title>Admin - Manage Staffs</title>
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <style>
-
+        /* Add any custom styles here */
     </style>
 </head>
 <body>
@@ -21,16 +21,15 @@
         <!-- Sidebar Menu -->
         <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
 
-
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">
             <div class="container">
                 <div class="text-center mb-4">
-                    <h2>Manage Users</h2>
+                    <h2>Manage Staffs</h2>
                 </div>
 
                 <div class="text-end mb-3">
-                    <a class="btn btn-primary" th:href="@{/manageUsers/new}">Add New User</a>
+                    <a class="btn btn-primary" th:href="@{/manageStaffs/new}">Add New Staff</a>
                 </div>
 
                 <div th:if="${message}" class="alert alert-success text-center">
@@ -45,23 +44,27 @@
                             <th>Username</th>
                             <th>Email</th>
                             <th>Phone number</th>
-                            <th>Role</th>
                             <th>Enabled</th>
+                            <th>Manager</th> <!-- Added Manager column -->
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="user : ${listUsers}">
+                        <th:block th:each="staff : ${listStaffs}">
                             <tr>
-                                <td>[[${user.id}]]</td>
-                                <td>[[${user.username}]]</td>
-                                <td>[[${user.email}]]</td>
-                                <td>[[${user.phoneNumber}]]</td>
-                                <td>[[${user.role}]]</td>
-                                <td>[[${user.enabled}]]</td>
+                                <td>[[${staff.id}]]</td>
+                                <td>[[${staff.user.username}]]</td>
+                                <td>[[${staff.user.email}]]</td>
+                                <td>[[${staff.user.phoneNumber}]]</td>
+                                <td>[[${staff.user.enabled}]]</td>
                                 <td>
-                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageUsers/edit/' + ${user.id}}">Edit</a>
-                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageUsers/delete/' + ${user.id}}">Delete</a>
+                                    <!-- Display Manager's name or details -->
+                                    <span th:text="|${staff.manager.user.username}|">Manager's Name</span>
+                                    <!-- You can display additional manager details like email or phone number -->
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStaffs/edit/' + ${staff.id}}">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStaffs/delete/' + ${staff.id}}">Delete</a>
                                 </td>
                             </tr>
                         </th:block>

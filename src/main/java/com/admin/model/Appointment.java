@@ -1,14 +1,16 @@
 package com.admin.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
+<<<<<<< HEAD
 
 import java.time.LocalDate;
 
 import java.util.List;
 
+=======
+import java.time.LocalDate;
+>>>>>>> 32e447fcc978edb38f93a4f083615b0194cc3b4e
 @Entity
 @Table(name = "appointments")
 public class Appointment {
@@ -25,19 +27,17 @@ public class Appointment {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany
-    @JoinTable(
-            name = "appointment_care",
-            joinColumns = @JoinColumn(name = "appointment_id"),
-            inverseJoinColumns = @JoinColumn(name = "care_id")
-    )
-    private List<Care> cares;  // Thay đổi từ @ManyToOne thành @ManyToMany
+    @ManyToOne
+    @JoinColumn(name = "care_id")
+    private Care care;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    @Column(name = "appointment_date", nullable = false)
+    @Column(name = "appointment_date")
     private LocalDateTime appointmentDate;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 32e447fcc978edb38f93a4f083615b0194cc3b4e
     private LocalDate date; // Nếu là LocalDate, hoặc có thể là Date hoặc Timestamp.
 
     public LocalDate getDate() {
@@ -59,6 +59,7 @@ public class Appointment {
     public Status getStatus() {
         return status;
     }
+<<<<<<< HEAD
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
@@ -71,10 +72,24 @@ public class Appointment {
     // Getters and Setters
     public Integer getId() {
         return id;
+=======
+
+    public void setStatus(Status status) {
+        this.status = status;
+>>>>>>> 32e447fcc978edb38f93a4f083615b0194cc3b4e
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+    private Double totalPrice;
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Stylist getStylist() {
@@ -93,13 +108,12 @@ public class Appointment {
         this.customer = customer;
     }
 
-    public List<Care> getCares() {
-        return cares;
+    public Care getCare() {
+        return care;
     }
 
-    public void setCares(List<Care> cares) {
-        this.cares = cares;
-        calculateTotalPrice();  // Tính toán lại tổng giá mỗi khi danh sách cares thay đổi
+    public void setCare(Care care) {
+        this.care = care;
     }
 
     public LocalDateTime getAppointmentDate() {
@@ -110,69 +124,14 @@ public class Appointment {
         this.appointmentDate = appointmentDate;
     }
 
-    public Status getStatus() {
-        return status;
-    }
-
-
-
-
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    // Tính toán tổng giá dựa trên các dịch vụ
-    private void calculateTotalPrice() {
-        if (cares != null) {
-            totalPrice = cares.stream().mapToDouble(Care::getPrice).sum();
-        } else {
-            totalPrice = 0.0;
-        }
-    }
-
     @Override
     public String toString() {
         return "Appointment{" +
                 "id=" + id +
                 ", stylist=" + stylist +
                 ", customer=" + customer +
-                ", cares=" + cares +
+                ", care=" + care +
                 ", appointmentDate=" + appointmentDate +
-                ", status=" + status +
-                ", totalPrice=" + totalPrice +
                 '}';
     }
-
-    // Enum Status cho các trạng thái cuộc hẹn
-    public enum Status {
-        PENDING,       // Đang đợi duyệt
-        APPROVED,      // Đã duyệt
-        IN_PROGRESS,   // Đang thực hiện
-        CANCELLED,     // Đã huỷ
-        COMPLETED;     // Đã thực hiện xong
-
-        @Override
-        public String toString() {
-            switch (this) {
-                case PENDING: return "Pending";
-                case APPROVED: return "Approved";
-                case IN_PROGRESS: return "In Progress";
-                case CANCELLED: return "Cancelled";
-                case COMPLETED: return "Completed";
-                default: return "Unknown";
-            }
-        }
-    }
-
-
-
 }

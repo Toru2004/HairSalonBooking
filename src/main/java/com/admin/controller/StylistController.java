@@ -1,33 +1,21 @@
 package com.admin.controller;
 
-import com.admin.model.Stylist;
 import com.admin.exception.StylistNotFoundException;
+import com.admin.model.Stylist;
 import com.admin.service.StylistService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.List;
-// Được sử dụng để xử lý các tệp tải lên từ client (người dùng gửi lên server)
-import org.springframework.web.multipart.MultipartFile;
-
-// Được sử dụng để xử lý ngoại lệ khi làm việc với các tệp tin (như khi lưu file)
-import java.io.IOException;
-
-// Được sử dụng trong các phương thức controller để nhận dữ liệu từ form, hoặc truyền dữ liệu vào đối tượng model
-import org.springframework.web.bind.annotation.ModelAttribute;
-
-// Được sử dụng trong các phương thức controller để nhận các tham số từ form (như tệp tải lên)
-import org.springframework.web.bind.annotation.RequestParam;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity; // Thêm import này
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.util.List;
 
 
 
@@ -114,6 +102,7 @@ public class StylistController {
             return "redirect:/manageStylists";
         }
 
+        stylist.getUser().setRole("stylist");
         stylistService.save(stylist); // Lưu stylist vào cơ sở dữ liệu
         ra.addFlashAttribute("message", "The stylist has been saved successfully.");
         return "redirect:/manageStylists";

@@ -48,9 +48,16 @@ public class AuthController {
                 model.addAttribute("message", "Login successful");
                 if ("admin".equals(user.get().getRole())) {
                     return "redirect:/manageUsers"; // Chuyển hướng đến trang admin nếu là admin
+                } else if ("stylist".equals(user.get().getRole())) {
+                    return "redirect:/manageUsers"; // Chuyển hướng đến trang chủ nếu không phải admin
+                } else if ("manager".equals(user.get().getRole())) {
+                    return "redirect:/managerDashboard"; // Chuyển hướng đến trang chủ nếu không phải admin
+                } else if ("staff".equals(user.get().getRole())) {
+                    return "redirect:/manageUsers"; // Chuyển hướng đến trang chủ nếu không phải admin
                 } else {
                     return "view/pages/home"; // Chuyển hướng đến trang chủ nếu không phải admin
                 }
+
             } else {
                 model.addAttribute("error", "Invalid username or password");
                 return "view/pages/login"; // Trở lại trang đăng nhập với lỗi
