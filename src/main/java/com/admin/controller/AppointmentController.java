@@ -135,6 +135,19 @@ public class AppointmentController {
     }
 
 
+    @GetMapping("/appointments")
+    public List<Appointment> getAllAppointments() {
+        List<Appointment> appointments = appointmentService.getAllAppointments();
+
+        // Đảm bảo tất cả các appointment đều có trạng thái, nếu không gán là PENDING
+        appointments.forEach(appointment -> {
+            if (appointment.getStatus() == null) {
+                appointment.setStatus(Appointment.Status.PENDING);
+            }
+        });
+
+        return appointments;
+    }
 
 
 }
