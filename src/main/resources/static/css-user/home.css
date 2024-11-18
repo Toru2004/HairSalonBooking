@@ -234,6 +234,7 @@ nav ul li a {
 }
 /* khung 2 end */
 /* 2box tiếp theo */
+
 .section-container {
     padding: 50px 0;
 }
@@ -381,8 +382,57 @@ nav ul li a {
         max-width: 90%; /* Đảm bảo hình ảnh lớn trên màn hình lớn */
     }
 }
+ /* Hiệu ứng fade-in */
+ .fade-in {
+     opacity: 0;
+     transform: translateY(20px);
+     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+ }
 
-/* end phần 3 */
+ /* Khi phần tử hiển thị */
+ .fade-in.show {
+     opacity: 1;
+     transform: translateY(0);
+ }
+
+ /* Location Container */
+ .location-container {
+     background-color: #f8f9fa;
+     padding: 40px;
+     border-radius: 8px;
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+ }
+
+ /* Section Container */
+ .section-container {
+     padding: 50px 0;
+ }
+
+ .box, .box-dark {
+     background-color: #e6f5f5;
+     border-radius: 8px;
+     padding: 30px;
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     justify-content: space-between;
+ }
+
+ .box-dark {
+     background-color: #f5f5f5;
+ }
+
+ .phone-img {
+     max-width: 100%;
+     border-radius: 8px;
+     margin-top: 20px;
+ }
+
+
+ /* end phần 3 */
 /* phần 4 */
 .city-list {
     font-size: 1.2rem;

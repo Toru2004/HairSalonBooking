@@ -4,12 +4,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-<<<<<<< HEAD
+
 import java.time.LocalDate;
-=======
+
 import java.util.List;
 
->>>>>>> cfa37dbbcd62bf16b15f9fab582777582f179811
 @Entity
 @Table(name = "appointments")
 public class Appointment {
@@ -38,7 +37,7 @@ public class Appointment {
     @Column(name = "appointment_date", nullable = false)
     private LocalDateTime appointmentDate;
 
-<<<<<<< HEAD
+
     private LocalDate date; // Nếu là LocalDate, hoặc có thể là Date hoặc Timestamp.
 
     public LocalDate getDate() {
@@ -60,14 +59,14 @@ public class Appointment {
     public Status getStatus() {
         return status;
     }
-=======
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;  // Enum Status
 
     @Column(name = "total_price")
     private Double totalPrice;
->>>>>>> cfa37dbbcd62bf16b15f9fab582777582f179811
+
 
     // Getters and Setters
     public Integer getId() {

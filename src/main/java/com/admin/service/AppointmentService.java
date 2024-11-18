@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
-import java.util.ArrayList;
+
 
 @Service
 public class AppointmentService {
@@ -86,12 +86,8 @@ public class AppointmentService {
         } else {
             throw new AppointmentNotFoundException("Could not find appointment with ID " + id);
         }
+
     }
-
-
-<<<<<<< HEAD
-=======
- 
-
->>>>>>> cfa37dbbcd62bf16b15f9fab582777582f179811
 }
+
+

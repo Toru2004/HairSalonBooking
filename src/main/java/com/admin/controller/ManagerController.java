@@ -1,6 +1,5 @@
 package com.admin.controller;
 
-import com.admin.model.Staff;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,46 +10,12 @@ import com.admin.service.StaffService;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org. springframework. web. bind. annotation. RequestParam;
 
 @Controller
 public class ManagerController {
-    @Autowired
-    private StaffService staffService;
-
-    @GetMapping("/manager/managerStaff")
-    public String viewStaff(Model model) {
-        List<Staff> listStaff = staffService.findAll();  // Lấy tất cả nhân viên
-        model.addAttribute("listStaff", listStaff);
-        return "redirect:/manager/managerStaff";
-    }
-
-    // Hiển thị form thêm hoặc sửa nhân viên
-    @GetMapping("/manager/addStaff")
-    public String showStaffForm(@RequestParam(value = "id", required = false) Long id, Model model) {
-        Staff staff = new Staff();
-        if (id != null) {
-            staff = staffService.findById(id);
-        }
-        model.addAttribute("staff", staff);
-        model.addAttribute("pageTitle", (id == null ? "Add New Staff" : "Edit Staff"));
-        return "redirect:/manager/addStaff";
-    }
-
-    // Lưu nhân viên sau khi thêm hoặc chỉnh sửa
-    @PostMapping("/manager/managerStaff")
-    public String saveStaff(@ModelAttribute Staff staff) {
-        staffService.save(staff);
-        return "redirect:/manager/managerStaff";
-    }
-
-    // Xóa nhân viên
-    @GetMapping("/manager/managerStaff/delete")
-    public String deleteStaff(@RequestParam("id") Long id) {
-        staffService.delete(id);
-        return "redirect:/manager/managerStaff";
+    @GetMapping("/RevenueOverview")
+    public String RevenueOverview() {
+        return "RevenueOverview";
     }
 
     @Autowired
