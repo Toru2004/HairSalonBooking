@@ -44,7 +44,7 @@ public class AppointmentService {
 
         // Nhóm doanh thu theo tháng
         for (Appointment appointment : appointments) {
-            String month = appointment.getDate().getMonth().toString(); // Chuyển ngày thành tháng
+            String month = appointment.getAppointmentDate().getMonth().toString(); // Chuyển ngày thành tháng
             Double revenue = appointment.getTotalPrice();
 
             // Cộng doanh thu vào từng tháng
@@ -86,13 +86,9 @@ public class AppointmentService {
         } else {
             throw new AppointmentNotFoundException("Could not find appointment with ID " + id);
         }
-
     }
-<<<<<<< HEAD
-=======
 
-
->>>>>>> 32e447fcc978edb38f93a4f083615b0194cc3b4e
 }
+
 
 

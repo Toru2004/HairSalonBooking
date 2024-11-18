@@ -1,5 +1,6 @@
 package com.admin.controller;
 
+import com.admin.model.Appointment;
 import com.admin.model.Staff;
 import com.admin.model.Manager;
 import com.admin.model.User;  // Import the User model
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class StaffController {
+
 
     @Autowired
     private StaffService staffService;
@@ -28,6 +31,14 @@ public class StaffController {
 
     @Autowired
     private UserService userService;  // Inject the UserService
+
+    @GetMapping("/Staff/staffDashboard")
+    public String staffDashboard(Model model) {
+
+        return "Staff/staffDashboard";
+    }
+
+
 
     @GetMapping("/manageStaffs")
     public String showStaffList(Model model) {
