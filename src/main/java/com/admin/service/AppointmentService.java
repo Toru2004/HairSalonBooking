@@ -6,6 +6,9 @@ import com.admin.repository.AppointmentRepository;
 import com.admin.utils.TimePeriodHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.Month;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -32,6 +35,14 @@ public class AppointmentService {
     }
 
 
+    // Phương thức trả về danh sách cuộc hẹn trong tháng cụ thể
+    public List<Appointment> getAppointmentsByMonth(int year, int month) {
+        // Lấy ngày đầu và ngày cuối của tháng
+        LocalDateTime startDate = LocalDateTime.of(year, month, 1, 0, 0);
+        LocalDateTime endDate = startDate.plusMonths(1).minusDays(1).withHour(23).withMinute(59).withSecond(59);
+
+        return appointmentRepository.findAppointmentsByDateBetween(startDate, endDate);
+    }
     @Autowired
     private AppointmentRepository AppointmentRepository; // Giả sử bạn có repository này
 

@@ -17,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.admin.model.Appointment.Status; // Đảm bảo đã import enum Status
+import java.time.LocalDate;
+
 
 import java.util.List;
 
@@ -34,18 +36,35 @@ public class AppointmentController {
 
     @Autowired
     private CareService careService;
+    @GetMapping("/manageAppointments/byMonth")
+    public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, Model model) {
+        // Get appointments by year and month
+        List<Appointment> appointments = appointmentService.getAppointmentsByMonth(year, month);
+        model.addAttribute("listAppointments", appointments);
 
-    // Hiển thị danh sách tất cả Appointment
+        // Add the year and month to the model to keep track of the selected month
+        model.addAttribute("selectedYear", year);
+        model.addAttribute("selectedMonth", month);
+
+        return "admin/appointmentFilterForm"; // The same view used for managing all appointments
+    }
+
     @GetMapping("/manageAppointments")
-    public String showAppointmentList(Model model) {
-        // Gọi phương thức listAll() để lấy danh sách tất cả các cuộc hẹn
-        List<Appointment> listAppointments = appointmentService.listAll();
-        model.addAttribute("listAppointments", listAppointments);
+    public String showManageAppointmentsPage(Model model) {
+        // Lấy ngày tháng năm hiện tại
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int currentMonth = currentDate.getMonthValue();
 
-        // Thêm danh sách các trạng thái vào model
-        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values()));
+        // Truy xuất danh sách cuộc hẹn từ cơ sở dữ liệu
+        List<Appointment> appointments = appointmentService.getAllAppointments(); // Giả sử bạn có phương thức này
 
-        return "admin/manageAppointments"; // Trả về view manageAppointments.html
+        // Thêm thông tin vào model
+        model.addAttribute("listAppointments", appointments);
+        model.addAttribute("currentYear", currentYear);
+        model.addAttribute("currentMonth", currentMonth);
+
+        return "admin/manageAppointments"; // Tên trang của bạn
     }
 
     @GetMapping("/manageAppointments/new")

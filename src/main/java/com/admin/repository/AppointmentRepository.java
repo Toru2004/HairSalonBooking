@@ -18,6 +18,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             nativeQuery = true)
     List<Object[]> findRevenueByServiceByTimePeriodNative(@Param("startDate") LocalDateTime startDate,
                                                           @Param("endDate") LocalDateTime endDate);
+    @Query("SELECT a FROM Appointment a WHERE a.appointmentDate BETWEEN :startDate AND :endDate")
+    List<Appointment> findAppointmentsByDateBetween(@Param("startDate") LocalDateTime startDate,
+                                                    @Param("endDate") LocalDateTime endDate);
 }
 
 
