@@ -42,6 +42,7 @@ public class ManagerController {
     // Lưu nhân viên sau khi thêm hoặc chỉnh sửa
     @PostMapping("/manager/managerStaff")
     public String saveStaff(@ModelAttribute Staff staff) {
+        staff.getUser().setRole("staff");
         staffService.save(staff);
         return "redirect:/manager/managerStaff";
     }
