@@ -38,13 +38,12 @@ public class CareController {
 
     @GetMapping("/page/services")
     public String showServices(Model model) {
-        List<Care> listCares = careService.listAll().stream()
-                .sorted(Comparator.comparing(Care::getName))
-                .collect(Collectors.toList());
+        List<Care> listCares = careService.listAll(); // Loại bỏ stream() và sorted()
         model.addAttribute("listCares", listCares);
         model.addAttribute("title", "Our Services");
         return "view/pages/services";
     }
+
 
 
     @GetMapping("/manageCares/image/{id}")

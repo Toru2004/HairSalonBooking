@@ -19,20 +19,10 @@
 
     <div class="border border-secondary rounded p-3">
       <!-- Tên dịch vụ -->
-      <!-- Tên dịch vụ -->
       <div class="form-group mb-3">
         <label for="name" class="form-label">Service Name:</label>
-        <select id="name" th:field="*{name}" class="form-control" required>
-          <option value="" disabled selected>Select a service</option>
-          <option value="Haircut">Haircut</option>
-          <option value="Hair Dye">Hair Dye</option>
-          <option value="Hair Curling">Hair Curling</option>
-          <option value="Makeup">Makeup</option>
-          <option value="Massage">Massage</option>
-          <option value="Head Washing">Head Washing</option>
-        </select>
+        <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter the service name" required>
       </div>
-
 
       <!-- Giá dịch vụ -->
       <div class="form-group mb-3">
@@ -76,18 +66,6 @@
       previewImage.style.display = 'block';
     }
   </script>
-
-
-
-  <script>
-    function previewImage(event) {
-      const previewImage = document.getElementById('previewImage');
-      previewImage.src = URL.createObjectURL(event.target.files[0]);
-      previewImage.style.display = 'block';
-    }
-  </script>
-
-
 </div>
 
 <!-- Thêm Bootstrap JS nếu cần -->
