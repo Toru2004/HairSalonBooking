@@ -7,16 +7,15 @@ body {
 
 .bookNow-section {
     padding: 20px;
-
     background-color: #ffffff;
 }
 
 .booking-container {
     display: flex;
     flex-direction: column;
-    max-width: 1200px; /* Tăng chiều rộng tối đa */
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 40px; /* Thêm padding cho xung quanh */
+    padding: 40px;
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -45,10 +44,16 @@ h2 {
     text-align: center;
 }
 
+h3 {
+    color: #555;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
 form {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px; /* Thêm khoảng cách giữa các phần tử */
+    gap: 30px;
 }
 
 label {
@@ -64,7 +69,7 @@ input[type="date"],
 input[type="time"],
 select {
     width: 100%;
-    padding: 12px; /* Tăng padding của các ô nhập liệu */
+    padding: 12px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -93,34 +98,36 @@ button:hover {
     margin-top: 10px;
 }
 
-.service-checkbox label {
-    flex: 1 1 45%;
+.service-button {
+    padding: 12px 20px;
     background-color: #f3f3f3;
-    padding: 12px; /* Tăng padding cho nhãn dịch vụ */
-    border-radius: 8px;
     border: 1px solid #ddd;
-    display: flex;
-    align-items: center;
+    border-radius: 8px;
+    display: inline-block;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
 }
 
-.service-checkbox label:hover {
+.service-button:hover {
     background-color: #959595;
-
 }
 
-.service-checkbox input:checked + label {
+.service-button.selected {
     background-color: #070202;
-    color:white;
+    color: white;
 }
 
-.service-checkbox input {
+
+.service-info .booking-input input {
     display: none;
 }
 
 .staff-profile {
-    display: none; /* Ẩn profile nhân viên mặc định */
+    display: none;
+    flex-direction: row;
     align-items: center;
     margin-top: 15px;
     margin-bottom: 15px;
@@ -130,21 +137,36 @@ button:hover {
     width: 100px;
     height: 100px;
     margin-right: 15px;
-
+    border-radius: 50%;
 }
 
 .staff-profile div {
     flex: 1;
 }
 
-.customer-info.active {
-    border: 2px solid #000000; /* Đổi màu viền khi có dữ liệu */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Thêm bóng mờ */
-    transition: border 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp */
+.customer-info.active,
+.service-info.active {
+    border: 2px solid #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
-.service-info.active {
-    border: 2px solid #000000; /* Đổi màu viền khi có dữ liệu */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Thêm bóng mờ */
-    transition: border 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng chuyển tiếp */
+@media (max-width: 768px) {
+    .booking-container {
+        padding: 20px;
+    }
+
+    .customer-info,
+    .service-info {
+        flex: 1 1 100%;
+    }
+
+    .service-button {
+        flex: 1 1 100%;
+    }
+
+    .staff-profile img {
+        width: 80px;
+        height: 80px;
+    }
 }

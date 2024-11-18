@@ -9,176 +9,198 @@
     <link rel="stylesheet" th:href="@{/css-user/footer.css}">
     <link rel="stylesheet" th:href="@{/css-user/popUp.css}">
     <link rel="stylesheet" th:href="@{/css-user/booknow.css}">
-    <!-- css của login/signup-->
-    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
-    <!--Login/Signup-->
-    <div th:replace="view/partials/popUpForms :: popUpForms"></div>
-    <!-- Header-->
-    <div th:replace="view/partials/header :: header"></div>
+<!--Login/Signup-->
+<div th:replace="view/partials/popUpForms :: popUpForms"></div>
+<!-- Header-->
+<div th:replace="view/partials/header :: header"></div>
 
-    <section class="bookNow-section">
-        <div class="booking-container">
-            <form id="booking-form" onsubmit="return validateForm()">
-                <!-- Customer Information -->
-                <div class="box customer-info">
-                    <h2>Customer Information</h2>
-                    <label for="name">Customer Name:</label>
-                    <input type="text" id="name" name="name" required>
+<section class="bookNow-section">
+    <div class="booking-container">
+        <form id="booking-form" onsubmit="return validateForm()">
+            <!-- Customer Information -->
+            <div class="box customer-info">
+                <h2>Customer Information</h2>
+                <label for="name">Customer Name:</label>
+                <input type="text" id="name" name="name" required>
 
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
 
-                    <label for="phone">Phone Number:</label>
-                    <input type="tel" id="phone" name="phone" required>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
 
-                    <label for="date">Booking Date:</label>
-                    <input type="date" id="date" name="date" required>
+                <label for="date">Booking Date:</label>
+                <input type="date" id="date" name="date" required>
 
-                    <label for="time">Time:</label>
-                    <input type="time" id="time" name="time" required>
-                </div>
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" required>
+            </div>
 
-                <!-- Service Information -->
-                <div class="box service-info">
-                    <h2>Service Information</h2>
-                    <label style="font-size:18px;">Select Services:</label>
-                    <div class="booking-input service-checkbox">
-                        <input type="checkbox" id="service-haircut" name="service" value="haircut" onchange="toggleStaffSelection()">
-                        <label  for="service-haircut" >Hair Cut</label>
+            <!-- Service Information -->
+            <div class="box service-info">
+                <h2>Service Information</h2>
+                <h3>Choose a Service</h3>
+                <div id="care-list"></div>
 
-                        <input type="checkbox" id="service-makeup" name="service" value="makeup" onchange="toggleStaffSelection()">
-                        <label for="service-makeup">Makeup</label>
+                <div id="staff-selection" >
+                    <h3>Choose a Stylist</h3>
+                    <div id="stylist-list"></div> <!-- Phần tử để hiển thị danh sách stylists -->
 
-                        <input type="checkbox" id="service-massage" name="service" value="massage" onchange="toggleStaffSelection()">
-                        <label for="service-massage">Massage</label>
 
-                        <input type="checkbox" id="service-headwashing" name="service" value="headwashing" onchange="toggleStaffSelection()">
-                        <label for="service-headwashing">Hair Washing</label>
-
-                        <input type="checkbox" id="service-hairdying" name="service" value="hairdying" onchange="toggleStaffSelection()">
-                        <label for="service-hairdying">Hair Dying</label>
-
-                        <input type="checkbox" id="service-haircurling" name="service" value="haircurling" onchange="toggleStaffSelection()">
-                        <label for="service-haircurling">Hair Curling</label>
+                    <!-- Staff Profile -->
+                    <div id="staff-profile" class="staff-profile" style="display: none;">
+                        <img id="staff-image" src="" alt="Profile Image">
+                        <div id="staff-details"></div>
                     </div>
-                    <div id="staff-selection" style="display: none;">
-                        <label for="staff" style="font-size:18px;">Select Staff:</label>
-                        <select id="staff" name="staff" required onchange="displayStaffProfile()">
-                            <option value="">Select Staff</option>
-                            <option value="1">Luu Truong Van</option>
-                            <option value="2">Le Nguyen Minh Phuc</option>
-                            <option value="3">Tran Thanh Dong</option>
-                            <option value="4">Do Tan Phat</option>
-                            <option value="5">Nguyen Tri Khai</option>
-                        </select>
-
-                        <div id="staff-profile" class="staff-profile">
-                            <img id="staff-image" src="" alt="Profile Image">
-                            <div id="staff-details"></div>
-                        </div>
-                    </div>
-
-
                 </div>
-                <button type="submit">Book Appointment</button>
-            </form>
-        </div>
-    </section>
+            </div>
 
-    <!-- Footer -->
-    <div th:replace="view/partials/footer :: footer"></div>
-</body>
-</html>
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="view/partials/footer :: footer"></div>
 
 <script>
-    const staffData = {
-        1: { name: "Luu Truong Van", age: 30, rating: 4.5, image: "images/staff1.jpg" },
-        2: { name: "Le Nguyen Minh Phuc", age: 28, rating: 4.8, image: "images/staff4.jpg" },
-        3: { name: "Tran Thanh Dong", age: 35, rating: 4.2, image: "images/staff2.jpg" },
-        4: { name: "Do Tan Phat", age: 31, rating: 4.7, image: "images/staff3.jpg" },
-        5: { name: "Nguyen Tri Khai", age: 29, rating: 4.6, image: "images/staff5.jpg" }
-    };
 
     function validateForm() {
-        const checkboxes = document.querySelectorAll('input[name="service"]:checked');
-        if (checkboxes.length === 0) {
-            alert("Please select at least one service before booking.");
-            return false; // Ngăn chặn việc gửi form
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+
+        // Kiểm tra nếu các trường bắt buộc chưa được nhập
+        if (!name || !email || !phone || !date || !time) {
+            alert("All fields are required!");
+            return false; // Ngừng việc gửi form nếu có trường thiếu
         }
-        return true; // Cho phép gửi form
+
+        // Có thể thêm các kiểm tra khác cho email, phone,...
+        return true; // Nếu mọi thứ hợp lệ thì form sẽ được gửi
     }
 
-    function toggleStaffSelection() {
-        const checkboxes = document.querySelectorAll('input[name="service"]:checked');
-        const staffSelection = document.getElementById('staff-selection');
+    // Hàm để gọi API và hiển thị danh sách care services dưới dạng nút
+    function loadCares() {
+        fetch('/api/booknow/cares')
+            .then(response => response.json())
+            .then(cares => {
+                const careList = document.getElementById('care-list');
+                careList.innerHTML = '';  // Clear any existing content
 
-        // Hiện phần chọn nhân viên nếu có ít nhất một dịch vụ được chọn
-        if (checkboxes.length > 0) {
-            staffSelection.style.display = 'block';
+                cares.forEach(care => {
+                    const careButton = document.createElement('button');
+                    careButton.classList.add('service-button');
+                    careButton.innerHTML = `<strong>${care.name}</strong>`;
+                    careButton.dataset.serviceId = care.id; // Lưu ID dịch vụ vào button
+
+                    careButton.addEventListener('click', function() {
+                        // Toggle class "selected" để đánh dấu dịch vụ đã chọn
+                        careButton.classList.toggle('selected');
+                        handleServiceSelection(care.id);  // Xử lý khi chọn hoặc bỏ chọn dịch vụ
+                    });
+
+                    careList.appendChild(careButton);
+                });
+            })
+            .catch(error => console.error('Error loading cares:', error));
+    }
+
+    // Hàm xử lý khi chọn dịch vụ
+    let selectedServices = []; // Mảng lưu các dịch vụ đã chọn
+
+    function handleServiceSelection(serviceId) {
+        const index = selectedServices.indexOf(serviceId);
+
+        if (index > -1) {
+            // Nếu dịch vụ đã được chọn thì bỏ chọn
+            selectedServices.splice(index, 1);
         } else {
-            staffSelection.style.display = 'none';
-            hideStaffProfile(); // Ẩn profile nhân viên khi không có dịch vụ nào được chọn
+            // Nếu dịch vụ chưa được chọn thì thêm vào mảng
+            selectedServices.push(serviceId);
         }
+
+        console.log("Selected Services:", selectedServices);
     }
 
-    function displayStaffProfile() {
-        const staffSelect = document.getElementById('staff');
-        const selectedStaffId = staffSelect.value;
-        const profileDiv = document.getElementById('staff-profile');
+    // Hàm để tải danh sách stylists
+    function loadStylists() {
+        fetch('/api/booknow/stylists')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // Đọc dữ liệu dưới dạng JSON
+            })
+            .then(stylists => {
+                const stylistList = document.getElementById('stylist-list');  // Lấy phần tử để hiển thị danh sách stylist
+
+                if (!stylistList) {
+                    console.error('stylist-list element not found');
+                    return;
+                }
+
+                stylistList.innerHTML = ''; // Clear any existing content
+
+                if (!Array.isArray(stylists) || stylists.length === 0) {
+                    stylistList.innerHTML = '<p>No stylists available.</p>';
+                    return;
+                }
+
+                stylists.forEach(stylist => {
+                    if (stylist.user && stylist.user.username) {
+                        const stylistItem = document.createElement('div');
+                        stylistItem.classList.add('stylist-item');
+                        stylistItem.innerHTML = `
+                        <p><strong>${stylist.user.username}</strong></p>
+                        <p>${stylist.user.email || 'N/A'}</p>
+                    `;
+
+                        stylistItem.addEventListener('click', function () {
+                            displayStylistProfile(stylist);
+                        });
+
+                        stylistList.appendChild(stylistItem);
+                    }
+                });
+
+                document.getElementById('staff-selection').style.display = 'block'; // Hiển thị phần chọn stylist
+            })
+            .catch(error => {
+                console.error('Error loading stylists:', error);
+                alert('Could not load stylists. Please try again later.');
+            });
+    }
+
+
+
+
+
+    // Hàm để hiển thị profile chi tiết của stylist khi chọn
+    function displayStylistProfile(stylist) {
+        const staffProfile = document.getElementById('staff-profile');
         const staffImage = document.getElementById('staff-image');
         const staffDetails = document.getElementById('staff-details');
 
-        // Nếu không có nhân viên nào được chọn, ẩn profile
-        if (selectedStaffId === "") {
-            hideStaffProfile();
-            return; // Thoát hàm
-        }
+        staffProfile.style.display = 'block';
 
-        // Hiện profile nhân viên được chọn
-        const staffInfo = staffData[selectedStaffId];
-        staffImage.src = staffInfo.image;
+
         staffDetails.innerHTML = `
-            <strong>Name:</strong> ${staffInfo.name}<br>
-            <strong>Age:</strong> ${staffInfo.age}<br>
-            <strong>Rating:</strong> ${staffInfo.rating} ★
+            <p><strong>${stylist.user.username}</strong></p>
+            <p>${stylist.description}</p>
         `;
-        profileDiv.style.display = 'flex'; // Hiện profile
     }
 
-    function hideStaffProfile() {
-        document.getElementById('staff-profile').style.display = 'none';
-    }
-
-    // Thêm sự kiện cho các ô nhập liệu customer-info
-    document.querySelectorAll('.customer-info input').forEach(input => {
-        input.addEventListener('input', function() {
-            const customerInfoBox = document.querySelector('.customer-info');
-            if (this.value) {
-                customerInfoBox.classList.add('active');
-            } else {
-                const allInputsFilled = Array.from(document.querySelectorAll('.customer-info input')).some(input => input.value);
-                if (!allInputsFilled) {
-                    customerInfoBox.classList.remove('active');
-                }
-            }
-        });
-    });
-
-    // Thêm sự kiện cho các ô dịch vụ
-    document.querySelectorAll('.service-info input').forEach(input => {
-        input.addEventListener('change', function() {
-            const serviceInfoBox = document.querySelector('.service-info');
-            const checkboxes = document.querySelectorAll('.service-info input[name="service"]:checked');
-            if (checkboxes.length > 0) {
-                serviceInfoBox.classList.add('active');
-            } else {
-                serviceInfoBox.classList.remove('active');
-            }
-        });
-    });
+    // Gọi các hàm load dữ liệu khi trang tải
+    window.onload = function() {
+        loadCares(); // Chỉ gọi loadCares khi trang tải
+        loadStylists(); // Hiển thị danh sách stylist ngay khi tải trang
+    };
 </script>
-
-<!-- Cập nhật lại đường dẫn JS với th:src -->
-<script th:src="@{/js/popUp.js}"></script>
+</body>
+</html>

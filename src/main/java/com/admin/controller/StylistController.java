@@ -24,6 +24,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 // Được sử dụng trong các phương thức controller để nhận các tham số từ form (như tệp tải lên)
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity; // Thêm import này
+
+
 
 
 
@@ -31,7 +37,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class StylistController {
 
     @Autowired
-    private StylistService stylistService;
+    private StylistService stylistService;//Service để lấy dữ liệu từ DB
+
 
 
     // Hiển thị danh sách tất cả stylist
@@ -42,6 +49,23 @@ public class StylistController {
         return "admin/manageStylists";//trả về trang html
     }
 
+    // Hiển thị danh sách stylist cho khách hàng
+    @GetMapping("/page/stylists")
+    public String listStylists(Model model) {
+        List<Stylist> listStylists = stylistService.findEnabledStylists();
+        model.addAttribute("listStylists", listStylists);
+        return "view/pages/stylists";
+    }
+
+    @GetMapping("/page/bookNow")
+    public String showBookNowPage() {
+        return "view/pages/bookNow"; // Đường dẫn đến file bookNow.html
+    }
+
+
+
+
+
     // Hiển thị form thêm mới stylist
     @GetMapping("/manageStylists/new")
     public String showNewForm(Model model) {
@@ -50,12 +74,26 @@ public class StylistController {
         return "admin/stylist_form";//trả về form stylist
     }
 
-//    Để hiển thị ảnh, bạn cần một endpoint riêng để xuất byte mảng dưới dạng hình ảnh.
     @GetMapping("/manageStylists/image/{id}")
-    public byte[] getStylistImage(@PathVariable("id") Integer id) throws StylistNotFoundException {
+    public ResponseEntity<byte[]> getStylistImage(@PathVariable("id") Integer id) throws StylistNotFoundException {/// Lấy stylist từ service
         Stylist stylist = stylistService.get(id);
-        return stylist.getProfilePicture(); // Trả về byte[] của ảnh
+
+        // Lấy byte[] của ảnh từ stylist
+        byte[] image = stylist.getProfilePicture();
+
+        // Kiểm tra nếu ảnh không tồn tại
+        if (image == null) {
+            throw new StylistNotFoundException("Image not found for stylist with ID " + id);
+        }
+
+        // Thiết lập header cho Content-Type của ảnh
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG); // Hoặc MediaType.IMAGE_JPEG nếu ảnh là JPG
+
+        // Trả về ảnh dưới dạng ResponseEntity với header thích hợp
+        return new ResponseEntity<>(image, headers, HttpStatus.OK);
     }
+
 
 
     // Lưu thông tin stylist
@@ -68,6 +106,9 @@ public class StylistController {
             if (!imageFile.isEmpty()) {
                 stylist.setProfilePicture(imageFile.getBytes()); // Lưu ảnh dưới dạng byte[]
             }
+            if (stylist.getUser() != null) {
+                stylist.getUser().setRole("STYLIST"); // Đặt role là "STYLIST"
+            }
         } catch (IOException e) {
             ra.addFlashAttribute("message", "Error uploading image: " + e.getMessage());
             return "redirect:/manageStylists";
@@ -77,6 +118,8 @@ public class StylistController {
         ra.addFlashAttribute("message", "The stylist has been saved successfully.");
         return "redirect:/manageStylists";
     }
+
+
 
 
     // Hiển thị form chỉnh sửa thông tin stylist

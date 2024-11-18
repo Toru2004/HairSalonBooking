@@ -3,70 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title}">Default Title</title>
+    <title th:text="${title}">Our Stylists</title>
     <link rel="icon" th:src="@{/images/logo.png}">
     <link rel="stylesheet" th:href="@{/css-user/header.css}">
     <link rel="stylesheet" th:href="@{/css-user/footer.css}">
     <link rel="stylesheet" th:href="@{/css-user/popUp.css}">
     <link rel="stylesheet" th:href="@{/css-user/stylists.css}">
-    <!-- css của login/signup-->
-    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .card {
+            width: 90%; /* Chiều rộng nhỏ hơn */
+            height: 350px; /* Tăng chiều cao */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            width: 100%;
+            height: 200px; /* Tăng chiều cao ảnh */
+            object-fit: cover;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .stylist-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000; /* Màu đen */
+            margin: 15px 0;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        .stylist-name:hover {
+            color: #444;
+            text-decoration: none; /* Loại bỏ gạch chân */
+        }
+
+        .btn-primary {
+            background-color: #000; /* Nút màu đen */
+            border: none;
+            color: #fff;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #444; /* Màu đen nhạt khi hover */
+            transform: scale(1.05);
+        }
+
+        .btn-booknow {
+            background-color: #28a745; /* Màu xanh lá */
+            border: none;
+            color: #fff;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-booknow:hover {
+            background-color: #218838; /* Màu xanh lá đậm khi hover */
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <!--Login/Signup-->
-    <div th:replace="view/partials/popUpForms :: popUpForms"></div>
-    <!-- Header-->
-    <div th:replace="view/partials/header :: header"></div>
+<!-- Login/Signup -->
+<div th:replace="view/partials/popUpForms :: popUpForms"></div>
+<!-- Header -->
+<div th:replace="view/partials/header :: header"></div>
 
-    <section class="stylists-section">
-        <h1>Our Stylists</h1>
-        <p>Meet our talented stylists who are dedicated to providing the best service for your hair needs.</p>
-        <div class="stylists-container">
-            <div class="stylists-container">
-                <div class="stylist">
-                    <img src="images/liz.webp" alt="Liz" /> <!-- Replace with actual image path -->
-                    <h2>Liz</h2>
-                    <p><strong>Owner/Master Stylist</strong></p> <!-- Title -->
-                    <!-- Buttons for View More and Book Now -->
-                    <div class="button-container">
-                        <button onclick="location.href='${pageContext.request.contextPath}/index.jsp?currentPage=viewMoreLiz'">View More</button> <!-- Link to a detailed page for Liz -->
-                        <button onclick="location.href='${pageContext.request.contextPath}/index.jsp?currentPage=bookNow'">Book Now</button> <!-- Link to the booking page -->
+<div class="container my-5">
+    <h1 class="text-center mb-4">Our Stylists</h1>
 
+    <!-- Danh sách stylist -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <th:block th:each="stylist : ${listStylists}">
+            <div class="col">
+                <div class="card text-center">
+                    <!-- Hiển thị ảnh stylist -->
+                    <img th:src="@{'/manageStylists/image/' + ${stylist.id}}" alt="Stylist Image" class="card-img-top">
 
+                    <div class="card-body">
+                        <!-- Tên stylist -->
+                        <h5 class="card-title stylist-name" th:text="${stylist.user.username}">Stylist Name</h5>
+
+                        <!-- Nút View More -->
+                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                th:attr="data-bs-target='#detailsModal-' + ${stylist.id}">
+                            View More
+                        </button>
                     </div>
                 </div>
-
-                <div class="stylist">
-                    <img src="images/Ayva.webp" alt="Ayva" /> <!-- Replace with actual image path -->
-                    <h2>Ayva</h2>
-                    <p><strong>Salon Stylist</strong></p> <!-- Title -->
-                    <!-- Buttons for View More and Book Now -->
-                    <div class="button-container">
-                        <button onclick="location.href='${pageContext.request.contextPath}/index.jsp?currentPage=viewMoreAyva'">View More</button> <!-- Link to a detailed page for Ayva -->
-                        <button onclick="location.href='../index.jsp?currentPage=bookNow'">Book Now</button> <!-- Link to the booking page -->
-                    </div>
-                </div>
-
-                <div class="stylist">
-                    <img src="images/Helen.webp" alt="Helen" /> <!-- Replace with actual image path -->
-                    <h2>Helen</h2>
-                    <p><strong>Master Stylist</strong></p> <!-- Title -->
-                    <!-- Buttons for View More and Book Now -->
-                    <div class="button-container">
-                        <button onclick="location.href='viewMoreHelen.html'">View More</button> <!-- Link to a detailed page for Helen -->
-                        <button onclick="location.href='../index.jsp?currentPage=bookNow'">Book Now</button> <!-- Link to the booking page -->
-                    </div>
-                </div>
-                <!-- Add more stylists if needed -->
             </div>
-            <!-- Add more stylists if needed -->
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <div th:replace="view/partials/footer :: footer"></div>
+            <!-- Modal Chi tiết Stylist -->
+            <div th:attr="id='detailsModal-' + ${stylist.id}" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" th:text="${stylist.user.username}">Stylist Name</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Email:</strong> <span th:text="${stylist.user.email}">Email</span></li>
+                                <li class="list-group-item"><strong>Phone:</strong> <span th:text="${stylist.user.phoneNumber}">Phone</span></li>
+                                <li class="list-group-item"><strong>Description:</strong>
+                                    <p th:text="${stylist.description}">Description</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/page/bookNow}" class="btn btn-primary">Book Now</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <!-- Thông báo khi không có stylist -->
+    <div th:if="${listStylists == null || listStylists.size() == 0}">
+        <p class="text-center">No stylists found.</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="view/partials/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-<!-- Cập nhật lại đường dẫn JS với th:src -->
-<script th:src="@{/js-user/popup-manage.js}"></script>

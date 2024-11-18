@@ -64,9 +64,9 @@ public class AppointmentService {
         appointmentRepository.save(appointment);
     }
 
-    // Phương thức cập nhật một cuộc hẹn
+    // Cập nhật Appointment
     public void update(Appointment appointment) {
-        appointmentRepository.save(appointment);
+        appointmentRepository.save(appointment);  // Sử dụng save để cập nhật
     }
 
     // Phương thức lấy một cuộc hẹn theo ID
@@ -89,4 +89,9 @@ public class AppointmentService {
     }
 
 
+<<<<<<< HEAD
+=======
+ 
+
+>>>>>>> cfa37dbbcd62bf16b15f9fab582777582f179811
 }

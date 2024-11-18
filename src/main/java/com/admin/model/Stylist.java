@@ -54,7 +54,7 @@ public class Stylist  {
 
     // Các thuộc tính riêng biệt khác của Stylist
     private boolean available;
-    private String specialization;
+
 
     @Lob
     @Column(name = "profile_picture", columnDefinition = "LONGBLOB")
@@ -73,13 +73,6 @@ public class Stylist  {
         this.available = available;
     }
 
-    public String getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specialization = specialization;
-    }
 
     public byte[] getProfilePicture() {
         return profilePicture;
@@ -111,7 +104,6 @@ public class Stylist  {
                 ", email='" + user.getEmail() + '\'' +
                 ", phone number='" + user.getPhoneNumber() + '\'' +
                 ", available=" + available +
-                ", specialization='" + specialization + '\'' +
                 ", profilePicture='" + profilePicture + '\'' +
                 ", description='" + description + '\'' +
                 '}';
