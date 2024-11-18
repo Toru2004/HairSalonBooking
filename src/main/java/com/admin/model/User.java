@@ -1,6 +1,10 @@
 package com.admin.model;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
 
 // Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "users"
 @Entity
@@ -39,7 +43,9 @@ public class User {
 
     // Quan hệ một-một với Stylist
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonBackReference // Ngăn vòng lặp tuần tự hóa
     private Stylist stylist;
+
 
     //Quan hệ 1-1 với admin
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)

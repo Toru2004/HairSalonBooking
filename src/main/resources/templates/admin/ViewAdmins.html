@@ -58,6 +58,7 @@
               <th>Username</th>
               <th>Email</th>
               <th>Phone number</th>
+              <th>Password</th>
               <th>Actions</th>
             </tr>
             </thead>
@@ -68,6 +69,7 @@
                 <td>[[${admin.user.username}]]</td>
                 <td>[[${admin.user.email}]]</td>
                 <td>[[${admin.user.phoneNumber}]]</td>
+                <td>[[${admin.user.password}]]</td>
                 <td>
                   <a class="btn btn-sm btn-outline-info" th:href="@{'/ViewAdmins/edit/' + ${admin.id}}">Edit</a>
                   <a class="btn btn-sm btn-outline-danger" th:href="@{'/ViewAdmins/delete/' + ${admin.id}}">Delete</a>

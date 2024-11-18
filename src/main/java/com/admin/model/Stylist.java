@@ -1,6 +1,10 @@
 package com.admin.model;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 
 // Đánh dấu lớp này là một thực thể trong cơ sở dữ liệu với tên bảng là "stylists"
 @Entity
@@ -16,7 +20,9 @@ public class Stylist  {
     // Thiết lập quan hệ một-một với thực thể User, tạo khóa ngoại "user_id" tham chiếu đến cột "id" của bảng User
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;  // Khóa ngoại liên kết đến bảng
+    @JsonManagedReference // Cho phép tuần tự hóa phía con
+    private User user;
+
 
 
 
