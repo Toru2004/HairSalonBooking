@@ -3,76 +3,54 @@ package com.admin.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Staff")
+@Table(name = "staffs")
 public class Staff {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
-    private String name;
-    private String position;
-    private String phoneNumber;
-    private String email;
-    private String status; // Active, Inactive, etc.
+    @ManyToOne
+    @JoinColumn(name = "manager_id", nullable = false)
+    private Manager manager;
 
-    // Constructors
-    public Staff() {}
+    @ManyToOne // No cascade here, User already exists in the users table
+    @JoinColumn(name = "user_id", nullable = false) // Ensure user_id is not null
+    private User user;
 
-    public Staff(String name, String position, String phoneNumber, String email, String status) {
-        this.name = name;
-        this.position = position;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.status = status;
-    }
-
-    // Getters and Setters
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public Manager getManager() {
+        return manager;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
-    public String getPosition() {
-        return position;
+    public User getUser() {
+        return user;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
+    @Override
+    public String toString() {
+        return "Staff{" +
+                "id=" + id +
+                ", manager=" + (manager != null ? manager.getId() : "No Manager") +
+                ", user=" + user.getUsername() +
+                ", email='" + user.getEmail() + '\'' +
+                ", phoneNumber='" + user.getPhoneNumber() + '\'' +
+                ", enabled=" + user.isEnabled() +
+                '}';
     }
 }
+

@@ -1,81 +1,72 @@
 package com.admin.controller;
 
-import com.admin.model.Staff;
+import com.admin.model.Manager; // Changed from Stylist to Manager
+import com.admin.exception.ManagerNotFoundException; // Changed from StylistNotFoundException
+import com.admin.service.ManagerService; // Changed from StylistService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.admin.service.AppointmentService;
-import com.admin.model.Appointment;
-import com.admin.service.StaffService;
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org. springframework. web. bind. annotation. RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 public class ManagerController {
-    @Autowired
-    private StaffService staffService;
 
-    @GetMapping("/manager/managerStaff")
-    public String viewStaff(Model model) {
-        List<Staff> listStaff = staffService.findAll();  // Lấy tất cả nhân viên
-        model.addAttribute("listStaff", listStaff);
-        return "redirect:/manager/managerStaff";
+    @Autowired
+    private ManagerService managerService;
+
+    @GetMapping("/manageManagers")
+    public String showManagerList(Model model) {
+        List<Manager> listManagers = managerService.listAll();
+        model.addAttribute("listManagers", listManagers);
+        System.out.println("Managers List: " + listManagers);  // Debugging
+        return "admin/manageManagers";
     }
 
-    // Hiển thị form thêm hoặc sửa nhân viên
-    @GetMapping("/manager/staff_form")
-    public String showStaffForm(@RequestParam(value = "id", required = false) Long id, Model model) {
-        Staff staff = new Staff();
-        if (id != null) {
-            staff = staffService.findById(id);
+
+    // Hiển thị form thêm mới manager
+    @GetMapping("/manageManagers/new")
+    public String showNewForm(Model model) {
+        model.addAttribute("manager", new Manager());
+        model.addAttribute("pageTitle", "Add New Manager");
+        return "admin/manager_form";
+    }
+
+    // Lưu thông tin manager
+    @PostMapping("/manageManagers/save")
+    public String saveManager(Manager manager, RedirectAttributes ra) {
+        managerService.save(manager);
+        ra.addFlashAttribute("message", "The manager has been saved successfully.");
+        return "redirect:/manageManagers";
+    }
+
+    // Hiển thị form chỉnh sửa thông tin manager
+    @GetMapping("/manageManagers/edit/{id}")
+    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
+        try {
+            Manager manager = managerService.get(id);
+            model.addAttribute("manager", manager);
+            model.addAttribute("pageTitle", "Edit Manager (ID: " + id + ")");
+            return "admin/manager_form"; // C
+        } catch (ManagerNotFoundException e) {
+            ra.addFlashAttribute("message", e.getMessage());
+            return "redirect:/manageManagers";
         }
-        model.addAttribute("staff", staff);
-        model.addAttribute("pageTitle", (id == null ? "Add New Staff" : "Edit Staff"));  // Thêm tiêu đề trang
-        return "redirect:/manager/staff_form";
     }
 
-    // Lưu nhân viên sau khi thêm hoặc chỉnh sửa
-    @PostMapping("/manager/managerStaff")
-    public String saveStaff(@ModelAttribute Staff staff) {
-        staff.getUser().setRole("staff");
-        staffService.save(staff);
-        return "redirect:/manager/managerStaff";
-    }
-
-    // Xóa nhân viên
-    @GetMapping("/manager/managerStaff/delete")
-    public String deleteStaff(@RequestParam("id") Long id) {
-        staffService.delete(id);
-        return "redirect:/manager/managerStaff";
-    }
-
-    @Autowired
-    private AppointmentService appointmentService;
-
-    @GetMapping("/manager/RevenueOverview")
-    public String RevenueOverview(Model model) {
-        Map<String, Object> revenueData = appointmentService.getRevenueDataByFilter("monthly");  // Ví dụ, lấy doanh thu theo tháng
-        model.addAttribute("revenueData", revenueData);
-        return "/manager/RevenueOverview";
-    }
-
-
-    @GetMapping("/manager/managerDashboard")
-    public String managerDashboard(Model model) {
-        // Truy xuất dữ liệu doanh thu từ appointment
-        List<Appointment> appointments = appointmentService.getAllAppointments();
-
-        // Tổng hợp dữ liệu doanh thu theo tháng (hoặc ngày/năm tùy theo yêu cầu)
-        Map<String, Double> revenueByMonth = appointmentService.calculateMonthlyRevenue(appointments);
-
-
-        model.addAttribute("revenueByMonth", revenueByMonth);
-
-        return "manager/managerDashboard";  // Điều hướng đến file dashboard.html trong thư mục templates/manager
+    // Xóa manager theo ID
+    @GetMapping("/manageManagers/delete/{id}")
+    public String deleteManager(@PathVariable("id") Integer id, RedirectAttributes ra) {
+        try {
+            managerService.delete(id); // Changed from stylistService.delete
+            ra.addFlashAttribute("message", "The manager ID " + id + " has been deleted."); // Changed from stylist
+        } catch (ManagerNotFoundException e) { // Changed from StylistNotFoundException
+            ra.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/manageManagers"; // Changed from manageStylists
     }
 }
