@@ -29,18 +29,7 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar Menu -->
-        <aside class="col-md-2 sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageCares}">Manage Services</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
-                <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
-            </ul>
-        </aside>
+        <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
 
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">

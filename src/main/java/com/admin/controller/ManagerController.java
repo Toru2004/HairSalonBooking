@@ -39,6 +39,7 @@ public class ManagerController {
     // Lưu thông tin manager
     @PostMapping("/manageManagers/save")
     public String saveManager(Manager manager, RedirectAttributes ra) {
+        manager.getUser().setRole("manager");
         managerService.save(manager);
         ra.addFlashAttribute("message", "The manager has been saved successfully.");
         return "redirect:/manageManagers";

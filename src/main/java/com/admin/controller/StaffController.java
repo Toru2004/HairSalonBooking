@@ -49,6 +49,7 @@ public class StaffController {
 
     @PostMapping("/manageStaffs/save")
     public String saveStaff(Staff staff, RedirectAttributes ra) {
+        staff.getUser().setRole("staff");
         // Kiểm tra và lưu User nếu chưa có ID
         if (staff.getUser() != null && staff.getUser().getId() == null) {
             userService.save(staff.getUser());  // Lưu user nếu chưa có ID
