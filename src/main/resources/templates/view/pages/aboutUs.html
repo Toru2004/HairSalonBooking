@@ -5,72 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${title}">Default Title</title>
     <link rel="icon" th:src="@{/images/logo.png}">
-    <!-- Cập nhật lại đường dẫn CSS với th:href -->
     <link rel="stylesheet" th:href="@{/css-user/header.css}">
 
     <link rel="stylesheet" th:href="@{/css-user/popUp.css}">
     <link rel="stylesheet" th:href="@{/css-user/aboutUs.css}">
-    <!-- css của login/signup-->
-    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}">
+    <!-- Bootstrap CSS -->
+    <!-- Thêm Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
+
 <body>
-    <!--Login / Signup-->
-    <div th:replace="view/partials/popUpForms :: popUpForms"></div>
-    <!-- Header-->
-    <div th:replace="view/partials/header :: header"></div>
+<div th:replace="view/partials/popUpForms :: popUpForms"></div>
+<div th:replace="view/partials/header :: header"></div>
 
-
-    <!-- About Us Section -->
-    <section class="about-detail-section mt-5">
-        <div class="container">
-            <!-- Phần giới thiệu ngắn -->
-            <div class="row">
-                <div class="col-md-6 about-img animate__animated animate__fadeInLeft">
-                    <img th:src="@{/images/barbershop.jpg}" alt="Salon Image" class="img-fluid">
-                </div>
-                <div class="col-md-6 about-content animate__animated animate__fadeInRight">
-                    <h2>Our Story</h2>
-                    <p>
-                        Founded in 1990, New Era Hair Salon has become a name synonymous with beauty and elegance.
-                        From our humble beginnings, we have grown to offer a range of premium services aimed at enhancing your natural beauty and confidence.
-                    </p>
-                    <p>
-                        Our team is dedicated to staying at the forefront of styling trends and techniques to provide each client with a look that reflects their unique personality.
-                    </p>
-                </div>
+<!-- About Us Section -->
+<section class="about-detail-section mt-5">
+    <div class="container">
+        <div class="row">
+            <!-- Ảnh chạy từ bên trái -->
+            <div class="col-md-6 about-img animate__animated animate__fadeInLeft">
+                <img th:src="@{/images/barbershop.jpg}" alt="Salon Image" class="img-fluid">
             </div>
-
-            <!-- Phần hình ảnh -->
-            <div class="row mt-5">
-                <div class="col-md-4 gallery-item animate__animated animate__fadeInUp">
-                    <img th:src="@{/images/Homeimg3.png}" alt="Salon Interior" class="img-fluid">
-                    <p class="text-center mt-2">Đông phương bất bại</p>
-                </div>
-                <div class="col-md-4 gallery-item animate__animated animate__fadeInUp">
-                    <img th:src="@{/images/Homeimg4.png}" alt="Our Team" class="img-fluid">
-                    <p class="text-center mt-2">Văn-Phát trùm quan hệ rộng</p>
-                </div>
-                <div class="col-md-4 gallery-item animate__animated animate__fadeInUp">
-                    <img th:src="@{/images/homeimg5.png}" alt="Products" class="img-fluid">
-                    <p class="text-center mt-2">Phúc Quên Xe</p>
-                </div>
+            <!-- Nội dung chạy từ bên phải -->
+            <div class="col-md-6 about-content animate__animated animate__fadeInRight">
+                <h2>Our Story</h2>
+                <p>
+                    Founded in 1990, New Era Hair Salon has become a name synonymous with beauty and elegance.
+                    From our humble beginnings, we have grown to offer a range of premium services aimed at enhancing your natural beauty and confidence.
+                </p>
+                <p>
+                    Our team is dedicated to staying at the forefront of styling trends and techniques to provide each client with a look that reflects their unique personality.
+                </p>
             </div>
         </div>
-    </section>
+        <div class="row mt-5">
+            <!-- Các ảnh trong gallery -->
+            <div class="col-md-4 gallery-item animate__animated animate__fadeInUp">
+                <img th:src="@{/images/Homeimg3.png}" alt="Salon Interior" class="img-fluid">
+                <p class="text-center mt-2">Đông phương bất bại</p>
+            </div>
+            <div class="col-md-4 gallery-item animate__animated animate__fadeInUp">
+                <img th:src="@{/images/Homeimg4.png}" alt="Our Team" class="img-fluid">
+                <p class="text-center mt-2">Văn-Phát trùm quan hệ rộng</p>
+            </div>
+            <div class="col-md-4 gallery-item animate__animated animate__fadeInUp">
+                <img th:src="@{/images/homeimg5.png}" alt="Products" class="img-fluid">
+                <p class="text-center mt-2">Phúc Quên Xe</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <!-- Footer -->
-    <div th:replace="view/partials/footer :: footer"></div>
 
+<div th:replace="view/partials/footer :: footer"></div>
 
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js-user/popup-manage.js"></script>
 </body>
 </html>
-
-<!-- Cập nhật lại đường dẫn JS với th:src -->
-<script th:src="@{/js-user/popup-manage.js}"></script>
-
-<!-- Bootstrap JS và các dependencies (thêm nếu cần) -->
-<!-- AngularJS -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-<script src="/js-user/popup-manage.js"></script>
-<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js}"></script>
-<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"></script>

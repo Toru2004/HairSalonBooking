@@ -12,89 +12,117 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         .card {
-            height: 100%;
-            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add transition effect */
+            width: 90%; /* Chiều rộng nhỏ hơn */
+            height: 350px; /* Tăng chiều cao */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0 auto;
         }
 
         .card:hover {
-            transform: translateY(-10px); /* Hover effect to lift the card */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
-        }
-
-        .card-body {
-            flex-grow: 1;
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
         }
 
         .card-img-top {
             width: 100%;
-            height: 250px; /* Increased height for better visibility */
+            height: 200px; /* Tăng chiều cao ảnh */
             object-fit: cover;
             border-bottom: 2px solid #ddd;
         }
 
         .stylist-name {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
             font-weight: bold;
-            text-align: center; /* Center the stylist name */
-            transition: color 0.3s ease; /* Smooth transition on hover */
+            color: #000; /* Màu đen */
+            margin: 15px 0;
+            text-align: center;
+            text-transform: uppercase;
         }
 
         .stylist-name:hover {
-            color: #007bff; /* Change color on hover */
-            cursor: pointer; /* Pointer cursor on hover */
+            color: #444;
+            text-decoration: none; /* Loại bỏ gạch chân */
         }
 
-        .description-container {
-            min-height: 150px; /* Ensure enough space for description */
-            padding: 10px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 1rem;
+        .btn-primary {
+            background-color: #000; /* Nút màu đen */
+            border: none;
+            color: #fff;
+            transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
-        .description-container p {
-            white-space: pre-line; /* Maintain line breaks in the description */
+        .btn-primary:hover {
+            background-color: #444; /* Màu đen nhạt khi hover */
+            transform: scale(1.05);
+        }
+
+        .btn-booknow {
+            background-color: #28a745; /* Màu xanh lá */
+            border: none;
+            color: #fff;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-booknow:hover {
+            background-color: #218838; /* Màu xanh lá đậm khi hover */
+            transform: scale(1.05);
         }
     </style>
 </head>
-<body ng-app="stylistApp">
+<body>
 <!-- Login/Signup -->
 <div th:replace="view/partials/popUpForms :: popUpForms"></div>
 <!-- Header -->
 <div th:replace="view/partials/header :: header"></div>
 
-<div class="container my-5" ng-controller="stylistController">
+<div class="container my-5">
     <h1 class="text-center mb-4">Our Stylists</h1>
-    <div class="row">
+
+    <!-- Danh sách stylist -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
         <th:block th:each="stylist : ${listStylists}">
-            <div class="col-md-4 mb-4">
-                <!-- Card Container -->
-                <div class="card">
-                    <!-- Hiển thị ảnh nếu tồn tại -->
+            <div class="col">
+                <div class="card text-center">
+                    <!-- Hiển thị ảnh stylist -->
                     <img th:src="@{'/manageStylists/image/' + ${stylist.id}}" alt="Stylist Image" class="card-img-top">
 
-                    <div class="card-body d-flex flex-column">
-                        <!-- Hiển thị tên stylist -->
+                    <div class="card-body">
+                        <!-- Tên stylist -->
                         <h5 class="card-title stylist-name" th:text="${stylist.user.username}">Stylist Name</h5>
 
-                        <div class="d-flex align-items-center">
-                            <strong>Enabled: </strong>
-                            <span th:text="${stylist.enabled ? '✔' : '❌'}"
-                                  th:classappend="${stylist.enabled ? 'text-success' : 'text-danger'}"
-                                  class="ms-2"></span>
+                        <!-- Nút View More -->
+                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                th:attr="data-bs-target='#detailsModal-' + ${stylist.id}">
+                            View More
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Chi tiết Stylist -->
+            <div th:attr="id='detailsModal-' + ${stylist.id}" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" th:text="${stylist.user.username}">Stylist Name</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-
-                        <!-- Hiển thị thông tin chi tiết của Stylist -->
-                        <ul class="list-group mt-3">
-                            <li class="list-group-item"><strong>Email:</strong> <span th:text="${stylist.user.email}">Email</span></li>
-                            <li class="list-group-item"><strong>Phone:</strong> <span th:text="${stylist.user.phoneNumber}">Phone Number</span></li>
-                        </ul>
-
-                        <!-- Description Container with enough space -->
-                        <div class="description-container mt-3">
-                            <strong>Description:</strong>
-                            <p th:text="${stylist.description}">Stylist description goes here.</p> <!-- Read-only display -->
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Email:</strong> <span th:text="${stylist.user.email}">Email</span></li>
+                                <li class="list-group-item"><strong>Phone:</strong> <span th:text="${stylist.user.phoneNumber}">Phone</span></li>
+                                <li class="list-group-item"><strong>Description:</strong>
+                                    <p th:text="${stylist.description}">Description</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/page/bookNow}" class="btn btn-primary">Book Now</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -102,26 +130,15 @@
         </th:block>
     </div>
 
-    <!-- Hiển thị thông báo khi không có stylist -->
+    <!-- Thông báo khi không có stylist -->
     <div th:if="${listStylists == null || listStylists.size() == 0}">
         <p class="text-center">No stylists found.</p>
     </div>
 </div>
 
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
 <!-- Footer -->
 <div th:replace="view/partials/footer :: footer"></div>
 
-<!-- Cập nhật lại đường dẫn JS -->
-<script th:src="@{/js-user/popup-manage.js}"></script>
-
-<!-- AngularJS -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-<script>
-    angular.module('stylistApp', [])
-        .controller('stylistController', function($scope) {
-            // Controller logic for any dynamic interaction with data
-        });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

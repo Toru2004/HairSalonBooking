@@ -27,22 +27,23 @@ public class AdminController {
         return "admin/ViewAdmins";
     }
 
+    // Hiển thị form để thêm admin mới
     @GetMapping("/ViewAdmins/new")
     public String showNewAdminForm(Model model) {
-        model.addAttribute("admin", new Admin());
-        model.addAttribute("pageTitle", "Add New Admin");
-        return "admin/admin_form"; // Returns the admin form
+        model.addAttribute("admin", new Admin()); // Tạo đối tượng Admin mới để sử dụng trong form
+        model.addAttribute("pageTitle", "Add New Admin"); // Thiết lập tiêu đề trang
+        return "admin/admin_form"; // Trả về view admin_form.html để thêm mới admin
     }
 
-
+    // Lưu thông tin admin
     @PostMapping("/ViewAdmins/save")
-    public String saveAdmin(@ModelAttribute Admin admin, RedirectAttributes ra) {
-        // Logic lưu admin mới vào cơ sở dữ liệu
-        admin.getUser().setRole("admin");
-        adminService.save(admin);
-        ra.addFlashAttribute("message", "The admin has been saved successfully."); // Thông báo lưu thành công
-        return "redirect:/ViewAdmins"; // Sau khi lưu, quay lại danh sách admin
+    public String saveAdmin(Admin admin, RedirectAttributes ra) {
+        admin.getUser().setRole("admin"); // Set role là admin
+        adminService.save(admin); // Lưu thông tin admin vào cơ sở dữ liệu
+        ra.addFlashAttribute("message", "The admin has been saved successfully."); // Thông báo thành công
+        return "redirect:/ViewAdmins"; // Chuyển hướng về trang danh sách admin
     }
+
 
     @GetMapping("/ViewAdmins/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model) {

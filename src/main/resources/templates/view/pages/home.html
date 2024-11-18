@@ -76,15 +76,15 @@
     </div>
 </header>
 
-<!-- khung2 -->
+<!-- Phần Location Services -->
 <div class="container mt-5">
-    <div class="location-container" data-aos="fade-up">
+    <div class="location-container fade-in">
         <div class="location-info">
             <h2>Turn on location services</h2>
             <p>Get recommendations of great businesses! Turn on location services so we can show you nearby businesses.</p>
             <div class="d-flex">
                 <button class="btn btn-primary mr-3">Search Near Me</button>
-                <button class="btn btn-outline-primary"> Not Now</button>
+                <button class="btn btn-outline-primary">Not Now</button>
             </div>
         </div>
         <div class="location-image">
@@ -93,38 +93,22 @@
     </div>
 </div>
 
-<!-- 2 bõ tiếp theo -->
+<!-- Phần Các Box -->
 <div class="container section-container">
     <div class="row equal-height">
-        <!-- Cột Bên Trái -->
-        <div class="col-md-6 d-flex">
+        <div class="col-md-6 d-flex fade-in">
             <div class="box text-center flex-fill">
                 <h6>Booksy App • iOS, Android</h6>
                 <h2>Find & book an appointment</h2>
                 <p>Cut the phone tag. Find your next appointment and book <strong>instantly</strong> anytime, anywhere.</p>
-
-                <!-- Phần ô nhập tùy chỉnh -->
-                <div class="input-group input-group-custom mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">🇺🇸 +1</span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Your phone number">
-                    <div class="input-group-append">
-                        <button class="btn download-btn">DOWNLOAD</button>
-                    </div>
-                </div>
-
                 <img src="../images/anhboxleft.jpg" alt="Phone Image" class="phone-img">
             </div>
         </div>
-
-        <!-- Cột Bên Phải -->
-        <div class="col-md-6 d-flex">
+        <div class="col-md-6 d-flex fade-in">
             <div class="box-dark text-center flex-fill">
                 <h6>BooksyBiz App • iOS, Android</h6>
                 <h2>Booksy for your business</h2>
                 <p>Get started with Booksy to run your business better. Calendar, Booking, Marketing, and Payments all in one.</p>
-                <button class="btn business-btn">Grow My Business</button>
                 <img src="../images/anhboxright.jpg" alt="Phone Image" class="phone-img">
             </div>
         </div>
@@ -333,6 +317,23 @@
     window.onload = function() {
         typeText();
     };
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const fadeElements = document.querySelectorAll(".fade-in");
+
+        function handleScroll() {
+            fadeElements.forEach(element => {
+                const rect = element.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                    element.classList.add("show");
+                }
+            });
+        }
+
+        window.addEventListener("scroll", handleScroll);
+        handleScroll(); // Kiểm tra ngay khi tải trang
+    });
 </script>
 
 <!-- Cập nhật lại đường dẫn JS với th:src -->

@@ -45,23 +45,24 @@
                 <h3>Choose a Service</h3>
                 <div id="care-list"></div>
 
-                <div id="staff-selection" style="display: none;">
+                <div id="staff-selection" >
                     <h3>Choose a Stylist</h3>
-                    <ul>
-                        <th:block th:each="stylist : ${listStylists}">
-                            <li>
-                                <p th:text="${stylist.user.username}">Stylist Name</p>
-                                <p th:text="${stylist.user.email}">Email</p>
-                                <p th:text="${stylist.user.phoneNumber}">Phone</p>
-                            </li>
-                        </th:block>
-                    </ul>
+                    <select id="stylist-list" name="stylist" required>
+                        <!-- Các tùy chọn sẽ được thêm vào đây bằng JavaScript -->
+                    </select>
 
-                    <!-- Staff Profile -->
-                    <div id="staff-profile" class="staff-profile" style="display: none;">
-                        <img id="staff-image" src="" alt="Profile Image">
-                        <div id="staff-details"></div>
+                    <div id="stylist-profile" style="display: none; margin-top: 20px;">
+                        <h4>Stylist Profile</h4>
+                        <div id="profile-details">
+                            <!-- Nội dung profile sẽ được thêm ở đây -->
+                        </div>
                     </div>
+
+
+
+
+
+
                 </div>
             </div>
 
@@ -74,6 +75,24 @@
 <div th:replace="view/partials/footer :: footer"></div>
 
 <script>
+
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+
+        // Kiểm tra nếu các trường bắt buộc chưa được nhập
+        if (!name || !email || !phone || !date || !time) {
+            alert("All fields are required!");
+            return false; // Ngừng việc gửi form nếu có trường thiếu
+        }
+
+        // Có thể thêm các kiểm tra khác cho email, phone,...
+        return true; // Nếu mọi thứ hợp lệ thì form sẽ được gửi
+    }
+
     // Hàm để gọi API và hiển thị danh sách care services dưới dạng nút
     function loadCares() {
         fetch('/api/booknow/cares')
@@ -117,54 +136,48 @@
         console.log("Selected Services:", selectedServices);
     }
 
+    // Hàm để tải danh sách stylists
     function loadStylists() {
         fetch('/api/booknow/stylists')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.text(); // Đọc dữ liệu thô
+                return response.json(); // Đọc dữ liệu dưới dạng JSON
             })
             .then(data => {
-                try {
-                    // Ghi log dữ liệu phản hồi thô để kiểm tra
-                    console.log('Raw response:', data);
+                stylists = data; // Gán dữ liệu trả về từ API vào biến stylists
+                console.log('Stylists data:', stylists); // Kiểm tra dữ liệu trả về
 
-                    // Kiểm tra nếu phản hồi là JSON hợp lệ
-                    const stylists = JSON.parse(data);
-                    console.log("Parsed stylists data:", stylists); // Ghi log dữ liệu đã phân tích
+                const stylistList = document.getElementById('stylist-list');
 
-                    const stylistList = document.getElementById('stylist-list');
-                    stylistList.innerHTML = '';
-
-                    if (!Array.isArray(stylists) || stylists.length === 0) {
-                        stylistList.innerHTML = '<p>No stylists available.</p>';
-                        return;
-                    }
-
-                    stylists.forEach(stylist => {
-                        if (stylist.user && stylist.user.username) {
-                            const stylistItem = document.createElement('div');
-                            stylistItem.classList.add('stylist-item');
-                            stylistItem.innerHTML = `
-                            <p><strong>${stylist.user.username}</strong></p>
-                            <p>${stylist.user.email || 'N/A'}</p>
-
-                        `;
-
-                            stylistItem.addEventListener('click', function () {
-                                displayStylistProfile(stylist);
-                            });
-
-                            stylistList.appendChild(stylistItem);
-                        }
-                    });
-
-                    document.getElementById('staff-selection').style.display = 'block';
-                } catch (error) {
-                    console.error('Error parsing JSON:', error);
-                    alert('Could not load stylists. Please check the server response.');
+                if (!stylistList) {
+                    console.error('Element with id "stylist-list" not found');
+                    return;
                 }
+
+                stylistList.innerHTML = ''; // Xóa nội dung cũ
+
+                if (!Array.isArray(stylists) || stylists.length === 0) {
+                    stylistList.innerHTML = '<option value="">No stylists available</option>';
+                    return;
+                }
+
+                // Thêm tùy chọn mặc định
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select a stylist';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                stylistList.appendChild(defaultOption);
+
+                // Lặp qua danh sách stylist và thêm vào dropdown
+                stylists.forEach(stylist => {
+                    const option = document.createElement('option');
+                    option.value = stylist.id; // Dùng ID stylist làm giá trị
+                    option.textContent = stylist.user?.username || `Stylist #${stylist.id}`; // Hiển thị tên stylist hoặc ID
+                    stylistList.appendChild(option);
+                });
             })
             .catch(error => {
                 console.error('Error loading stylists:', error);
@@ -175,26 +188,68 @@
 
 
 
+
+
     // Hàm để hiển thị profile chi tiết của stylist khi chọn
     function displayStylistProfile(stylist) {
         const staffProfile = document.getElementById('staff-profile');
         const staffImage = document.getElementById('staff-image');
         const staffDetails = document.getElementById('staff-details');
 
-        staffProfile.style.display = 'block';
+        staffProfile.style.display = 'flex'; // Hiển thị profile
 
-        staffImage.src = stylist.profileImage || '';  // Giả sử stylist có thuộc tính profileImage
+        // Cập nhật thông tin stylist
+        const profilePicture = stylist.profilePicture
+            ? `data:image/jpeg;base64,${stylist.profilePicture}`
+            : 'default-profile.png'; // Đường dẫn ảnh mặc định
+
+        staffImage.src = profilePicture; // Cập nhật ảnh
         staffDetails.innerHTML = `
-            <p><strong>${stylist.user.username}</strong></p>
-            <p>${stylist.description}</p>
-        `;
+        <p><strong>${stylist.user.username}</strong></p>
+        <p>Email: ${stylist.user.email || 'No email provided'}</p>
+        <p>${stylist.description || 'No description available'}</p>
+    `;
     }
+
+
 
     // Gọi các hàm load dữ liệu khi trang tải
     window.onload = function() {
         loadCares(); // Chỉ gọi loadCares khi trang tải
         loadStylists(); // Hiển thị danh sách stylist ngay khi tải trang
     };
+
+    let stylists = []; // Biến toàn cục để lưu danh sách stylists
+
+    document.getElementById('stylist-list').addEventListener('change', function () {
+        const stylistId = this.value; // Lấy ID stylist được chọn
+        const selectedStylist = stylists.find(stylist => stylist.id == stylistId); // Tìm stylist tương ứng
+
+        if (selectedStylist) {
+            displayStylistProfile(selectedStylist); // Gọi hàm hiển thị profile
+        } else {
+            document.getElementById('stylist-profile').style.display = 'none'; // Ẩn profile nếu không có stylist
+        }
+    });
+
+    // Hàm hiển thị thông tin stylist
+    function displayStylistProfile(stylist) {
+        const profileContainer = document.getElementById('profile-details');
+        document.getElementById('stylist-profile').style.display = 'block'; // Hiển thị container profile
+
+        const profilePicture = stylist.profilePicture
+            ? `data:image/jpeg;base64,${stylist.profilePicture}` // Nếu có ảnh, hiển thị
+            : 'default-profile.png'; // Nếu không, hiển thị ảnh mặc định
+
+        profileContainer.innerHTML = `
+        <img src="${profilePicture}" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 15px;">
+        <p><strong>Name:</strong> ${stylist.user?.username || 'N/A'}</p>
+        <p><strong>Email:</strong> ${stylist.user?.email || 'N/A'}</p>
+        <p><strong>Description:</strong> ${stylist.description || 'No description available'}</p>
+    `;
+    }
+
 </script>
+
 </body>
 </html>

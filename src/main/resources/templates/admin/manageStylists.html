@@ -52,9 +52,10 @@
                         <tr>
                             <th>ID</th>
                             <th>Username</th>
+                            <th>Password</th> <!-- Thêm cột Password -->
                             <th>Email</th>
-                            <th>Phone number</th>
-                            <th>Available</th>
+                            <th>Phone Number</th>
+                            <th>Enabled</th>
                             <th>Description</th>
                             <th>Avatar</th>
                             <th>Actions</th>
@@ -65,23 +66,27 @@
                             <tr>
                                 <td>[[${stylist.id}]]</td>
                                 <td>[[${stylist.user.username}]]</td>
+                                <td>[[${stylist.user.password}]]</td> <!-- Hiển thị mật khẩu -->
                                 <td>[[${stylist.user.email}]]</td>
                                 <td>[[${stylist.user.phoneNumber}]]</td>
-                                <td>[[${stylist.available}]]</td>
+                                <td th:text="${stylist.user.enabled} ? 'Yes' : 'No'"></td>
                                 <td>[[${stylist.description}]]</td>
-                                <td><img
-                                        th:src="@{${stylist.id}}"
-                                         alt="Profile Picture" width="50" height="50" />
+                                <td>
+                                    <img th:if="${stylist.profilePicture != null}"
+                                         th:src="@{'/manageStylists/image/' + ${stylist.id}}"
+                                         alt="Profile Picture" width="50" height="50" class="rounded-circle"/>
+                                    <span th:if="${stylist.profilePicture == null}">No Image</span>
                                 </td>
                                 <td>
-                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStylists/edit/' + ${stylist.id}}">Edit</a>
-                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStylists/delete/' + ${stylist.id}}">Delete</a>
+                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStylists/edit/' + ${stylist.id}}" title="Edit Stylist">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStylists/delete/' + ${stylist.id}}" title="Delete Stylist">Delete</a>
                                 </td>
                             </tr>
                         </th:block>
                         </tbody>
                     </table>
                 </div>
+
             </div>
         </main>
     </div>

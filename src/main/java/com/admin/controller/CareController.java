@@ -22,10 +22,43 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 // Được sử dụng trong các phương thức controller để nhận các tham số từ form (như tệp tải lên)
 import org.springframework.web.bind.annotation.RequestParam;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+
+import java.util.stream.Collectors;
+import java.util.Comparator;
+
+
 @Controller
 public class CareController {
     @Autowired
     private CareService careService;
+
+    @GetMapping("/page/services")
+    public String showServices(Model model) {
+        List<Care> listCares = careService.listAll(); // Loại bỏ stream() và sorted()
+        model.addAttribute("listCares", listCares);
+        model.addAttribute("title", "Our Services");
+        return "view/pages/services";
+    }
+
+
+
+    @GetMapping("/manageCares/image/{id}")
+    public ResponseEntity<byte[]> getCareImage(@PathVariable("id") Integer id) throws CareNotFoundException {
+        Care care = careService.get(id); // Gọi service để lấy dữ liệu
+        byte[] image = care.getProfilePicture();
+        if (image == null) {
+            throw new CareNotFoundException("Image not found for care with ID " + id);
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_JPEG); // Định dạng ảnh
+        return new ResponseEntity<>(image, headers, HttpStatus.OK);
+    }
+
 
     // Hiển thị danh sách tất cả care
     @GetMapping("/manageCares")
@@ -43,12 +76,6 @@ public class CareController {
         return "admin/care_form"; // Trả về template care_form.html
     }
 
-
-    @GetMapping("/manageCares/image/{id}")
-    public byte[] getCareImage(@PathVariable("id") Integer id) throws CareNotFoundException {
-        Care care = careService.get(id);
-        return care.getProfilePicture(); // Trả về byte[] của ảnh
-    }
 
     // Lưu thông tin care
 

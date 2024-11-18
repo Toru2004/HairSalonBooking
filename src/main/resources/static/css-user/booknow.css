@@ -121,17 +121,19 @@ button:hover {
 }
 
 
-.service-info .booking-input input {
-    display: none;
-}
+
 
 .staff-profile {
-    display: none;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    gap: 15px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
 }
+
 
 .staff-profile img {
     width: 100px;
@@ -169,4 +171,38 @@ button:hover {
         width: 80px;
         height: 80px;
     }
+}
+#stylist-list {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+#stylist-profile {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+#stylist-profile img {
+    float: left;
+    margin-right: 15px;
+    border-radius: 50%;
+}
+
+#profile-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+#profile-details strong {
+    color: #333;
 }
