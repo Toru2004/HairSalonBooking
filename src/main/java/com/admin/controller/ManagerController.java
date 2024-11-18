@@ -28,15 +28,15 @@ public class ManagerController {
     }
 
     // Hiển thị form thêm hoặc sửa nhân viên
-    @GetMapping("/manager/staff_form")
+    @GetMapping("/manager/addStaff")
     public String showStaffForm(@RequestParam(value = "id", required = false) Long id, Model model) {
         Staff staff = new Staff();
         if (id != null) {
             staff = staffService.findById(id);
         }
         model.addAttribute("staff", staff);
-        model.addAttribute("pageTitle", (id == null ? "Add New Staff" : "Edit Staff"));  // Thêm tiêu đề trang
-        return "redirect:/manager/staff_form";
+        model.addAttribute("pageTitle", (id == null ? "Add New Staff" : "Edit Staff"));
+        return "redirect:/manager/addStaff";
     }
 
     // Lưu nhân viên sau khi thêm hoặc chỉnh sửa
@@ -75,6 +75,6 @@ public class ManagerController {
 
         model.addAttribute("revenueByMonth", revenueByMonth);
 
-        return "manager/managerDashboard";  // Điều hướng đến file dashboard.html trong thư mục templates/manager
+        return "manager/managerDashboard";
     }
 }
