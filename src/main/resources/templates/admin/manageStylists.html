@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Stylists</title>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+
+<header class="text-center">
+    <h2>Admin Panel</h2>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Menu -->
+        <aside class="col-md-2 sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageUsers}">Manage Users</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/ViewAdmins}">View Admins</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageCustomers}">Manage Customers</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageStylists}">Manage Stylists</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageCares}">Manage Services</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageAppointments}">Manage Appointments</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageOrders}">Manage Orders</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manageFeedbacks}">Manage Feedbacks</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="col-md-10 p-4">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2>Manage Stylists</h2>
+                </div>
+
+                <div class="text-end mb-3">
+                    <a class="btn btn-primary" th:href="@{/manageStylists/new}">Add New Stylist</a>
+                </div>
+
+                <div th:if="${message}" class="alert alert-success text-center">
+                    [[${message}]]
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Password</th> <!-- Thêm cột Password -->
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Enabled</th>
+                            <th>Description</th>
+                            <th>Avatar</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="stylist : ${listStylists}">
+                            <tr>
+                                <td>[[${stylist.id}]]</td>
+                                <td>[[${stylist.user.username}]]</td>
+                                <td>[[${stylist.user.password}]]</td> <!-- Hiển thị mật khẩu -->
+                                <td>[[${stylist.user.email}]]</td>
+                                <td>[[${stylist.user.phoneNumber}]]</td>
+                                <td th:text="${stylist.user.enabled} ? 'Yes' : 'No'"></td>
+                                <td>[[${stylist.description}]]</td>
+                                <td>
+                                    <img th:if="${stylist.profilePicture != null}"
+                                         th:src="@{'/manageStylists/image/' + ${stylist.id}}"
+                                         alt="Profile Picture" width="50" height="50" class="rounded-circle"/>
+                                    <span th:if="${stylist.profilePicture == null}">No Image</span>
+                                </td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageStylists/edit/' + ${stylist.id}}" title="Edit Stylist">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageStylists/delete/' + ${stylist.id}}" title="Delete Stylist">Delete</a>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Footer Content -->
+<footer>
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
