@@ -10,7 +10,11 @@
 <body>
 
 <header class="text-center">
-    <h2>Admin Panel - Manage Appointments</h2>
+    <h2>Admin Panel </h2>
+    <div class="d-flex justify-content-end align-items-center">
+        <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
+        <a class="btn btn-danger" id="logoutBtn" href="#">Logout</a>
+    </div>
 </header>
 
 <div class="container-fluid">
@@ -34,6 +38,7 @@
             <div class="container">
                 <div class="text-center mb-4">
                     <h2>Manage Appointments</h2>
+
                 </div>
 
                 <div class="text-end mb-3">
@@ -155,5 +160,23 @@
             });
         });
     });
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
+
+        // Hiển thị tên người dùng nếu có
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        }
+
+        // Xử lý sự kiện Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
+            alert("You have been logged out.");
+            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
+        });
+    });
+
 </script>
 </html>
