@@ -51,20 +51,22 @@ public class AppointmentController {
 
     @GetMapping("/manageAppointments")
     public String showManageAppointmentsPage(Model model) {
+        // Lấy danh sách tất cả các cuộc hẹn
+        List<Appointment> listAppointments = appointmentService.listAll();
+
         // Lấy ngày tháng năm hiện tại
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
         int currentMonth = currentDate.getMonthValue();
 
-        // Truy xuất danh sách cuộc hẹn từ cơ sở dữ liệu
-        List<Appointment> appointments = appointmentService.getAllAppointments(); // Giả sử bạn có phương thức này
-
         // Thêm thông tin vào model
-        model.addAttribute("listAppointments", appointments);
+        model.addAttribute("listAppointments", listAppointments);
+        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values())); // Thêm danh sách trạng thái
         model.addAttribute("currentYear", currentYear);
         model.addAttribute("currentMonth", currentMonth);
 
-        return "admin/manageAppointments"; // Tên trang của bạn
+        // Trả về view manageAppointments.html
+        return "admin/manageAppointments";
     }
 
     @GetMapping("/manageAppointments/new")
