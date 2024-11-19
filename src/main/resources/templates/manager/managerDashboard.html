@@ -20,7 +20,6 @@
         <aside class="col-md-2 sidebar">
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link" th:href="@{/manager/RevenueOverview}">Revenue Overview</a></li>
-
             </ul>
         </aside>
 
@@ -31,54 +30,21 @@
                 <div class="text-center mb-4">
                     <h3>Revenue Overview</h3>
                     <select class="form-select w-25 mx-auto" id="filter-option" onchange="updateChart()">
-                        <option value="daily">Daily</option>
                         <option value="monthly">Monthly</option>
-                        <option value="yearly">Yearly</option>
                     </select>
                 </div>
 
                 <!-- Chart for Revenue -->
                 <canvas id="revenueChart" width="400" height="200"></canvas>
             </div>
+        </main> <!-- Closing the main tag -->
 
-            <!-- Staff Management Section -->
-            <div class="container">
-                <div class="text-center mb-4">
-                    <h3>Manage Staff</h3>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Phone Number</th>
-                            <th>Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <th:block th:each="staff : ${listStaff}">
-                            <tr>
-                                <td>[[${staff.id}]]</td>
-                                <td>[[${staff.username}]]</td>
-                                <td>[[${staff.email}]]</td>
-                                <td>[[${staff.phoneNumber}]]</td>
-                                <td>[[${staff.status}]]</td>
-                            </tr>
-                        </th:block>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </main>
+        <!-- Footer Content -->
+        <footer class="text-center">
+            <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+        </footer>
     </div>
 </div>
-
-<!-- Footer Content -->
-<footer class="text-center">
-    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
-</footer>
 
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script>
@@ -105,12 +71,10 @@
         }
     });
 
-  /*  function updateChart() {
+    function updateChart() {
         const filterOption = document.getElementById('filter-option').value;
 
-        const dailyData = { labels: ['Mon', 'Tue', 'Wed'], data: [120, 150, 180] };
-        const monthlyData = { labels: ['Jan', 'Feb', 'Mar'], data: [1000, 1200, 900] };
-        const yearlyData = { labels: ['2022', '2023', '2024'], data: [15000, 18000, 20000] };
+        const monthlyData = {labels: ['Jan', 'Feb', 'Mar'], data: [1000, 1200, 900]};
 
         let selectedData;
         if (filterOption === 'daily') selectedData = dailyData;
@@ -122,23 +86,8 @@
         revenueChart.update();
     }
 
-   */
-
-    function updateChart() {
-        const filterOption = document.getElementById('filter-option').value;
-
-        fetch(`/manager/revenue?filter=${filterOption}`)  // Gửi yêu cầu tới server
-            .then(response => response.json())
-            .then(data => {
-                revenueChart.data.labels = data.labels;  // labels là tên các ngày, tháng, năm
-                revenueChart.data.datasets[0].data = data.revenue;  // revenue là mảng doanh thu
-                revenueChart.update();
-            })
-            .catch(error => console.error("Error fetching revenue data:", error));
-    }
-
-
-
+    updateChart();
 </script>
+
 </body>
 </html>
