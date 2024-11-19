@@ -27,6 +27,11 @@ public class StaffService {
     public List<Staff> listAll() {
         return (List<Staff>) staffRepository.findAll();
     }
+    public List<Staff> listByManager(Integer managerId) {
+        return staffRepository.findByManagerId(managerId);
+    }
+
+
 
     public void save(Staff staff) {
         // Kiểm tra và lưu User nếu chưa có ID

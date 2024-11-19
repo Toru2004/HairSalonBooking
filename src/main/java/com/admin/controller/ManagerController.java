@@ -1,7 +1,9 @@
 package com.admin.controller;
 
+import com.admin.model.Appointment;
 import com.admin.model.Manager; // Changed from Stylist to Manager
 import com.admin.exception.ManagerNotFoundException; // Changed from StylistNotFoundException
+import com.admin.service.AppointmentService;
 import com.admin.service.ManagerService; // Changed from StylistService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,12 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.time.LocalDate;
 
 import java.util.List;
 
 @Controller
 public class ManagerController {
+    @Autowired
+    private AppointmentService appointmentService;
 
     @Autowired
     private ManagerService managerService;
@@ -22,10 +28,14 @@ public class ManagerController {
     @GetMapping("/manageManagers")
     public String showManagerList(Model model) {
         List<Manager> listManagers = managerService.listAll();
+        LocalDate now = LocalDate.now();
+        model.addAttribute("currentYear", now.getYear());
+        model.addAttribute("currentMonth", now.getMonthValue());
         model.addAttribute("listManagers", listManagers);
         System.out.println("Managers List: " + listManagers);  // Debugging
         return "admin/manageManagers";
     }
+
 
 
     // Hiển thị form thêm mới manager

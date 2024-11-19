@@ -28,33 +28,38 @@
 
                 <!-- Month and Year Filter Form -->
                 <form th:action="@{/manageAppointments/byMonth}" method="get" class="text-center mb-4">
-                    <div class="form-group">
-                        <label for="year">Year</label>
-                        <select id="year" name="year" class="form-control" th:value="${selectedYear}">
-                            <option th:value="2024">2024</option>
-                            <option th:value="2023">2023</option>
-                            <!-- Add more years as needed -->
-                        </select>
+                    <div class="form-row align-items-center">
+                        <div class="form-group col-md-4">
+                            <label for="year" class="sr-only">Year</label>
+                            <select id="year" name="year" class="form-control" th:value="${selectedYear}">
+                                <option th:value="2024">2024</option>
+                                <option th:value="2023">2023</option>
+                                <!-- Add more years as needed -->
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="month" class="sr-only">Month</label>
+                            <select id="month" name="month" class="form-control" th:value="${selectedMonth}">
+                                <option th:value="1">January</option>
+                                <option th:value="2">February</option>
+                                <option th:value="3">March</option>
+                                <option th:value="4">April</option>
+                                <option th:value="5">May</option>
+                                <option th:value="6">June</option>
+                                <option th:value="7">July</option>
+                                <option th:value="8">August</option>
+                                <option th:value="9">September</option>
+                                <option th:value="10">October</option>
+                                <option th:value="11">November</option>
+                                <option th:value="12">December</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button type="submit" class="btn btn-primary btn-block">Filter</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="month">Month</label>
-                        <select id="month" name="month" class="form-control" th:value="${selectedMonth}">
-                            <option th:value="1">January</option>
-                            <option th:value="2">February</option>
-                            <option th:value="3">March</option>
-                            <option th:value="4">April</option>
-                            <option th:value="5">May</option>
-                            <option th:value="6">June</option>
-                            <option th:value="7">July</option>
-                            <option th:value="8">August</option>
-                            <option th:value="9">September</option>
-                            <option th:value="10">October</option>
-                            <option th:value="11">November</option>
-                            <option th:value="12">December</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Filter</button>
                 </form>
+
 
                 <!-- Add New Appointment Button -->
                 <div class="text-end mb-3">

@@ -35,6 +35,14 @@ public class StaffController {
         model.addAttribute("listStaffs", listStaffs);
         return "admin/manageStaffs";
     }
+    // Hiển thị Staff theo Manager ID
+    @GetMapping("/manager/{managerId}")
+    public String showStaffsByManager(@PathVariable("managerId") Integer managerId, Model model) {
+        List<Staff> listStaffs = staffService.listByManager(managerId);
+        model.addAttribute("listStaffs", listStaffs);
+        model.addAttribute("pageTitle", "Staffs Managed by Manager ID: " + managerId);
+        return "admin/manageStaffsft";
+    }
 
     @GetMapping("/manageStaffs/new")
     public String showNewForm(Model model) {

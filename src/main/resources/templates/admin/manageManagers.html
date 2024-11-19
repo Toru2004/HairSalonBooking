@@ -30,6 +30,10 @@
 
                 <div class="text-end mb-3">
                     <a class="btn btn-primary" th:href="@{/manageManagers/new}">Add New Manager</a>
+                        <!-- Nút chuyển đến trang "Manage Appointments by Month" với tháng hiện tại -->
+                    <a class="btn btn-success" th:href="@{/manageAppointments/byMonth(year=${currentYear}, month=${currentMonth})}">
+                        View Appointments for
+                    </a>
                 </div>
 
                 <div th:if="${message}" class="alert alert-success text-center">
