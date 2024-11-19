@@ -61,6 +61,8 @@
                                 <td>[[${manager.user.phoneNumber}]]</td>
                                 <td>[[${manager.user.enabled}]]</td>
                                 <td>
+                                    <!-- Nút Show Staffs -->
+                                    <a class="btn btn-sm btn-outline-primary" th:href="@{'/manager/' + ${manager.id}}">Show Staffs</a>
                                     <a class="btn btn-sm btn-outline-info" th:href="@{'/manageManagers/edit/' + ${manager.id}}">Edit</a>
                                     <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageManagers/delete/' + ${manager.id}}">Delete</a>
                                 </td>
