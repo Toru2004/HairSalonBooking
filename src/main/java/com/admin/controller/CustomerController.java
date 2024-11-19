@@ -55,7 +55,7 @@ public class CustomerController {
             model.addAttribute("customer", customer); // Đưa thông tin khách hàng vào model để hiển thị trong form
             model.addAttribute("pageTitle", "Edit Customer (ID: " + id + ")"); // Thiết lập tiêu đề trang
 
-            return "customer_form";  // Trả về view customer_form.html để chỉnh sửa khách hàng
+            return "admin/customer_form";  // Trả về view customer_form.html để chỉnh sửa khách hàng
         } catch (CustomerNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage()); // Thông báo lỗi nếu không tìm thấy khách hàng
             return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng
