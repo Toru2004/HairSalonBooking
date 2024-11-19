@@ -36,16 +36,14 @@
 
                 <div class="text-end mb-3">
                     <a class="btn btn-primary" th:href="@{/manageAppointments/new}">Add New Appointment</a>
+                    <!-- Nút chuyển đến trang "Manage Appointments by Month" với tháng hiện tại -->
+                    <a class="btn btn-success" th:href="@{/manageAppointments/byMonth(year=${currentYear}, month=${currentMonth})}">
+                        Monthly Appointments
+                    </a>
                 </div>
 
                 <div th:if="${message}" class="alert alert-success text-center">
                     [[${message}]]
-                </div>
-                <div class="text-end mb-3">
-                    <!-- Nút chuyển đến trang "Manage Appointments by Month" với tháng hiện tại -->
-                    <a class="btn btn-success" th:href="@{/manageAppointments/byMonth(year=${currentYear}, month=${currentMonth})}">
-                        View Appointments for
-                    </a>
                 </div>
 
                 <div class="table-responsive">
