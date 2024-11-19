@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customer List</title>
+  <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<header class="text-center">
+  <h2>Customer List</h2>
+</header>
+<div class="container mt-4">
+  <table class="table table-striped table-bordered">
+    <thead class="table-dark">
+    <tr>
+      <th>Customer ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="customer : ${listCustomers}">
+      <tr>
+        <td>[[${customer.id}]]</td>
+        <td>[[${customer.name}]]</td>
+        <td>[[${customer.email}]]</td>
+        <td>[[${customer.phoneNumber}]]</td>
+      </tr>
+    </th:block>
+    </tbody>
+  </table>
+</div>
+<footer class="text-center">
+  <p>&copy;  2024 Hair Salon. All rights reserved.</p>
+</footer>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
