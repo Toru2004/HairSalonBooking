@@ -32,27 +32,23 @@ public class AppointmentService {
     }
 
 
+    @Autowired
+    private AppointmentRepository AppointmentRepository; // Giả sử bạn có repository này
 
-
-
+    // Phương thức này trả về tất cả các Appointment
     public List<Appointment> getAllAppointments() {
-        // Truy vấn tất cả các appointments từ cơ sở dữ liệu
-        return appointmentRepository.findAll();
+        return appointmentRepository.findAll(); // Sử dụng phương thức findAll() của JpaRepository
     }
-    public Map<String, Double> calculateMonthlyRevenue(List<Appointment> appointments) {
-        Map<String, Double> revenueByMonth = new HashMap<>();
 
+<<<<<<< HEAD
         // Nhóm doanh thu theo tháng
         for (Appointment appointment : appointments) {
             String month = appointment.getAppointmentDate().getMonth().toString(); // Chuyển ngày thành tháng
             Double revenue = appointment.getTotalPrice();
+=======
+>>>>>>> 4baa215b9b11c0f402b62821ce6df65058110f6c
 
-            // Cộng doanh thu vào từng tháng
-            revenueByMonth.merge(month, revenue, Double::sum);
-        }
 
-        return revenueByMonth;
-    }
 
     // Phương thức lấy danh sách tất cả các cuộc hẹn
     public List<Appointment> listAll() {

@@ -101,9 +101,7 @@
     const statusOrder = {
         PENDING: 1,
         APPROVED: 2,
-        IN_PROGRESS: 3,
-        COMPLETED: 4,
-        CANCELED: 5
+        CANCELLED: 3
     };
 
     // Hàm lưu trạng thái từng appointment
@@ -126,32 +124,37 @@
             const dropdown = row.querySelector('select');
             let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
 
-            // Đặt trạng thái ban đầu cho dropdown (nếu có)
-            if (savedStatus) {
-                dropdown.value = savedStatus;
+            // Đặt trạng thái ban đầu cho dropdown
+            if (!savedStatus) {
+                // Nếu chưa có trạng thái lưu trước đó, đặt mặc định là PENDING
+                dropdown.value = "PENDING";
+                saveAppointmentStatus(appointmentId, "PENDING");
+                savedStatus = "PENDING"; // Cập nhật biến để sử dụng trong logic kiểm tra sau
+            } else {
+                dropdown.value = savedStatus; // Nếu có trạng thái đã lưu, đặt trạng thái đó
             }
 
-            // Ngăn chỉnh quay lùi trạng thái
+            // Xử lý sự kiện thay đổi trạng thái
             dropdown.addEventListener('change', (event) => {
                 const selectedStatus = event.target.value;
 
-                // Kiểm tra nếu trạng thái hiện tại là đã hoàn thành hoặc đã hủy
-                // Nếu có, không cho phép thay đổi trạng thái nữa
-                if (savedStatus === 'COMPLETED' || savedStatus === 'CANCELLED') {
-                    alert(`Bạn không thể chỉnh trạng thái khi ở ${savedStatus}!`);
+                // Kiểm tra nếu trạng thái hiện tại là CANCELLED và cố gắng quay lui
+                if (savedStatus === "CANCELLED" && selectedStatus !== "CANCELLED") {
+                    alert("Không thể thay đổi trạng thái từ CANCELLED!");
                     event.target.value = savedStatus; // Reset về trạng thái cũ
                 }
-                    // Kiểm tra nếu trạng thái mới thấp hơn trạng thái đã lưu (quay lùi)
-                // Nếu trạng thái mới có thứ tự thấp hơn trạng thái đã lưu, không cho phép quay lùi
+                // Kiểm tra nếu trạng thái mới thấp hơn trạng thái hiện tại
                 else if (statusOrder[selectedStatus] < statusOrder[savedStatus]) {
-                    alert('Không thể quay lại trạng thái trước!');
+                    alert("Không thể quay lại trạng thái trước!");
                     event.target.value = savedStatus; // Reset về trạng thái cũ
                 } else {
-                    saveAppointmentStatus(appointmentId, selectedStatus); // Lưu trạng thái mới
-                    savedStatus = selectedStatus; // Cập nhật trạng thái đã lưu
+                    // Lưu trạng thái mới và cập nhật giá trị đã lưu
+                    saveAppointmentStatus(appointmentId, selectedStatus);
+                    savedStatus = selectedStatus;
                 }
             });
         });
     });
 </script>
+
 </html>
