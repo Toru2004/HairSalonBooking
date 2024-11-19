@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
-import java.util.ArrayList;
+
 
 @Service
 public class AppointmentService {
@@ -48,11 +48,23 @@ public class AppointmentService {
 
     // Phương thức này trả về tất cả các Appointment
     public List<Appointment> getAllAppointments() {
-        return appointmentRepository.findAll(); // Sử dụng phương thức findAll() của JpaRepository
+        // Truy vấn tất cả các appointments từ cơ sở dữ liệu
+        return appointmentRepository.findAll();
     }
+    public Map<String, Double> calculateMonthlyRevenue(List<Appointment> appointments) {
+        Map<String, Double> revenueByMonth = new HashMap<>();
 
+        // Nhóm doanh thu theo tháng
+        for (Appointment appointment : appointments) {
+            String month = appointment.getAppointmentDate().getMonth().toString(); // Chuyển ngày thành tháng
+            Double revenue = appointment.getTotalPrice();
 
+            // Cộng doanh thu vào từng tháng
+            revenueByMonth.merge(month, revenue, Double::sum);
+        }
 
+        return revenueByMonth;
+    }
 
     // Phương thức lấy danh sách tất cả các cuộc hẹn
     public List<Appointment> listAll() {
@@ -88,5 +100,7 @@ public class AppointmentService {
         }
     }
 
-
 }
+
+
+
