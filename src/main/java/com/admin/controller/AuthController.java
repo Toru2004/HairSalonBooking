@@ -51,7 +51,7 @@ public class AuthController {
                 } else if ("stylist".equals(user.get().getRole())) {
                     return "redirect:/manageUsers"; // Chuyển hướng đến trang chủ nếu không phải admin
                 } else if ("manager".equals(user.get().getRole())) {
-                    return "redirect:/managerDashboard"; // Chuyển hướng đến trang chủ nếu không phải admin
+                    return "/manager/managerDashboard"; // Chuyển hướng đến trang chủ nếu không phải admin
                 } else if ("staff".equals(user.get().getRole())) {
                     return "redirect:/manageUsers"; // Chuyển hướng đến trang chủ nếu không phải admin
                 } else {

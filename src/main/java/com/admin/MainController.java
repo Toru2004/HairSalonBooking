@@ -45,6 +45,25 @@ public class MainController {
         model.addAttribute("title", title);
         return "view/pages/" + pageName; // Chạy "pageName".html
     }
+
+    @GetMapping("/manager-page/{pageName}")
+    public String showManagerPage(@PathVariable String pageName, Model model) {
+        String title;
+        switch (pageName) {
+            case "home":
+                title = "Home";
+                break;
+            case "aboutUs":
+                title = "About Us";
+                break;
+
+            default:
+                title = "Not Found!"; // Tiêu đề mặc định
+                break;
+        }
+        model.addAttribute("title", title);
+        return "manager/" + pageName; // Chạy "pageName".html
+    }
 }
 
 
