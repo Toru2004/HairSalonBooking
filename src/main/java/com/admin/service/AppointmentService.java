@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.time.Month;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.time.Month;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -50,7 +53,11 @@ public class AppointmentService {
     public List<Appointment> getAllAppointments() {
         // Truy vấn tất cả các appointments từ cơ sở dữ liệu
         return appointmentRepository.findAll();
+        // Truy vấn tất cả các appointments từ cơ sở dữ liệu
+        return appointmentRepository.findAll();
     }
+    public Map<String, Double> calculateMonthlyRevenue(List<Appointment> appointments) {
+        Map<String, Double> revenueByMonth = new HashMap<>();
     public Map<String, Double> calculateMonthlyRevenue(List<Appointment> appointments) {
         Map<String, Double> revenueByMonth = new HashMap<>();
 
@@ -62,7 +69,12 @@ public class AppointmentService {
             // Cộng doanh thu vào từng tháng
             revenueByMonth.merge(month, revenue, Double::sum);
         }
+            // Cộng doanh thu vào từng tháng
+            revenueByMonth.merge(month, revenue, Double::sum);
+        }
 
+        return revenueByMonth;
+    }
         return revenueByMonth;
     }
 
@@ -101,6 +113,3 @@ public class AppointmentService {
     }
 
 }
-
-
-
