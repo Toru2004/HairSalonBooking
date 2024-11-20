@@ -21,7 +21,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.admin.model.Appointment.Status; // Đảm bảo đã import enum Status
 import java.time.LocalDate;
-
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -46,11 +47,31 @@ public class AppointmentController {
         // Lấy doanh thu theo tháng từ Service
         List<Object[]> revenueData = appointmentService.getRevenueByMonth(year);
 
-        // Truyền dữ liệu vào model để hiển thị
-        model.addAttribute("revenueData", revenueData);
+        // Kiểm tra dữ liệu trả về
+        if (revenueData != null) {
+            for (Object[] data : revenueData) {
+                System.out.println("Month: " + data[0] + ", Revenue: " + data[1]);
+            }
+        } else {
+            System.out.println("No data found for year " + year);
+        }
 
-        return "revenueView"; // Trả về View để hiển thị
+        // Chuyển dữ liệu doanh thu thành các danh sách riêng biệt cho Chart.js
+        List<Integer> months = new ArrayList<>();
+        List<Double> revenues = new ArrayList<>();
+
+        for (Object[] data : revenueData) {
+            months.add((Integer) data[0]);
+            revenues.add((Double) data[1]);
+        }
+
+        // Truyền dữ liệu vào model
+        model.addAttribute("months", months);
+        model.addAttribute("revenues", revenues);
+
+        return "manager/managerDashboard"; // Trả về View để hiển thị
     }
+
     @GetMapping("/manageAppointments/byMonth")
     public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, Model model) {
         // Get appointments by year and month

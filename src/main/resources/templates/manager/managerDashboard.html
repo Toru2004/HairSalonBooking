@@ -27,11 +27,6 @@
 
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">
-            <form th:action="@{/manageAppointments/yearly}" method="get">
-                <input type="number" name="year" th:value="${selectedYear}" />
-                <input type="number" name="month" th:value="${selectedMonth}" />
-                <button type="submit">Submit</button>
-            </form>
 
             <div class="container">
                 <div class="text-center mb-4">
@@ -62,42 +57,31 @@
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
 <script>
-    // Giới hạn số tháng trong năm (1 đến 12)
-    const months = Array.from({ length: 12 }, (_, i) => i + 1);
+    // Lấy dữ liệu từ controller (sử dụng Thymeleaf để truyền giá trị vào JavaScript)
+    var months = [[${months}]];  // Dữ liệu tháng từ controller
+    var revenues = [[${revenues}]]; // Dữ liệu doanh thu từ controller
 
-    // Hàm gọi API và hiển thị dữ liệu
-    function fetchTotalPriceForMonth(year, month) {
-        return fetch(`http://localhost:8080/manageAppointments/yearly?year=${year}&month=${month}`)
-            .then(response => response.json())  // Giả sử API trả về dữ liệu dạng JSON
-            .then(data => {
-                return {
-                    month: month,
-                    totalPrice: data.totalPriceMonth || 0 // Nếu không có dữ liệu thì trả về 0
-                };
-            })
-            .catch(error => {
-                console.error('Error fetching data for month ' + month, error);
-                return { month: month, totalPrice: 0 };  // Nếu lỗi, trả về 0
-            });
-    }
-
-    // Hàm hiển thị tổng giá trị của mỗi tháng trong năm
-    async function displayTotalPrices(year) {
-        let totalPriceHtml = '<h4>Total Price for Each Month in ' + year + ':</h4><ul>';
-
-        for (const month of months) {
-            const { month: monthNum, totalPrice } = await fetchTotalPriceForMonth(year, month);
-            totalPriceHtml += `<li>Month ${monthNum}: ${totalPrice}</li>`;
+    var ctx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(ctx, {
+        type: 'bar',  // Loại biểu đồ: bar (cột)
+        data: {
+            labels: months, // Các tháng
+            datasets: [{
+                label: 'Doanh thu (VND)',
+                data: revenues, // Doanh thu theo tháng
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền cho cột
+                borderColor: 'rgba(75, 192, 192, 1)', // Màu viền cột
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-
-        totalPriceHtml += '</ul>';
-
-        // In ra kết quả
-        document.getElementById('totalPriceContainer').innerHTML = totalPriceHtml;
-    }
-
-    // Gọi hàm hiển thị cho năm 2024
-    displayTotalPrices(2024);
+    });
 </script>
 
 </body>
