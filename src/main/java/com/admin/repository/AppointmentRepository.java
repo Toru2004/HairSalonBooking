@@ -28,4 +28,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
 
     // Danh sách cuộc hẹn trong khoảng thời gian (Derived Query)
     List<Appointment> findAppointmentsByAppointmentDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    // Doanh thu theo từng tháng trong năm (Native Query)
+    @Query(value = "SELECT MONTH(appointment_date) AS month, SUM(total_price) FROM appointments " +
+            "WHERE YEAR(appointment_date) = :year GROUP BY MONTH(appointment_date) ORDER BY MONTH(appointment_date)",
+            nativeQuery = true)
+    List<Object[]> findRevenueByMonth(@Param("year") int year);
 }

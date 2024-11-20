@@ -1,7 +1,10 @@
 package com.admin.controller;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.HashMap;
 
+import org.springframework.ui.Model;
 import com.admin.exception.AppointmentNotFoundException;
 import com.admin.model.Appointment;
 import com.admin.model.Care;
@@ -36,22 +39,41 @@ public class AppointmentController {
 
     @Autowired
     private CareService careService;
+    @GetMapping("/revenue")
+    public String showRevenueByMonth(Model model) {
+        int year = 2024; // Ví dụ: năm cần tính doanh thu
+
+        // Lấy doanh thu theo tháng từ Service
+        List<Object[]> revenueData = appointmentService.getRevenueByMonth(year);
+
+        // Truyền dữ liệu vào model để hiển thị
+        model.addAttribute("revenueData", revenueData);
+
+        return "revenueView"; // Trả về View để hiển thị
+    }
     @GetMapping("/manageAppointments/byMonth")
     public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, Model model) {
         // Get appointments by year and month
         List<Appointment> listAppointments = appointmentService.listAll();
         List<Appointment> appointments = appointmentService.getAppointmentsByMonth(year, month);
-        model.addAttribute("listAppointments", appointments);
-        // Thêm thông tin vào model
-        model.addAttribute("listAppointments", listAppointments);
-        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values())); // Thêm danh sách trạng thái
 
-        // Add the year and month to the model to keep track of the selected month
+        // Calculate the total price for the month
+        double totalPriceMonth = appointments.stream()
+                .mapToDouble(Appointment::getTotalPrice)
+                .sum();
+
+        model.addAttribute("listAppointments", appointments);
+        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values()));
         model.addAttribute("selectedYear", year);
         model.addAttribute("selectedMonth", month);
+        model.addAttribute("totalPriceMonth", totalPriceMonth);  // Add total price to the model
 
-        return "admin/appointmentFilterForm"; // The same view used for managing all appointments
+        return "admin/appointmentFilterForm";
     }
+
+
+
+
 
     @GetMapping("/manageAppointments")
     public String showManageAppointmentsPage(Model model) {
@@ -62,7 +84,6 @@ public class AppointmentController {
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
         int currentMonth = currentDate.getMonthValue();
-
         // Thêm thông tin vào model
         model.addAttribute("listAppointments", listAppointments);
         model.addAttribute("statuses", Arrays.asList(Appointment.Status.values())); // Thêm danh sách trạng thái

@@ -1,0 +1,25 @@
+<!-- revenueView.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Doanh thu theo tháng</title>
+</head>
+<body>
+<h1>Doanh thu theo tháng trong năm 2024</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Tháng</th>
+        <th>Doanh thu</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="data : ${revenueData}">
+        <td th:text="${data[0]}">Tháng</td> <!-- data[0] là tháng -->
+        <td th:text="${data[1]}">Doanh thu</td> <!-- data[1] là doanh thu -->
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
