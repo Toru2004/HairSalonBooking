@@ -40,6 +40,9 @@
                 <!-- Chart for Revenue -->
                 <canvas id="revenueChart" width="400" height="200"></canvas>
             </div>
+        </main>
+    </div>
+</div>
 
 
 
@@ -49,9 +52,7 @@
 </footer>
 
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script>
+ <script>
     const ctx = document.getElementById('revenueChart').getContext('2d');
     let revenueChart = new Chart(ctx, {
         type: 'bar',
@@ -93,7 +94,7 @@
     }
 
     updateChart();
-</script>
+ </script>
 
 </body>
 </html>
