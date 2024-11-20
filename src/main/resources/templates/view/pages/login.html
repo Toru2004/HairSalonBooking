@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css-user/login.css}">
+</head>
+<body>
+<!-- Header-->
+<div th:replace="view/partials/header :: header"></div>
+
+<div class="container">
+    <div class="form-container">
+        <h2>Login</h2>
+        <form method="POST" action="/login">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+        <p class="text-center mt-3">Don't have an account? <a th:href="@{/page/signup}">Sign Up</a></p>
+        <p th:if="${error}" th:text="${error}" class="error"></p> <!-- Lỗi đăng nhập -->
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="view/partials/footer :: footer"></div>
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const loginForm = document.querySelector("form"); // Giả sử bạn có form đăng nhập
+
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault(); // Ngăn hành động mặc định
+
+            const email = document.getElementById("email").value; // Lấy email từ input
+            const password = document.getElementById("password").value; // Lấy password từ input
+
+            try {
+                const response = await fetch("/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams({ email, password }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json(); // Lấy dữ liệu JSON từ backend
+
+                    // Lưu username vào Local Storage
+                    localStorage.setItem("adminUsername", data.username);
+                    localStorage.setItem("role", data.role);
+
+                    // Chuyển hướng tùy thuộc vào vai trò
+                    if (data.role === "admin") {
+                        window.location.href = "/ViewAdmins";
+                    } else {
+                        window.location.href = "/home";
+                    }
+                } else {
+                    const error = await response.json();
+                    alert(error.error); // Hiển thị lỗi nếu có
+                }
+            } catch (error) {
+                console.error("Error during login:", error);
+                alert("An error occurred. Please try again.");
+            }
+        });
+    });
+
+</script>

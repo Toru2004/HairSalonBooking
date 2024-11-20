@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${pageTitle}]]</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="text-center"><h2>[[${pageTitle}]]</h2></div>
+
+    <form th:action="@{/manageStylists/save}" method="post" th:object="${stylist}" enctype="multipart/form-data" style="max-width: 500px; margin: 0 auto;">
+        <!-- Hidden ID -->
+        <input type="hidden" th:field="*{id}">
+
+        <div class="border border-secondary rounded p-3">
+            <!-- Username -->
+            <div class="form-group mb-3">
+                <label>Username:</label>
+                <input type="text" th:field="*{user.username}" class="form-control" required minlength="2" maxlength="45" placeholder="Enter username"/>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group mb-3">
+                <label>Email:</label>
+                <input type="email" th:field="*{user.email}" class="form-control" required minlength="8" maxlength="45" placeholder="Enter email"/>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group mb-3">
+                <label>Phone Number:</label>
+                <input type="text" th:field="*{user.phoneNumber}" class="form-control" required minlength="10" maxlength="15" placeholder="Enter phone number"/>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group mb-3">
+                <label>Password:</label>
+                <input type="password" th:field="*{user.password}" class="form-control" required minlength="5" maxlength="15" placeholder="Enter password"/>
+            </div>
+
+            <!-- Profile Picture -->
+            <div class="form-group mb-3">
+                <label>Profile Picture:</label>
+                <input type="file" name="imageFile" class="form-control" accept="image/*"/>
+                <small class="text-muted">Upload a picture for the stylist (optional).</small>
+            </div>
+
+            <div class="form-group mb-3">
+                <label>Description:</label>
+                <textarea th:field="*{description}" class="form-control" rows="4" maxlength="255" placeholder="Enter description"></textarea>
+            </div>
+
+
+            <!-- Enabled -->
+            <div class="form-group mb-3">
+                <label>Enabled:</label>
+                <input type="checkbox" th:field="*{user.enabled}" class="form-check-input"/>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelForm()">Cancel</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>
+
+<script type="text/javascript">
+    function cancelForm() {
+        window.location = "[[@{/manageStylists}]]";
+    }
+</script>

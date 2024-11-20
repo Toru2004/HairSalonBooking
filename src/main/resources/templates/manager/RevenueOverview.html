@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Overview</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Revenue Overview</h2>
+
+    <!-- Chọn bộ lọc thời gian -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <label for="filter" class="form-label">Filter by:</label>
+            <select class="form-select" id="filter" name="filter">
+                <option value="day" selected>Today</option>
+                <option value="month">This Month</option>
+                <option value="year">This Year</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-primary mt-4" id="filterBtn">Apply Filter</button>
+        </div>
+    </div>
+
+    <!-- Doanh thu tổng -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h4>Total Revenue</h4>
+            <p class="h3" id="totalRevenue">Loading...</p>
+        </div>
+    </div>
+
+    <!-- Biểu đồ doanh thu theo dịch vụ -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h4>Revenue by Service</h4>
+            <canvas id="revenueChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Content -->
+<footer class="text-center">
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
+
+<script>
+    // Chức năng lấy dữ liệu doanh thu từ API và cập nhật trang
+    document.getElementById("filterBtn").addEventListener("click", function () {
+        const filter = document.getElementById("filter").value;
+
+        // Gọi API hoặc controller để lấy dữ liệu doanh thu theo filter
+        fetch(`/revenue?filter=${filter}`)
+            .then(response => response.json())
+            .then(data => {
+                // Cập nhật doanh thu tổng
+                document.getElementById("totalRevenue").textContent = data.totalRevenue.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+
+                // Cập nhật biểu đồ doanh thu theo dịch vụ
+                updateRevenueChart(data.revenueByService);
+            })
+            .catch(error => console.error("Error fetching revenue data:", error));
+    });
+
+    // Cập nhật biểu đồ doanh thu theo dịch vụ
+    function updateRevenueChart(revenueData) {
+        const labels = Object.keys(revenueData);
+        const values = Object.values(revenueData);
+
+        const ctx = document.getElementById("revenueChart").getContext("2d");
+
+        // Xóa biểu đồ cũ nếu có
+        if (window.revenueChart) {
+            window.revenueChart.destroy();
+        }
+
+        // Tạo biểu đồ mới
+        window.revenueChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Revenue by Service",
+                    data: values,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+</script>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

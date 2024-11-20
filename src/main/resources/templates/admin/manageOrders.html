@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+</head>
+<body>
+<header>
+    <h2>Admin</h2>
+</header>
+
+<div class="container">
+    <!-- Sidebar Menu -->
+    <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
+
+    <!-- Main Content Area -->
+    <main class="content">
+        <h3>Order Management</h3>
+        <p>Manage orders placed in the system. Process new orders and update order statuses.</p>
+    </main>
+</div>
+
+<!-- Footer Content -->
+<footer>
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
+</body>
+</html>

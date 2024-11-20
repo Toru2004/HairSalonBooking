@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <section th:fragment="popUpForms">
+    <!-- Pop-up Login Form -->
+    <div id="login-popup" class="popup-overlay d-none">
+      <div class="popup-content rounded shadow">
+        <button class="close-popup">&times;</button> <!-- Nút đóng -->
+        <h2 class="text-center">Login</h2>
+        <form action="/login" method="post">
+          <input type="text" class="form-control mb-3" placeholder="Username" name="username" required>
+          <input type="password" class="form-control mb-3" placeholder="Password" name="password" required>
+          <button type="submit" class="btn btn-dark w-100">Login</button>
+        </form>
+        <p class="text-center mt-3">Don't have an account? <a href="#" id="to-signup">Sign Up</a></p>
+        <p th:if="${error}" th:text="${error}"></p>
+      </div>
+    </div>
+
+    <!-- Pop-up Sign Up Form -->
+    <div id="signup-popup" class="popup-overlay d-none">
+      <div class="popup-content rounded shadow">
+        <button class="close-popup">&times;</button> <!-- Nút đóng -->
+        <h2 class="text-center">Signup</h2>
+        <form action="/signup" method="post">
+          <input type="text" class="form-control mb-3" placeholder="Username" name="username" required>
+          <input type="email" class="form-control mb-3" placeholder="Email" name="email" required>
+          <input type="text" class="form-control mb-3" placeholder="Phone Number" name="phone" required>
+          <input type="password" class="form-control mb-3" placeholder="Password" name="password" required>
+          <button type="submit" class="btn btn-dark w-100">Sign Up</button>
+        </form>
+        <p class="text-center mt-3">Already have an account? <a href="#" id="to-login">Login</a></p>
+        <p th:if="${message}" th:text="${message}"></p>
+        <p th:if="${error}" th:text="${error}"></p>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

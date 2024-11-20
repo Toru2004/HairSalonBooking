@@ -1,0 +1,208 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.bookNow-section {
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.customer-info {
+    flex: 1 1 55%; /* Tăng độ rộng cho phần thông tin khách hàng */
+}
+
+.service-info {
+    flex: 1 1 40%; /* Điều chỉnh độ rộng cho phần thông tin dịch vụ */
+}
+
+h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h3 {
+    color: #555;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.customer-info input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 14px;
+    background-color: #333;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 20px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+.service-info .booking-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.service-button {
+    padding: 12px 20px;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px;
+}
+
+.service-button:hover {
+    background-color: #959595;
+}
+
+.service-button.selected {
+    background-color: #070202;
+    color: white;
+}
+
+
+
+
+.staff-profile {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+.staff-profile img {
+    width: 100px;
+    height: 100px;
+    margin-right: 15px;
+    border-radius: 50%;
+}
+
+.staff-profile div {
+    flex: 1;
+}
+
+.customer-info.active,
+.service-info.active {
+    border: 2px solid #000000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .booking-container {
+        padding: 20px;
+    }
+
+    .customer-info,
+    .service-info {
+        flex: 1 1 100%;
+    }
+
+    .service-button {
+        flex: 1 1 100%;
+    }
+
+    .staff-profile img {
+        width: 80px;
+        height: 80px;
+    }
+}
+#stylist-list {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+#stylist-profile {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+#stylist-profile img {
+    float: left;
+    margin-right: 15px;
+    border-radius: 50%;
+}
+
+#profile-details p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+#profile-details strong {
+    color: #333;
+}

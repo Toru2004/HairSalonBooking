@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Default Title</title>
+    <link rel="icon" th:src="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css-user/header.css}">
+    <link rel="stylesheet" th:href="@{/css-user/footer.css}">
+    <link rel="stylesheet" th:href="@{/css-user/popUp.css}">
+    <link rel="stylesheet" th:href="@{/css-user/booknow.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<!--Login/Signup-->
+<div th:replace="view/partials/popUpForms :: popUpForms"></div>
+<!-- Header-->
+<div th:replace="view/partials/header :: header"></div>
+
+<section class="bookNow-section">
+    <div class="booking-container">
+        <form id="booking-form" onsubmit="return validateForm()">
+            <!-- Customer Information -->
+            <div class="box customer-info">
+                <h2>Customer Information</h2>
+                <label for="name">Customer Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="date">Booking Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+
+            <!-- Service Information -->
+            <div class="box service-info">
+                <h2>Service Information</h2>
+                <h3>Choose a Service</h3>
+                <div id="care-list"></div>
+
+                <div id="staff-selection" >
+                    <h3>Choose a Stylist</h3>
+                    <select id="stylist-list" name="stylist" required>
+                        <!-- Các tùy chọn sẽ được thêm vào đây bằng JavaScript -->
+                    </select>
+
+                    <div id="stylist-profile" style="display: none; margin-top: 20px;">
+                        <h4>Stylist Profile</h4>
+                        <div id="profile-details">
+                            <!-- Nội dung profile sẽ được thêm ở đây -->
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+            </div>
+
+            <button type="submit">Book Appointment</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="view/partials/footer :: footer"></div>
+
+<script>
+
+    function validateForm() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const date = document.getElementById('date').value;
+        const time = document.getElementById('time').value;
+
+        // Kiểm tra nếu các trường bắt buộc chưa được nhập
+        if (!name || !email || !phone || !date || !time) {
+            alert("All fields are required!");
+            return false; // Ngừng việc gửi form nếu có trường thiếu
+        }
+
+        // Có thể thêm các kiểm tra khác cho email, phone,...
+        return true; // Nếu mọi thứ hợp lệ thì form sẽ được gửi
+    }
+
+    // Hàm để gọi API và hiển thị danh sách care services dưới dạng nút
+    function loadCares() {
+        fetch('/api/booknow/cares')
+            .then(response => response.json())
+            .then(cares => {
+                const careList = document.getElementById('care-list');
+                careList.innerHTML = '';  // Clear any existing content
+
+                cares.forEach(care => {
+                    const careButton = document.createElement('button');
+                    careButton.classList.add('service-button');
+                    careButton.innerHTML = `<strong>${care.name}</strong>`;
+                    careButton.dataset.serviceId = care.id; // Lưu ID dịch vụ vào button
+
+                    careButton.addEventListener('click', function() {
+                        // Toggle class "selected" để đánh dấu dịch vụ đã chọn
+                        careButton.classList.toggle('selected');
+                        handleServiceSelection(care.id);  // Xử lý khi chọn hoặc bỏ chọn dịch vụ
+                    });
+
+                    careList.appendChild(careButton);
+                });
+            })
+            .catch(error => console.error('Error loading cares:', error));
+    }
+
+    // Hàm xử lý khi chọn dịch vụ
+    let selectedServices = []; // Mảng lưu các dịch vụ đã chọn
+
+    function handleServiceSelection(serviceId) {
+        const index = selectedServices.indexOf(serviceId);
+
+        if (index > -1) {
+            // Nếu dịch vụ đã được chọn thì bỏ chọn
+            selectedServices.splice(index, 1);
+        } else {
+            // Nếu dịch vụ chưa được chọn thì thêm vào mảng
+            selectedServices.push(serviceId);
+        }
+
+        console.log("Selected Services:", selectedServices);
+    }
+
+    // Hàm để tải danh sách stylists
+    function loadStylists() {
+        fetch('/api/booknow/stylists')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // Đọc dữ liệu dưới dạng JSON
+            })
+            .then(data => {
+                stylists = data; // Gán dữ liệu trả về từ API vào biến stylists
+                console.log('Stylists data:', stylists); // Kiểm tra dữ liệu trả về
+
+                const stylistList = document.getElementById('stylist-list');
+
+                if (!stylistList) {
+                    console.error('Element with id "stylist-list" not found');
+                    return;
+                }
+
+                stylistList.innerHTML = ''; // Xóa nội dung cũ
+
+                if (!Array.isArray(stylists) || stylists.length === 0) {
+                    stylistList.innerHTML = '<option value="">No stylists available</option>';
+                    return;
+                }
+
+                // Thêm tùy chọn mặc định
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select a stylist';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                stylistList.appendChild(defaultOption);
+
+                // Lặp qua danh sách stylist và thêm vào dropdown
+                stylists.forEach(stylist => {
+                    const option = document.createElement('option');
+                    option.value = stylist.id; // Dùng ID stylist làm giá trị
+                    option.textContent = stylist.user?.username || `Stylist #${stylist.id}`; // Hiển thị tên stylist hoặc ID
+                    stylistList.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error loading stylists:', error);
+                alert('Could not load stylists. Please try again later.');
+            });
+    }
+
+
+
+
+
+
+    // Hàm để hiển thị profile chi tiết của stylist khi chọn
+    function displayStylistProfile(stylist) {
+        const staffProfile = document.getElementById('staff-profile');
+        const staffImage = document.getElementById('staff-image');
+        const staffDetails = document.getElementById('staff-details');
+
+        staffProfile.style.display = 'flex'; // Hiển thị profile
+
+        // Cập nhật thông tin stylist
+        const profilePicture = stylist.profilePicture
+            ? `data:image/jpeg;base64,${stylist.profilePicture}`
+            : 'default-profile.png'; // Đường dẫn ảnh mặc định
+
+        staffImage.src = profilePicture; // Cập nhật ảnh
+        staffDetails.innerHTML = `
+        <p><strong>${stylist.user.username}</strong></p>
+        <p>Email: ${stylist.user.email || 'No email provided'}</p>
+        <p>${stylist.description || 'No description available'}</p>
+    `;
+    }
+
+
+
+    // Gọi các hàm load dữ liệu khi trang tải
+    window.onload = function() {
+        loadCares(); // Chỉ gọi loadCares khi trang tải
+        loadStylists(); // Hiển thị danh sách stylist ngay khi tải trang
+    };
+
+    let stylists = []; // Biến toàn cục để lưu danh sách stylists
+
+    document.getElementById('stylist-list').addEventListener('change', function () {
+        const stylistId = this.value; // Lấy ID stylist được chọn
+        const selectedStylist = stylists.find(stylist => stylist.id == stylistId); // Tìm stylist tương ứng
+
+        if (selectedStylist) {
+            displayStylistProfile(selectedStylist); // Gọi hàm hiển thị profile
+        } else {
+            document.getElementById('stylist-profile').style.display = 'none'; // Ẩn profile nếu không có stylist
+        }
+    });
+
+    // Hàm hiển thị thông tin stylist
+    function displayStylistProfile(stylist) {
+        const profileContainer = document.getElementById('profile-details');
+        document.getElementById('stylist-profile').style.display = 'block'; // Hiển thị container profile
+
+        const profilePicture = stylist.profilePicture
+            ? `data:image/jpeg;base64,${stylist.profilePicture}` // Nếu có ảnh, hiển thị
+            : 'default-profile.png'; // Nếu không, hiển thị ảnh mặc định
+
+        profileContainer.innerHTML = `
+        <img src="${profilePicture}" alt="Profile Image" style="width: 100px; height: 100px; border-radius: 50%; margin-right: 15px;">
+        <p><strong>Name:</strong> ${stylist.user?.username || 'N/A'}</p>
+        <p><strong>Email:</strong> ${stylist.user?.email || 'N/A'}</p>
+        <p><strong>Description:</strong> ${stylist.description || 'No description available'}</p>
+    `;
+    }
+
+</script>
+
+</body>
+</html>

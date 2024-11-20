@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager - Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<header class="text-center">
+    <h2>Manager Dashboard</h2>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Menu -->
+        <aside class="col-md-2 sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manager/RevenueOverview}">Revenue Overview</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="col-md-10 p-4">
+            <!-- Revenue Tracking Section -->
+            <div class="container mb-5">
+                <div class="text-center mb-4">
+                    <h3>Revenue Overview</h3>
+                    <select class="form-select w-25 mx-auto" id="filter-option" onchange="updateChart()">
+                        <option value="monthly">Monthly</option>
+                    </select>
+                </div>
+
+                <!-- Chart for Revenue -->
+                <canvas id="revenueChart" width="400" height="200"></canvas>
+            </div>
+        </main> <!-- Closing the main tag -->
+
+        <!-- Footer Content -->
+        <footer class="text-center">
+            <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+        </footer>
+    </div>
+</div>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+ <script>
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    let revenueChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Revenue',
+                data: [],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    function updateChart() {
+    function updateChart() {
+        const filterOption = document.getElementById('filter-option').value;
+
+        const monthlyData = {labels: ['Jan', 'Feb', 'Mar'], data: [1000, 1200, 900]};
+
+        let selectedData;
+        if (filterOption === 'daily') selectedData = dailyData;
+        else if (filterOption === 'monthly') selectedData = monthlyData;
+        else selectedData = yearlyData;
+
+        revenueChart.data.labels = selectedData.labels;
+        revenueChart.data.datasets[0].data = selectedData.data;
+        revenueChart.update();
+    }
+
+    updateChart();
+    updateChart();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Managers</title>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <style>
+
+    </style>
+</head>
+<body>
+
+<header class="text-center">
+    <h2>Admin Panel</h2>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Menu -->
+        <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
+
+        <!-- Main Content Area -->
+        <main class="col-md-10 p-4">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2>Manage Managers</h2>
+                </div>
+
+                <div class="text-end mb-3">
+                    <a class="btn btn-primary" th:href="@{/manageManagers/new}">Add New Manager</a>
+                        <!-- Nút chuyển đến trang "Manage Appointments by Month" với tháng hiện tại -->
+                    <a class="btn btn-success" th:href="@{/manageAppointments/byMonth(year=${currentYear}, month=${currentMonth})}">
+                        Monthly Appointments
+                    </a>
+                </div>
+
+                <div th:if="${message}" class="alert alert-success text-center">
+                    [[${message}]]
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Phone number</th>
+                            <th>Enabled</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="manager : ${listManagers}">
+                            <tr>
+                                <td>[[${manager.id}]]</td>
+                                <td>[[${manager.user.username}]]</td>
+                                <td>[[${manager.user.email}]]</td>
+                                <td>[[${manager.user.phoneNumber}]]</td>
+                                <td>[[${manager.user.enabled}]]</td>
+                                <td>
+                                    <!-- Nút Show Staffs -->
+                                    <a class="btn btn-sm btn-outline-primary" th:href="@{'/manager/' + ${manager.id}}">Show Staffs</a>
+                                    <a class="btn btn-sm btn-outline-info" th:href="@{'/manageManagers/edit/' + ${manager.id}}">Edit</a>
+                                    <a class="btn btn-sm btn-outline-danger" th:href="@{'/manageManagers/delete/' + ${manager.id}}">Delete</a>
+                                </td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+
+<!-- Footer Content -->
+<footer>
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

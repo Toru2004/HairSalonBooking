@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Our Stylists</title>
+    <link rel="icon" th:src="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css-user/header.css}">
+    <link rel="stylesheet" th:href="@{/css-user/footer.css}">
+    <link rel="stylesheet" th:href="@{/css-user/popUp.css}">
+    <link rel="stylesheet" th:href="@{/css-user/stylists.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+<!-- Login/Signup -->
+<div th:replace="view/partials/popUpForms :: popUpForms"></div>
+<!-- Header -->
+<div th:replace="view/partials/header :: header"></div>
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Our Stylists</h1>
+
+    <!-- Danh sách stylist -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        <th:block th:each="stylist : ${listStylists}">
+            <div class="col">
+                <div class="card text-center">
+                    <!-- Hiển thị ảnh stylist -->
+                    <img th:src="@{'/manageStylists/image/' + ${stylist.id}}" alt="Stylist Image" class="card-img-top">
+
+                    <div class="card-body">
+                        <!-- Tên stylist -->
+                        <h5 class="card-title stylist-name" th:text="${stylist.user.username}">Stylist Name</h5>
+
+                        <!-- Nút View More -->
+                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                th:attr="data-bs-target='#detailsModal-' + ${stylist.id}">
+                            View More
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Chi tiết Stylist -->
+            <div th:attr="id='detailsModal-' + ${stylist.id}" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" th:text="${stylist.user.username}">Stylist Name</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul class="list-group">
+                                <li class="list-group-item"><strong>Email:</strong> <span th:text="${stylist.user.email}">Email</span></li>
+                                <li class="list-group-item"><strong>Phone:</strong> <span th:text="${stylist.user.phoneNumber}">Phone</span></li>
+                                <li class="list-group-item"><strong>Description:</strong>
+                                    <p th:text="${stylist.description}">Description</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <a th:href="@{/page/bookNow}" class="btn btn-primary">Book Now</a>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+
+    <!-- Thông báo khi không có stylist -->
+    <div th:if="${listStylists == null || listStylists.size() == 0}">
+        <p class="text-center">No stylists found.</p>
+    </div>
+</div>
+
+<!-- Footer -->
+<div th:replace="view/partials/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
