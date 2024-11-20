@@ -39,8 +39,12 @@ public class AppointmentController {
     @GetMapping("/manageAppointments/byMonth")
     public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, Model model) {
         // Get appointments by year and month
+        List<Appointment> listAppointments = appointmentService.listAll();
         List<Appointment> appointments = appointmentService.getAppointmentsByMonth(year, month);
         model.addAttribute("listAppointments", appointments);
+        // Thêm thông tin vào model
+        model.addAttribute("listAppointments", listAppointments);
+        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values())); // Thêm danh sách trạng thái
 
         // Add the year and month to the model to keep track of the selected month
         model.addAttribute("selectedYear", year);
