@@ -16,7 +16,8 @@
     <h2>Admin Panel</h2>
     <div class="d-flex justify-content-end align-items-center">
         <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
-        <a class="btn btn-danger" id="logoutBtn" href="#">Logout</a>
+        <a href="/logout" class="btn btn-danger">Logout</a>
+
     </div>
 </header>
 
@@ -85,22 +86,15 @@
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
+        const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
 
-        // Hiển thị tên người dùng nếu có
         if (currentUsername) {
             document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
         } else {
             document.getElementById("usernameDisplay").textContent = "No user logged in.";
         }
-
-        // Xử lý sự kiện Logout
-        document.getElementById("logoutBtn").addEventListener("click", () => {
-            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
-            alert("You have been logged out.");
-            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
-        });
     });
+
 
 </script>
 </body>

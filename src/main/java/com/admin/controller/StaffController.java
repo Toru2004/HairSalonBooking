@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -33,9 +34,19 @@ public class StaffController {
     private UserService userService;  // Inject the UserService
 
     @GetMapping("/Staff/staffDashboard")
-    public String staffDashboard(Model model) {
+    public String staffDashboard(Model model, HttpServletRequest request) {
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
 
-        return "Staff/staffDashboard";
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("staff")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
+
+        // Lấy username của staff từ session
+        String currentUsername = (String) request.getSession().getAttribute("username");
+        model.addAttribute("currentUsername", currentUsername); // Truyền vào model
+        return "Staff/staffDashboard"; // Trả về file giao diện
     }
 
 
@@ -52,7 +63,7 @@ public class StaffController {
         List<Staff> listStaffs = staffService.listByManager(managerId);
         model.addAttribute("listStaffs", listStaffs);
         model.addAttribute("pageTitle", "Staffs Managed by Manager ID: " + managerId);
-        return "admin/manageStaffsft";
+        return "admin/manageStaffs";
     }
 
     @GetMapping("/manageStaffs/new")

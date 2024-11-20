@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javax.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -35,15 +36,23 @@ public class ManagerController {
 
 
     @GetMapping("/manager/managerDashboard")
-    public String managerDashboard(Model model) {
+    public String managerDashboard(HttpServletRequest request, Model model) {
         // Truy xuất dữ liệu doanh thu từ appointment
         List<Appointment> appointments = appointmentService.getAllAppointments();
 
         // Tổng hợp dữ liệu doanh thu theo tháng (hoặc ngày/năm tùy theo yêu cầu)
         Map<String, Double> revenueByMonth = appointmentService.calculateMonthlyRevenue(appointments);
 
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
+
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("manager")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
 
         model.addAttribute("revenueByMonth", revenueByMonth);
+
 
         return "manager/managerDashboard";
     }

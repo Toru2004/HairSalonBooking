@@ -28,7 +28,13 @@ public class AdminController {
         // Lấy username từ session (sau khi login)
         String currentUsername = (String) request.getSession().getAttribute("username");
         model.addAttribute("currentUsername", currentUsername);
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
 
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+//        if (role == null || !role.equals("admin")) {
+//            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+//        }
         return "admin/ViewAdmins";
     }
 
