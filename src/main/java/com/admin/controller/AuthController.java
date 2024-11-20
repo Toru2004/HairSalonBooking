@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Optional;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.http.ResponseEntity;
 
 @Controller
 public class AuthController {
@@ -40,31 +44,34 @@ public class AuthController {
 
     // Đăng nhập người dùng
     @PostMapping("/login")
-    public String loginUser(@RequestParam String email, @RequestParam String password, Model model) {
+    public ResponseEntity<Map<String, String>> loginUser(@RequestParam String email,
+                                                         @RequestParam String password,
+                                                         HttpSession session) {
         try {
             Optional<User> user = userService.loginUser(email, password);
             if (user.isPresent()) {
                 // Lưu username vào session
-                model.addAttribute("message", "Login successful");
-                if ("admin".equals(user.get().getRole())) {
-                    return "redirect:/manageUsers"; // Chuyển hướng đến trang admin nếu là admin
-                } else if ("stylist".equals(user.get().getRole())) {
-                    return "redirect:/manageUsers"; // Chuyển hướng đến trang chủ nếu không phải admin
-                } else if ("manager".equals(user.get().getRole())) {
-                    return "/manager/managerDashboard"; // Chuyển hướng đến trang chủ nếu không phải admin
-                } else if ("staff".equals(user.get().getRole())) {
-                    return "redirect:/manageUsers"; // Chuyển hướng đến trang chủ nếu không phải admin
-                } else {
-                    return "view/pages/home"; // Chuyển hướng đến trang chủ nếu không phải admin
-                }
+                session.setAttribute("username", user.get().getUsername());
 
+                // Tạo phản hồi JSON trả về frontend
+                Map<String, String> response = new HashMap<>();
+                response.put("username", user.get().getUsername());
+                response.put("role", user.get().getRole());
+
+                return ResponseEntity.ok(response); // Trả về JSON với thông tin người dùng
             } else {
-                model.addAttribute("error", "Invalid username or password");
-                return "view/pages/login"; // Trở lại trang đăng nhập với lỗi
+                // Trả về lỗi nếu đăng nhập không thành công
+                Map<String, String> error = new HashMap<>();
+                error.put("error", "Invalid email or password");
+                return ResponseEntity.status(401).body(error);
             }
         } catch (NoSuchAlgorithmException e) {
-            model.addAttribute("error", "Error while encoding password");
-            return "view/pages/login"; // Trở lại trang đăng nhập nếu có lỗi mã hóa
+            Map<String, String> error = new HashMap<>();
+            error.put("error", "Error during password encryption.");
+            return ResponseEntity.status(500).body(error);
         }
     }
+
+
+
 }

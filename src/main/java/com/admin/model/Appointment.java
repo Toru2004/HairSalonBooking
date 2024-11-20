@@ -129,18 +129,14 @@ public class Appointment {
     public enum Status {
         PENDING,       // Đang đợi duyệt
         APPROVED,      // Đã duyệt
-        IN_PROGRESS,   // Đang thực hiện
-        CANCELLED,     // Đã huỷ
-        COMPLETED;     // Đã thực hiện xong
+        CANCELLED;    // Đã huỷ
 
         @Override
         public String toString() {
             switch (this) {
                 case PENDING: return "Pending";
                 case APPROVED: return "Approved";
-                case IN_PROGRESS: return "In Progress";
                 case CANCELLED: return "Cancelled";
-                case COMPLETED: return "Completed";
                 default: return "Unknown";
             }
         }

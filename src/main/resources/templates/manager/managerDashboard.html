@@ -47,7 +47,7 @@
 </div>
 
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script>
+ <script>
     const ctx = document.getElementById('revenueChart').getContext('2d');
     let revenueChart = new Chart(ctx, {
         type: 'bar',
@@ -74,7 +74,9 @@
     function updateChart() {
         const filterOption = document.getElementById('filter-option').value;
 
+        const dailyData = {labels: ['Mon', 'Tue', 'Wed'], data: [120, 150, 180]};
         const monthlyData = {labels: ['Jan', 'Feb', 'Mar'], data: [1000, 1200, 900]};
+        const yearlyData = {labels: ['2022', '2023', '2024'], data: [15000, 18000, 20000]};
 
         let selectedData;
         if (filterOption === 'daily') selectedData = dailyData;
@@ -88,6 +90,7 @@
 
     updateChart();
 </script>
+
 
 </body>
 </html>
