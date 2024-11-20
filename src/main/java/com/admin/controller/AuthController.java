@@ -43,7 +43,7 @@ public class AuthController {
     }
 
     // Đăng nhập người dùng
-    @PostMapping("/login")
+    /*@PostMapping("/login")
     public ResponseEntity<Map<String, String>> loginUser(@RequestParam String email,
                                                          @RequestParam String password,
                                                          HttpSession session) {
@@ -70,7 +70,46 @@ public class AuthController {
             error.put("error", "Error during password encryption.");
             return ResponseEntity.status(500).body(error);
         }
+    }*/
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email,
+                        @RequestParam String password,
+                        HttpSession session,
+                        Model model) {
+     try {
+        Optional<User> user = userService.loginUser(email, password);
+        if (user.isPresent()) {
+            // Lưu thông tin người dùng vào session
+            session.setAttribute("username", user.get().getUsername());
+            session.setAttribute("role", user.get().getRole());
+
+            // Chuyển hướng dựa trên vai trò
+            String role = user.get().getRole();
+            switch (role.toLowerCase()) {
+                case "manager":
+                    return "redirect:/manager/dashboard"; // Chuyển đến trang của manager
+                case "staff":
+                    return "redirect:/staff/dashboard"; // Chuyển đến trang của staff
+                case "admin":
+                    return "redirect:/admin/ViewAdmins"; // Chuyển đến trang của admin
+                case "user":
+                case "customer":
+                    return "redirect:/home"; // Chuyển đến trang chủ
+                default:
+                    model.addAttribute("error", "Role not recognized");
+                    return "view/pages/login"; // Trả về trang login nếu vai trò không hợp lệ
+            }
+        } else {
+            model.addAttribute("error", "Invalid email or password");
+            return "view/pages/login"; // Trả về trang login với thông báo lỗi
+        }
+    } catch (NoSuchAlgorithmException e) {
+        model.addAttribute("error", "Error during password encryption.");
+        return "view/pages/login"; // Trả về trang login với thông báo lỗi hệ thống
     }
+}
+
+
 
 
 
