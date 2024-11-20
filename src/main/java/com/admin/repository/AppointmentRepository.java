@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
-   /* // Tổng doanh thu trong khoảng thời gian (Native Query)
+    // Tổng doanh thu trong khoảng thời gian (Native Query)
     @Query(value = "SELECT SUM(total_price) FROM appointments WHERE appointment_date BETWEEN :startDate AND :endDate",
             nativeQuery = true)
     Double findTotalRevenueByTimePeriodNative(@Param("startDate") LocalDateTime startDate,
@@ -27,5 +27,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
                                                           @Param("endDate") LocalDateTime endDate);
 
     // Danh sách cuộc hẹn trong khoảng thời gian (Derived Query)
-    List<Appointment> findAppointmentsByAppointmentDateBetween(LocalDateTime startDate, LocalDateTime endDate);*/
+    List<Appointment> findAppointmentsByAppointmentDateBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
