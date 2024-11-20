@@ -41,9 +41,8 @@ public class AppointmentController {
     @Autowired
     private CareService careService;
     @GetMapping("/revenue")
-    public String showRevenueByMonth(Model model) {
-        int year = 2024; // Ví dụ: năm cần tính doanh thu
-
+    public String showRevenueByMonth(@RequestParam(value = "year", defaultValue = "2024") int year,
+                                     Model model) {
         // Lấy doanh thu theo tháng từ Service
         List<Object[]> revenueData = appointmentService.getRevenueByMonth(year);
 
@@ -68,9 +67,12 @@ public class AppointmentController {
         // Truyền dữ liệu vào model
         model.addAttribute("months", months);
         model.addAttribute("revenues", revenues);
+        model.addAttribute("selectedYear", year);
+
 
         return "manager/managerDashboard"; // Trả về View để hiển thị
     }
+
 
     @GetMapping("/manageAppointments/byMonth")
     public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, Model model) {

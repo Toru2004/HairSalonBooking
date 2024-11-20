@@ -27,6 +27,20 @@
 
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">
+            <!-- Form for Selecting Year and Month -->
+            <form th:action="@{/revenue}" method="get">
+                <!-- Form chọn năm -->
+                <div class="form-group row">
+                    <label for="year" class="col-md-2 col-form-label">Year</label>
+                    <div class="col-md-4">
+                        <input type="number" id="year" name="year" class="form-control" th:value="${selectedYear}" placeholder="Enter Year" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </div>
+
+            </form>
 
             <div class="container">
                 <div class="text-center mb-4">
@@ -37,9 +51,6 @@
                 <div class="text-center mb-4">
                     <h3>Dashboard</h3>
                 </div>
-
-                <!-- Display Total Price for the Year -->
-                <div id="totalPriceContainer" class="text-center mb-4"></div>
 
                 <!-- Chart for Revenue -->
                 <canvas id="revenueChart" width="400" height="200"></canvas>
