@@ -27,9 +27,6 @@
         }
 
         public void save(Stylist stylist) {
-            if (stylist.getUser() != null) {
-                stylist.getUser().setRole("STYLIST"); // Đặt role là "STYLIST"
-            }
             stylistRepository.save(stylist);
         }
 

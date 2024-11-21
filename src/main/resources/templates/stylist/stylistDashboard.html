@@ -22,7 +22,7 @@
         <!-- Sidebar Menu -->
         <aside class="col-md-2 sidebar">
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" th:href="@{/stylist/stylistappointments}">Manage Appointments</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/stylist/stylistappointment}">Manage Appointments</a></li>
             </ul>
         </aside>
 
@@ -37,25 +37,25 @@
 </div>
 
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // Get the currently logged-in stylist username
-        const currentUsername = localStorage.getItem("stylistUsername");
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", () => {-->
+<!--        // Get the currently logged-in stylist username-->
+<!--        const currentUsername = localStorage.getItem("stylistUsername");-->
 
-        if (currentUsername) {
-            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
-        } else {
-            document.getElementById("usernameDisplay").textContent = "No user logged in.";
-        }
+<!--        if (currentUsername) {-->
+<!--            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;-->
+<!--        } else {-->
+<!--            document.getElementById("usernameDisplay").textContent = "No user logged in.";-->
+<!--        }-->
 
-        // Logout button functionality
-        document.getElementById("logoutBtn").addEventListener("click", () => {
-            localStorage.removeItem("stylistUsername");
-            alert("You have been logged out.");
-            window.location.href = "/page/login";
-        });
-    });
-</script>
+<!--        // Logout button functionality-->
+<!--        document.getElementById("logoutBtn").addEventListener("click", () => {-->
+<!--            localStorage.removeItem("stylistUsername");-->
+<!--            alert("You have been logged out.");-->
+<!--            window.location.href = "/page/login";-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
 
 <!-- Footer Content -->
 <footer class="text-center mt-4">
