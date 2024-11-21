@@ -9,7 +9,6 @@
   <link rel="stylesheet" th:href="@{/css-user/header.css}">
   <div class="header-container">
     <div class="logo">
-      <!-- Sử dụng th:href cho hình ảnh -->
       <a th:href="@{/page/home}"><img th:src="@{/images/logo.png}" alt="Logo"></a>
     </div>
     <div class="search-container">
@@ -17,18 +16,20 @@
       <input type="text" placeholder="Where?">
       <input type="text" placeholder="When?">
     </div>
+    <span id="usernameDisplay" class="me-3 namengdung" ></span>
     <div class="content">
-        <div class="login-signup">
-          <span id="usernameDisplay"></span> <!-- Hiển thị username -->
-          <div class="user-section">
-            <a id="loginLink" th:href="@{/page/login}">Log In / Sign Up</a> <!-- Nút Login -->
-            <a id="logoutLink" class="btn btn-danger" style="display: none;">Logout</a> <!-- Nút Logout -->
-          </div>
+      <div class="login-signup">
+<!--        <span id="usernameDisplay"></span> &lt;!&ndash; Displays the username &ndash;&gt;-->
+        <div class="user-section">
+          <a id="loginLink" th:href="@{/page/login}" aria-label="Log in or sign up">Log In / Sign Up</a>
+          <a id="logoutLink" class="btn btn-danger" style="display: none;" aria-label="Logout">Logout</a>
+
         </div>
       </div>
+    </div>
+
   </div>
   <nav class="nav-links">
-    <!-- Sử dụng th:href cho các liên kết -->
     <a th:href="@{/page/aboutUs}">About Us</a>
     <a th:href="@{/page/services}">Services</a>
     <a th:href="@{/page/stylists}">Stylists</a>
@@ -36,53 +37,46 @@
     <a th:href="@{/page/contact}">Contact</a>
     <a th:href="@{/page/handbook}">Handbook</a>
   </nav>
+
+  <script>
+    document.body.classList.add("logged-in");  // Add the class if logged in
+    document.body.classList.remove("logged-in");  // Remove the class if not logged in
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const loginLink = document.getElementById("loginLink");
+      const logoutLink = document.getElementById("logoutLink");
+
+      // Kiểm tra trạng thái đăng nhập từ localStorage
+      const username = localStorage.getItem("username");
+
+      // Nếu có username, chứng tỏ người dùng đã đăng nhập
+      if (username) {
+        // Hiển thị tên người dùng và nút Logout
+        usernameDisplay.textContent = `Welcome, ${username}`;
+        loginLink.style.display = "none"; // Ẩn nút Login/Sign Up
+        logoutLink.style.display = "inline-block"; // Hiển thị nút Logout
+      } else {
+        // Nếu không có username, hiển thị nút Login/Sign Up
+        usernameDisplay.textContent = "";
+        loginLink.style.display = "inline-block"; // Hiển thị nút Login/Sign Up
+        logoutLink.style.display = "none"; // Ẩn nút Logout
+      }
+
+      // Xử lý sự kiện Logout
+      logoutLink.addEventListener("click", () => {
+        // Xóa thông tin đăng nhập từ Local Storage
+        localStorage.removeItem("username");
+        localStorage.removeItem("role");
+
+        // Gọi backend để đăng xuất, xóa session
+        window.location.href = "/logout";  // Đảm bảo chuyển hướng đúng đến endpoint logout
+      });
+    });
+
+  </script>
 </header>
 </body>
 </html>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const fadeElements = document.querySelectorAll(".fade-in");
 
-    function handleScroll() {
-      fadeElements.forEach(element => {
-        const rect = element.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom >= 0) {
-          element.classList.add("show");
-        }
-      });
-    }
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Kiểm tra ngay khi tải trang
-  });
-  document.addEventListener("DOMContentLoaded", () => {
-    const usernameDisplay = document.getElementById("usernameDisplay");
-    const loginLink = document.getElementById("loginLink");
-    const logoutLink = document.getElementById("logoutLink");
-
-    // Kiểm tra trạng thái đăng nhập
-    const username = localStorage.getItem("username");
-
-    if (username) {
-      // Nếu đã đăng nhập, hiển thị username và nút Logout
-      usernameDisplay.textContent = `Welcome, ${username}`;
-      loginLink.style.display = "none"; // Ẩn nút Login/Sign Up
-      logoutLink.style.display = "inline-block"; // Hiển thị nút Logout
-    } else {
-      // Nếu chưa đăng nhập, hiển thị nút Login/Sign Up
-      usernameDisplay.textContent = "";
-      loginLink.style.display = "inline-block";
-      logoutLink.style.display = "none";
-    }
-
-    // Xử lý sự kiện Logout
-    logoutLink.addEventListener("click", () => {
-      // Xóa thông tin từ Local Storage
-      localStorage.removeItem("username");
-      localStorage.removeItem("role");
-
-      // Chuyển hướng về trang chủ hoặc trang đăng nhập
-      window.location.href = "/page/login";
-    });
-  });
-</script>
