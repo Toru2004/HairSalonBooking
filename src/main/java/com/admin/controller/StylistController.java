@@ -1,7 +1,9 @@
 package com.admin.controller;
 
 import com.admin.exception.StylistNotFoundException;
+import com.admin.model.Appointment;
 import com.admin.model.Stylist;
+import com.admin.service.AppointmentService;
 import com.admin.service.StylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,9 +26,29 @@ import java.util.List;
 
 @Controller
 public class StylistController {
+    @Autowired
+    private AppointmentService appointmentService;
 
     @Autowired
     private StylistService stylistService;//Service để lấy dữ liệu từ DB
+
+    @GetMapping("/stylist/stylistDashboard")
+    public String openDashboard() {
+        return "stylist/stylistDashboard";
+    }
+
+
+    @GetMapping("/stylist/stylistAppointment")
+    public String getAllAppointmentsForStylist(Model model) {
+        // Lấy toàn bộ các cuộc hẹn trong hệ thống
+//        List<Appointment> allAppointments = appointmentService.findAll();
+//
+//        // Đưa danh sách vào model
+//        model.addAttribute("listAppointments", allAppointments);
+
+        return "stylist/stylistAppointment";
+    }
+
 
 
 
@@ -59,10 +81,6 @@ public class StylistController {
     public String showBookNowPage() {
         return "view/pages/bookNow"; // Đường dẫn đến file bookNow.html
     }
-
-
-
-
 
     // Hiển thị form thêm mới stylist
     @GetMapping("/manageStylists/new")
@@ -104,9 +122,7 @@ public class StylistController {
             if (!imageFile.isEmpty()) {
                 stylist.setProfilePicture(imageFile.getBytes()); // Lưu ảnh dưới dạng byte[]
             }
-            if (stylist.getUser() != null) {
-                stylist.getUser().setRole("STYLIST"); // Đặt role là "STYLIST"
-            }
+
         } catch (IOException e) {
             ra.addFlashAttribute("message", "Error uploading image: " + e.getMessage());
             return "redirect:/manageStylists";

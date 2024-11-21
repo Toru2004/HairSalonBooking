@@ -141,6 +141,16 @@ public class Appointment {
             }
         }
     }
+    private String customerName; // Thêm trường này
+
+    // Các trường khác, getter và setter
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
 
 
 

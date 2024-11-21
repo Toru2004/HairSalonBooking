@@ -16,6 +16,9 @@ import java.util.Map;
 import org.springframework.http.ResponseEntity;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Cookie;
+
 
 
 @Controller
@@ -54,16 +57,20 @@ public class AuthController {
             Optional<User> user = userService.loginUser(email, password);
             if (user.isPresent()) {
                 // Lưu thông tin vào session
+                session.setAttribute("id", user.get().getId());
                 session.setAttribute("username", user.get().getUsername());
                 session.setAttribute("role", user.get().getRole());
 
+
                 // Tạo phản hồi JSON
                 Map<String, String> response = new HashMap<>();
+                response.put("id", user.get().getId().toString());
                 response.put("username", user.get().getUsername());
                 response.put("role", user.get().getRole());
 
+
                 // Xử lý phân quyền theo role
-                String role = user.get().getRole();
+                String role = user.get().getRole().toLowerCase(); // Đảm bảo role là chữ thường
                 switch (role) {
                     case "admin":
                         response.put("redirect", "/ViewAdmins");
@@ -73,6 +80,9 @@ public class AuthController {
                         break;
                     case "manager":
                         response.put("redirect", "/manager/managerDashboard");
+                        break;
+                    case "stylist":
+                        response.put("redirect", "/stylist/stylistDashboard");
                         break;
                     default:
                         response.put("redirect", "/page/home"); // Mặc định là user
@@ -92,12 +102,22 @@ public class AuthController {
         }
     }
 
+
+
     @GetMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.invalidate(); // Xóa toàn bộ dữ liệu trong session
+
+        // Xóa cookies liên quan nếu cần (ví dụ: để làm sạch session hoặc token)
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setMaxAge(0);  // Thiết lập thời gian sống của cookie là 0, để xóa cookie
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
         return "redirect:/page/login"; // Chuyển hướng về trang login
     }
+
 
 
 }

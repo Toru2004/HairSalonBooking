@@ -12,10 +12,6 @@
 </head>
 <body>
 
-<header class="text-center">
-    <h2>Admin Panel</h2>
-</header>
-
 <div class="container-fluid">
     <div class="text-center mb-4">
         <h2 th:if="${admin.id == null}">Add New Admin</h2>
@@ -80,15 +76,10 @@
     </form>
 </div>
 
-<!-- Back to Admin List -->
-<div class="text-end mb-3">
-    <a class="btn btn-secondary" th:href="@{/ViewAdmins}">Back to Admin List</a>
-</div>
 
-<!-- Footer Content -->
-<footer>
-    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
-</footer>
+
+</body>
+</html>
 
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
@@ -97,6 +88,3 @@
         window.location = "[[@{/ViewAdmins}]]"; <!-- Quay lại danh sách Admin -->
     }
 </script>
-
-</body>
-</html>

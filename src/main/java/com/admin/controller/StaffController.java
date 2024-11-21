@@ -1,21 +1,20 @@
 package com.admin.controller;
 
-import com.admin.model.Appointment;
-import com.admin.model.Staff;
-import com.admin.model.Manager;
-import com.admin.model.User;  // Import the User model
+import com.admin.exception.AppointmentNotFoundException;
+import com.admin.model.*;
 import com.admin.exception.StaffNotFoundException;
-import com.admin.service.StaffService;
-import com.admin.service.ManagerService;
-import com.admin.service.UserService;  // Import the UserService
+import com.admin.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+
 import javax.servlet.http.HttpServletRequest;
+
 
 import java.util.List;
 import java.util.Map;
@@ -28,10 +27,44 @@ public class StaffController {
     private StaffService staffService;
 
     @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private AppointmentService appointmentService;
+
+
+    @Autowired
     private ManagerService managerService;
 
     @Autowired
     private UserService userService;  // Inject the UserService
+    @GetMapping("/Staff/appointments")
+    public String getAllAppointmentsForStaff(Model model) {
+        // Lấy toàn bộ các cuộc hẹn trong hệ thống
+        List<Appointment> allAppointments = appointmentService.findAll();
+
+        // Đưa danh sách vào model
+        model.addAttribute("listAppointments", allAppointments);
+
+        return "Staff/appointments";
+    }
+
+    // Trang Staff/customers
+    @GetMapping("/Staff/customers")
+    public String showStaffCustomersPage(Model model) {
+        List<Customer> listCustomers = customerService.listAll(); // Lấy danh sách khách hàng
+
+        model.addAttribute("listCustomers", listCustomers);
+
+        return "Staff/customers";
+    }
+
+
+
+
+
+
+
 
     @GetMapping("/Staff/staffDashboard")
     public String staffDashboard(Model model, HttpServletRequest request) {
@@ -48,6 +81,8 @@ public class StaffController {
         model.addAttribute("currentUsername", currentUsername); // Truyền vào model
         return "Staff/staffDashboard"; // Trả về file giao diện
     }
+
+
 
 
 
