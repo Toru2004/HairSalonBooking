@@ -25,7 +25,8 @@
             <button type="submit" class="btn">Login</button>
         </form>
         <p class="text-center mt-3">Don't have an account? <a th:href="@{/page/signup}">Sign Up</a></p>
-        <p th:if="${error}" th:text="${error}" class="error"></p> <!-- Lỗi đăng nhập -->
+        <p class="error" style="color: red; font-weight: bold;"></p>
+
     </div>
 </div>
 
@@ -35,13 +36,14 @@
 </html>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const loginForm = document.querySelector("form"); // Giả sử bạn có form đăng nhập
+        const loginForm = document.querySelector("form");
 
         loginForm.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Ngăn hành động mặc định
+            event.preventDefault();
 
-            const email = document.getElementById("email").value; // Lấy email từ input
-            const password = document.getElementById("password").value; // Lấy password từ input
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const errorElement = document.querySelector(".error");
 
             try {
                 const response = await fetch("/login", {
@@ -51,27 +53,41 @@
                 });
 
                 if (response.ok) {
-                    const data = await response.json(); // Lấy dữ liệu JSON từ backend
-
-                    // Lưu username vào Local Storage
-                    localStorage.setItem("adminUsername", data.username);
+                    const data = await response.json();
+                    localStorage.setItem("username", data.username);
                     localStorage.setItem("role", data.role);
 
-                    // Chuyển hướng tùy thuộc vào vai trò
-                    if (data.role === "admin") {
-                        window.location.href = "/ViewAdmins";
-                    } else {
-                        window.location.href = "/home";
+                    // Điều hướng theo vai trò
+                    switch (data.role) {
+                        case "admin":
+                            window.location.href = "/ViewAdmins";
+                            break;
+                        case "staff":
+                            window.location.href = "/Staff/staffDashboard";
+                            break;
+                        case "manager":
+                            window.location.href = "/manager/managerDashboard";
+                            break;
+                        default:
+                            window.location.href = "/page/home";
                     }
                 } else {
                     const error = await response.json();
-                    alert(error.error); // Hiển thị lỗi nếu có
+                    // Hiển thị lỗi từ backend
+                    if (errorElement) {
+                        errorElement.textContent = error.error;
+                    }
                 }
             } catch (error) {
                 console.error("Error during login:", error);
-                alert("An error occurred. Please try again.");
+                // Hiển thị lỗi trong trường hợp có lỗi bất ngờ
+                if (errorElement) {
+                    errorElement.textContent = "An unexpected error occurred. Please try again.";
+                }
             }
         });
     });
 
+
 </script>
+

@@ -29,12 +29,23 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
-        .service-image {
-            flex: 0 0 20%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
+        .image-wrapper {
+            flex: 0 0 150px; /* Kích thước khung ảnh (chiều rộng và cao cố định) */
+            height: 150px;
+            width: 150px;
+            overflow: hidden; /* Ẩn phần ảnh vượt ra ngoài khung */
+            border-radius: 8px; /* Bo góc khung ảnh */
+            display: flex; /* Đảm bảo ảnh căn giữa nếu cần */
+            align-items: center;
+            justify-content: center;
         }
+
+        .service-image {
+            width: 100%; /* Đảm bảo ảnh chiếm toàn bộ khung theo chiều ngang */
+            height: auto; /* Giữ tỉ lệ ảnh */
+            object-fit: cover; /* Cắt ảnh vừa khung mà không méo ảnh */
+        }
+
 
         .service-content {
             flex: 1;
@@ -83,9 +94,10 @@
             <div class="col-12">
                 <div class="service-card">
                     <!-- Service Image -->
-                    <img th:src="@{/manageCares/image/{id}(id=${care.id})}"
-                         alt="Service Image"
-                         class="service-image">
+                    <div class="image-wrapper">
+                        <img th:src="@{/manageCares/image/{id}(id=${care.id})}" alt="Service Image" class="service-image">
+                    </div>
+
 
                     <!-- Service Content -->
                     <div class="service-content">

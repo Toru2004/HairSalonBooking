@@ -27,6 +27,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.stream.Collectors;
 import java.util.Comparator;
 
@@ -37,10 +38,18 @@ public class CareController {
     private CareService careService;
 
     @GetMapping("/page/services")
-    public String showServices(Model model) {
+    public String showServices(HttpServletRequest request,Model model) {
         List<Care> listCares = careService.listAll(); // Loại bỏ stream() và sorted()
         model.addAttribute("listCares", listCares);
         model.addAttribute("title", "Our Services");
+
+//        // Lấy vai trò từ session
+//        String role = (String) request.getSession().getAttribute("role");
+//
+//        // Kiểm tra nếu không phải staff thì chuyển hướng
+//        if (role == null || !role.equals("admin")) {
+//            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+//        }
         return "view/pages/services";
     }
 

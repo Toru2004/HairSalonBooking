@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -20,10 +21,17 @@ public class UserController {
 
     // Hiển thị danh sách tất cả người dùng
     @GetMapping("/manageUsers")
-    public String showUserList(Model model) {
+    public String showUserList(HttpServletRequest request, Model model) {
         List<User> listUsers = userService.listAll(); // Lấy danh sách người dùng từ dịch vụ
         model.addAttribute("listUsers", listUsers); // Đưa danh sách vào model để hiển thị trong view
 
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
+
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("admin")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
         return "admin/manageUsers"; // Trả về view manageUsers.html
     }
 

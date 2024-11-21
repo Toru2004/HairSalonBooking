@@ -47,10 +47,11 @@
                 <img src="../images/logo.png" alt="Booksy Logo">
             </div>
             <div class="login-signup">
-<!--                <a th:href="@{/page/login}" id="open-login">Log In / Sign Up</a>-->
-                <a th:href="@{/page/login}">Log In / Sign Up</a>
-
+                <span id="usernameDisplay"></span> <!-- Hiển thị username -->
+                <a id="loginLink" th:href="@{/page/login}" class="btn">Log In / Sign Up</a> <!-- Nút Login -->
+                <a id="logoutLink" class="btn btn-danger" style="display: none;">Logout</a> <!-- Nút Logout -->
             </div>
+
         </div>
 
         <!-- Phần chính với tiêu đề và thanh tìm kiếm -->
@@ -334,6 +335,37 @@
         window.addEventListener("scroll", handleScroll);
         handleScroll(); // Kiểm tra ngay khi tải trang
     });
+    document.addEventListener("DOMContentLoaded", () => {
+        const usernameDisplay = document.getElementById("usernameDisplay");
+        const loginLink = document.getElementById("loginLink");
+        const logoutLink = document.getElementById("logoutLink");
+
+        // Kiểm tra trạng thái đăng nhập
+        const username = localStorage.getItem("username");
+
+        if (username) {
+            // Nếu đã đăng nhập, hiển thị username và nút Logout
+            usernameDisplay.textContent = `Welcome, ${username}`;
+            loginLink.style.display = "none"; // Ẩn nút Login/Sign Up
+            logoutLink.style.display = "inline-block"; // Hiển thị nút Logout
+        } else {
+            // Nếu chưa đăng nhập, hiển thị nút Login/Sign Up
+            usernameDisplay.textContent = "";
+            loginLink.style.display = "inline-block";
+            logoutLink.style.display = "none";
+        }
+
+        // Xử lý sự kiện Logout
+        logoutLink.addEventListener("click", () => {
+            // Xóa thông tin từ Local Storage
+            localStorage.removeItem("username");
+            localStorage.removeItem("role");
+
+            // Chuyển hướng về trang chủ hoặc trang đăng nhập
+            window.location.href = "/page/login";
+        });
+    });
+
 </script>
 
 <!-- Cập nhật lại đường dẫn JS với th:src -->

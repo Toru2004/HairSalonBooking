@@ -20,6 +20,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.admin.model.Appointment.Status; // Đảm bảo đã import enum Status
+
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
@@ -75,7 +77,7 @@ public class AppointmentController {
 
 
     @GetMapping("/manageAppointments/byMonth")
-    public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, Model model) {
+    public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, HttpServletRequest request, Model model) {
         // Get appointments by year and month
         List<Appointment> listAppointments = appointmentService.listAll();
         List<Appointment> appointments = appointmentService.getAppointmentsByMonth(year, month);
@@ -90,6 +92,13 @@ public class AppointmentController {
         model.addAttribute("selectedYear", year);
         model.addAttribute("selectedMonth", month);
         model.addAttribute("totalPriceMonth", totalPriceMonth);  // Add total price to the model
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
+
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("manager")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
 
         return "admin/appointmentFilterForm";
     }

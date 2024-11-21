@@ -14,6 +14,11 @@
 
 <header class="text-center">
     <h2>Admin Panel</h2>
+    <div class="d-flex justify-content-end align-items-center">
+        <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
+        <a href="/logout" class="btn btn-danger">Logout</a>
+
+    </div>
 </header>
 
 <div class="container-fluid">
@@ -80,7 +85,19 @@
 <footer>
     <p>&copy; 2024 Hair Salon. All rights reserved.</p>
 </footer>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
 
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        }
+    });
+
+
+</script>
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

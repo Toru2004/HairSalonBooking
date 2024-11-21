@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -31,9 +32,18 @@ public class StylistController {
 
     // Hiển thị danh sách tất cả stylist
     @GetMapping("/manageStylists")
-    public String showStylistList(Model model) {
+    public String showStylistList(HttpServletRequest request, Model model) {
         List<Stylist> listStylists = stylistService.listAll();
         model.addAttribute("listStylists", listStylists);
+
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
+
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("admin")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
+
         return "admin/manageStylists";//trả về trang html
     }
 
