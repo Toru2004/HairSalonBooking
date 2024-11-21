@@ -127,33 +127,39 @@ public class AppointmentController {
     }
 
     @GetMapping("/manageAppointments/new")
-    public String showNewAppointmentForm(Model model) {
+    public String showNewAppointmentForm(Model model, RedirectAttributes ra) {
         Appointment appointment = new Appointment();
 
-        // Lấy dữ liệu từ service
-        List<Customer> customers = customerService.listAll();  // Lấy danh sách khách hàng
-        List<Stylist> stylists = stylistService.listAll();  // Lấy danh sách stylist
-        List<Care> cares = careService.listAll();  // Lấy danh sách dịch vụ
+        try {
+            // Lấy dữ liệu từ service
+            List<Customer> customers = customerService.listAll(); // Danh sách khách hàng
+            List<Stylist> stylists = stylistService.listAll();    // Danh sách stylist
+            List<Care> cares = careService.listAll();             // Danh sách dịch vụ
 
-        // Kiểm tra nếu danh sách không rỗng
-        if (customers.isEmpty()) {
-            System.out.println("Customer list is empty");
-        }
-        if (stylists.isEmpty()) {
-            System.out.println("Stylist list is empty");
-        }
-        if (cares.isEmpty()) {
-            System.out.println("Care list is empty");
-        }
+            // Kiểm tra và thêm thông báo nếu danh sách rỗng
+            if (customers.isEmpty()) {
+                ra.addFlashAttribute("warning", "Customer list is empty. Please add some customers.");
+            }
+            if (stylists.isEmpty()) {
+                ra.addFlashAttribute("warning", "Stylist list is empty. Please add some stylists.");
+            }
+            if (cares.isEmpty()) {
+                ra.addFlashAttribute("warning", "Care list is empty. Please add some care services.");
+            }
 
-        // Truyền dữ liệu vào model
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("customerList", customers);  // Truyền customer list vào model
-        model.addAttribute("stylistList", stylists);  // Truyền stylist list vào model
-        model.addAttribute("careList", cares);  // Truyền care list vào model
-        model.addAttribute("pageTitle", "Add New Appointment");
+            // Truyền dữ liệu vào model
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("customerList", customers);
+            model.addAttribute("stylistList", stylists);
+            model.addAttribute("careList", cares);
+            model.addAttribute("pageTitle", "Add New Appointment");
 
-        return "admin/appointment_form"; // Trả về view appointment_form.html
+            return "admin/appointment_form"; // Trả về view
+        } catch (Exception e) {
+            // Xử lý lỗi khi lấy dữ liệu từ service
+            ra.addFlashAttribute("error", "An error occurred while loading data: " + e.getMessage());
+            return "redirect:/manageAppointments"; // Quay lại trang danh sách nếu có lỗi
+        }
     }
 
     @PostMapping("/manageAppointments/save")
@@ -166,7 +172,7 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Lưu mới nếu không có ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "redirect:/manageAppointments"; // Chuyển hướng về danh sách appointment
+            return "view/pages/completedBooking";
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Quay lại form nếu có lỗi
@@ -174,7 +180,7 @@ public class AppointmentController {
     }
 
 
-    // Hiển thị form để chỉnh sửa thông tin Appointment
+
     // Hiển thị form để chỉnh sửa thông tin Appointment
     @GetMapping("/manageAppointments/edit/{id}")
     public String showEditAppointmentForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
