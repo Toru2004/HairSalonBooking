@@ -9,12 +9,13 @@ import org.springframework.stereotype.Service;
 import java.time.Month;
 import java.time.LocalDateTime;
 import java.util.List;
-
+import com.admin.model.Customer;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
+import com.admin.exception.CustomerNotFoundException;
 
 
 @Service
@@ -81,7 +82,6 @@ public class AppointmentService {
         appointmentRepository.save(appointment);  // Sử dụng save để cập nhật
     }
 
-    // Phương thức lấy một cuộc hẹn theo ID
     public Appointment get(Integer id) throws AppointmentNotFoundException {
         Optional<Appointment> result = appointmentRepository.findById(id);
         if (result.isPresent()) {
@@ -103,9 +103,9 @@ public class AppointmentService {
 
 
 
-    // Tạo mới appointment
-    public Appointment createAppointment(Appointment appointment) {
-        return appointmentRepository.save(appointment);
-    }
+
+
+
+
 
 }
