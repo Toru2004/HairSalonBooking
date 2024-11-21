@@ -32,6 +32,11 @@ public class StylistController {
     @Autowired
     private StylistService stylistService;//Service để lấy dữ liệu từ DB
 
+    @GetMapping("/stylist/stylistDashboard")
+    public String openDashboard() {
+        return "stylist/stylistDashboard";
+    }
+
 
     @GetMapping("/stylist/stylistappointments")
     public String getAllAppointmentsForStylist(Model model) {
