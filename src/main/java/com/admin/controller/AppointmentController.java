@@ -178,6 +178,16 @@ public class AppointmentController {
 
         return appointments;
     }
+    @GetMapping("/booknow")
+    public String showBookNowForm(Model model) {
+        Appointment appointment = new Appointment();
+        model.addAttribute("appointment", appointment);  // Thêm appointment vào model
+        // Thêm các danh sách dữ liệu khác (stylist, care services, etc)
+        model.addAttribute("stylistList", stylistService.listAll());
+        model.addAttribute("careList", careService.listAll());
+        return "booknow";  // Đảm bảo trả về đúng view
+    }
+
 
 
 }

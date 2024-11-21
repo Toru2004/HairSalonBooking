@@ -100,4 +100,12 @@ public class AppointmentService {
         }
     }
 
+
+
+
+    // Tạo mới appointment
+    public Appointment createAppointment(Appointment appointment) {
+        return appointmentRepository.save(appointment);
+    }
+
 }
