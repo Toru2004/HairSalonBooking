@@ -50,7 +50,7 @@ public class UserController {
             User user = userService.get(id); // Lấy thông tin người dùng theo ID
             model.addAttribute("user", user); // Đưa thông tin người dùng vào model để hiển thị trong form
             model.addAttribute("pageTitle", "Edit User (ID: " + id + ")"); // Thiết lập tiêu đề trang
-            return " user_form"; // Trả về view user_form.html để chỉnh sửa người dùng
+            return "admin/user_form"; // Trả về view user_form.html để chỉnh sửa người dùng
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage()); // Thông báo lỗi nếu không tìm thấy người dùng
             return "redirect:/manageUsers"; // Chuyển hướng về trang danh sách người dùng
