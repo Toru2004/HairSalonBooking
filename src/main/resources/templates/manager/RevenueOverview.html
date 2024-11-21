@@ -1,108 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue Overview</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-
+    <!-- Bootstrap CSS -->
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <!-- Chart.js -->
+    <script th:src="@{/webjars/chart.js/Chart.min.js}"></script>
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Revenue Overview</h2>
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3">Revenue Overview</h1>
+    </div>
 
-    <!-- Chọn bộ lọc thời gian -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <label for="filter" class="form-label">Filter by:</label>
-            <select class="form-select" id="filter" name="filter">
-                <option value="day" selected>Today</option>
-                <option value="month">This Month</option>
-                <option value="year">This Year</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <button class="btn btn-primary mt-4" id="filterBtn">Apply Filter</button>
+
+
+    <!-- Chart Section -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <canvas id="revenueChart" height="100"></canvas>
         </div>
     </div>
 
-    <!-- Doanh thu tổng -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <h4>Total Revenue</h4>
-            <p class="h3" id="totalRevenue">Loading...</p>
+    <!-- Revenue Details -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Revenue Details</h5>
         </div>
-    </div>
+        <div class="card-body">
+            <table class="table table-bordered">
 
-    <!-- Biểu đồ doanh thu theo dịch vụ -->
-    <div class="row mb-4">
-        <div class="col-md-12">
-            <h4>Revenue by Service</h4>
-            <canvas id="revenueChart"></canvas>
+                <tbody>
+                <!-- Data Binding with Thymeleaf -->
+                <tr th:each="entry, iterStat : ${revenueDetails}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${entry.serviceName}"></td>
+                    <td th:text="${entry.appointmentDate}"></td>
+                    <td th:text="${entry.revenue} + ' VND'"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
 
-<!-- Footer Content -->
-<footer class="text-center">
-    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
-</footer>
+<!-- Bootstrap JS -->
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
+<!-- Custom JS -->
 <script>
-    // Chức năng lấy dữ liệu doanh thu từ API và cập nhật trang
-    document.getElementById("filterBtn").addEventListener("click", function () {
-        const filter = document.getElementById("filter").value;
-
-        // Gọi API hoặc controller để lấy dữ liệu doanh thu theo filter
-        fetch(`/revenue?filter=${filter}`)
-            .then(response => response.json())
-            .then(data => {
-                // Cập nhật doanh thu tổng
-                document.getElementById("totalRevenue").textContent = data.totalRevenue.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-
-                // Cập nhật biểu đồ doanh thu theo dịch vụ
-                updateRevenueChart(data.revenueByService);
-            })
-            .catch(error => console.error("Error fetching revenue data:", error));
-    });
-
-    // Cập nhật biểu đồ doanh thu theo dịch vụ
-    function updateRevenueChart(revenueData) {
-        const labels = Object.keys(revenueData);
-        const values = Object.values(revenueData);
-
-        const ctx = document.getElementById("revenueChart").getContext("2d");
-
-        // Xóa biểu đồ cũ nếu có
-        if (window.revenueChart) {
-            window.revenueChart.destroy();
-        }
-
-        // Tạo biểu đồ mới
-        window.revenueChart = new Chart(ctx, {
-            type: "bar",
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: "Revenue by Service",
-                    data: values,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    // Initialize Chart.js
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    let revenueChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartLabels, //chứa danh sách tên (haircut, styling)
+            datasets: [{
+                label: 'Revenue',
+                data: chartData, //chứa doanh thu tương ứng (vidu 10k,20k,30k tien)
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Revenue Overview'
                 }
             }
-        });
+        }
+    });
+
+    function updateChart() {
+
+        console.log("Update chart based on filter selection");
+    }
+
+    function exportData() {
+
+        console.log("Exporting data...");
     }
 </script>
-
-<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 </body>
 </html>

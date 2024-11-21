@@ -1,7 +1,9 @@
 package com.admin.controller;
 
 import com.admin.exception.StylistNotFoundException;
+import com.admin.model.Appointment;
 import com.admin.model.Stylist;
+import com.admin.service.AppointmentService;
 import com.admin.service.StylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,9 +26,29 @@ import java.util.List;
 
 @Controller
 public class StylistController {
+    @Autowired
+    private AppointmentService appointmentService;
 
     @Autowired
     private StylistService stylistService;//Service để lấy dữ liệu từ DB
+
+    @GetMapping("/stylist/stylistDashboard")
+    public String openDashboard() {
+        return "stylist/stylistDashboard";
+    }
+
+
+    @GetMapping("/stylist/stylistappointments")
+    public String getAllAppointmentsForStylist(Model model) {
+        // Lấy toàn bộ các cuộc hẹn trong hệ thống
+        List<Appointment> allAppointments = appointmentService.findAll();
+
+        // Đưa danh sách vào model
+        model.addAttribute("listAppointments", allAppointments);
+
+        return "stylist/stylistappointments";
+    }
+
 
 
 

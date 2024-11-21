@@ -23,11 +23,17 @@
     </thead>
     <tbody>
     <th:block th:each="customer : ${listCustomers}">
-      <tr>
-        <td>[[${customer.id}]]</td>
-        <td>[[${customer.name}]]</td>
-        <td>[[${customer.email}]]</td>
-        <td>[[${customer.phoneNumber}]]</td>
+      <tr th:each="customer : ${listCustomers}">
+        <td th:text="${customer.user.id}">User ID</td>
+        <td th:text="${customer.user.username}">Username</td>
+        <td th:text="${customer.user.email}">Email</td>
+        <td th:text="${customer.user.phoneNumber}">Phone number</td>
+        <td th:text="${customer.user.enabled}">Enable</td>
+        <td>
+          <!-- Edit/Delete buttons -->
+          <a class="btn btn-sm btn-outline-info" th:href="@{/manageCustomers/edit/{id}(id=${customer.id})}">Edit</a>
+          <a class="btn btn-sm btn-outline-danger" th:href="@{/manageCustomers/delete/{id}(id=${customer.id})}">Delete</a>
+        </td>
       </tr>
     </th:block>
     </tbody>
