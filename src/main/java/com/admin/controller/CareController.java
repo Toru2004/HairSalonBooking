@@ -43,13 +43,13 @@ public class CareController {
         model.addAttribute("listCares", listCares);
         model.addAttribute("title", "Our Services");
 
-        // Lấy vai trò từ session
-        String role = (String) request.getSession().getAttribute("role");
-
-        // Kiểm tra nếu không phải staff thì chuyển hướng
-        if (role == null || !role.equals("admin")) {
-            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
-        }
+//        // Lấy vai trò từ session
+//        String role = (String) request.getSession().getAttribute("role");
+//
+//        // Kiểm tra nếu không phải staff thì chuyển hướng
+//        if (role == null || !role.equals("admin")) {
+//            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+//        }
         return "view/pages/services";
     }
 
