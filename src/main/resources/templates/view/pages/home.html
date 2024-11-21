@@ -23,16 +23,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-
-
 </head>
 <body>
 <!--<div th:replace="view/partials/popUpForms :: popUpForms"></div>-->
-
+<div th:replace="view/partials/header :: header"></div>
 <!-- Header với video background -->
 
-<header>
+<section class="video-holder">
     <!-- Video Background -->
     <video autoplay muted loop id="bgVideo">
         <source src="../videos/background-video.mp4" type="video/mp4">
@@ -41,41 +38,14 @@
 
     <!-- Nội dung hiển thị phía trên video -->
     <div class="content">
-        <!-- Logo -->
-        <div class="top-bar">
-            <div class="logo">
-                <img src="../images/logo.png" alt="Booksy Logo">
-            </div>
-            <div class="login-signup">
-                <span id="usernameDisplay"></span> <!-- Hiển thị username -->
-                <a id="loginLink" th:href="@{/page/login}" class="btn">Log In / Sign Up</a> <!-- Nút Login -->
-                <a id="logoutLink" class="btn btn-danger" style="display: none;">Logout</a> <!-- Nút Logout -->
-            </div>
-
-        </div>
 
         <!-- Phần chính với tiêu đề và thanh tìm kiếm -->
-        <div class="header-content">
+        <div class="video-holder-content">
             <h1><span id="typing-text"></span></h1>
             <p>Discover and book beauty & wellness professionals near you</p>
-            <div class="search-bar">
-                <input type="text" placeholder="Search services or businesses">
-            </div>
         </div>
-
-        <!-- Menu điều hướng -->
-        <nav class="nav link">
-            <ul id="main-menu">
-                <li><a th:href="@{/page/aboutUs}">About Us</a></li>
-                <li><a th:href="@{/page/services}">Services</a></li>
-                <li><a th:href="@{/page/stylists}">Stylists</a></li>
-                <li><a th:href="@{/manageAppointments/new}">Book Now</a></li>
-                <li><a th:href="@{/page/contact}">Contact</a></li>
-                <li><a th:href="@{/page/handbook}">Handbook</a></li>
-            </ul>
-        </nav>
     </div>
-</header>
+</section>
 
 <!-- Phần Location Services -->
 <div class="container mt-5">
@@ -335,37 +305,6 @@
         window.addEventListener("scroll", handleScroll);
         handleScroll(); // Kiểm tra ngay khi tải trang
     });
-    document.addEventListener("DOMContentLoaded", () => {
-        const usernameDisplay = document.getElementById("usernameDisplay");
-        const loginLink = document.getElementById("loginLink");
-        const logoutLink = document.getElementById("logoutLink");
-
-        // Kiểm tra trạng thái đăng nhập
-        const username = localStorage.getItem("username");
-
-        if (username) {
-            // Nếu đã đăng nhập, hiển thị username và nút Logout
-            usernameDisplay.textContent = `Welcome, ${username}`;
-            loginLink.style.display = "none"; // Ẩn nút Login/Sign Up
-            logoutLink.style.display = "inline-block"; // Hiển thị nút Logout
-        } else {
-            // Nếu chưa đăng nhập, hiển thị nút Login/Sign Up
-            usernameDisplay.textContent = "";
-            loginLink.style.display = "inline-block";
-            logoutLink.style.display = "none";
-        }
-
-        // Xử lý sự kiện Logout
-        logoutLink.addEventListener("click", () => {
-            // Xóa thông tin từ Local Storage
-            localStorage.removeItem("username");
-            localStorage.removeItem("role");
-
-            // Chuyển hướng về trang chủ hoặc trang đăng nhập
-            window.location.href = "/page/login";
-        });
-    });
-
 </script>
 
 <!-- Cập nhật lại đường dẫn JS với th:src -->

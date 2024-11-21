@@ -100,4 +100,11 @@ public class AppointmentService {
         }
     }
 
+    public List<Appointment> findAll() {
+        return appointmentRepository.findAll();
+    }
+    public List<Object[]> getRevenueByMonth(int year) {
+        return appointmentRepository.findRevenueByMonth(year);
+    }
+
 }
