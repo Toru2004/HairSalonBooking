@@ -1,7 +1,10 @@
 package com.admin.controller;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.HashMap;
 
+import org.springframework.ui.Model;
 import com.admin.exception.AppointmentNotFoundException;
 import com.admin.model.Appointment;
 import com.admin.model.Care;
@@ -20,7 +23,8 @@ import com.admin.model.Appointment.Status; // Đảm bảo đã import enum Stat
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -38,15 +42,56 @@ public class AppointmentController {
 
     @Autowired
     private CareService careService;
+    @GetMapping("/revenue")
+    public String showRevenueByMonth(@RequestParam(value = "year", defaultValue = "2024") int year,
+                                     Model model) {
+        // Lấy doanh thu theo tháng từ Service
+        List<Object[]> revenueData = appointmentService.getRevenueByMonth(year);
+
+        // Kiểm tra dữ liệu trả về
+        if (revenueData != null) {
+            for (Object[] data : revenueData) {
+                System.out.println("Month: " + data[0] + ", Revenue: " + data[1]);
+            }
+        } else {
+            System.out.println("No data found for year " + year);
+        }
+
+        // Chuyển dữ liệu doanh thu thành các danh sách riêng biệt cho Chart.js
+        List<Integer> months = new ArrayList<>();
+        List<Double> revenues = new ArrayList<>();
+
+        for (Object[] data : revenueData) {
+            months.add((Integer) data[0]);
+            revenues.add((Double) data[1]);
+        }
+
+        // Truyền dữ liệu vào model
+        model.addAttribute("months", months);
+        model.addAttribute("revenues", revenues);
+        model.addAttribute("selectedYear", year);
+
+
+        return "manager/managerDashboard"; // Trả về View để hiển thị
+    }
+
+
     @GetMapping("/manageAppointments/byMonth")
     public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, HttpServletRequest request, Model model) {
         // Get appointments by year and month
+        List<Appointment> listAppointments = appointmentService.listAll();
         List<Appointment> appointments = appointmentService.getAppointmentsByMonth(year, month);
-        model.addAttribute("listAppointments", appointments);
 
-        // Add the year and month to the model to keep track of the selected month
+        // Calculate the total price for the month
+        double totalPriceMonth = appointments.stream()
+                .mapToDouble(Appointment::getTotalPrice)
+                .sum();
+
+        model.addAttribute("listAppointments", appointments);
+        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values()));
         model.addAttribute("selectedYear", year);
         model.addAttribute("selectedMonth", month);
+        model.addAttribute("totalPriceMonth", totalPriceMonth);  // Add total price to the model
         // Lấy vai trò từ session
         String role = (String) request.getSession().getAttribute("role");
 
@@ -55,8 +100,12 @@ public class AppointmentController {
             return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
         }
 
-        return "admin/appointmentFilterForm"; // The same view used for managing all appointments
+        return "admin/appointmentFilterForm";
     }
+
+
+
+
 
     @GetMapping("/manageAppointments")
     public String showManageAppointmentsPage(Model model) {
@@ -67,7 +116,6 @@ public class AppointmentController {
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
         int currentMonth = currentDate.getMonthValue();
-
         // Thêm thông tin vào model
         model.addAttribute("listAppointments", listAppointments);
         model.addAttribute("statuses", Arrays.asList(Appointment.Status.values())); // Thêm danh sách trạng thái
@@ -184,6 +232,7 @@ public class AppointmentController {
 
         return appointments;
     }
+
 
 
 }

@@ -4,8 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager - Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+
+    <!-- Chart.js Script -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -21,27 +27,39 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar Menu -->
-        <aside class="col-md-2 sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" th:href="@{/manager/RevenueOverview}">Revenue Overview</a></li>
-            </ul>
-        </aside>
+        <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
 
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">
-            <!-- Revenue Tracking Section -->
-            <div class="container mb-5">
+            <!-- Form for Selecting Year and Month -->
+            <form th:action="@{/revenue}" method="get">
+                <!-- Form chọn năm -->
+                <div class="form-group row">
+                    <label for="year" class="col-md-2 col-form-label">Year</label>
+                    <div class="col-md-4">
+                        <input type="number" id="year" name="year" class="form-control" th:value="${selectedYear}" placeholder="Enter Year" />
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="container">
                 <div class="text-center mb-4">
-                    <h3>Revenue Overview</h3>
-                    <select class="form-select w-25 mx-auto" id="filter-option" onchange="updateChart()">
-                        <option value="monthly">Monthly</option>
-                    </select>
+                    <h2>Manage Appointments</h2>
+                </div>
+
+                <!-- Revenue Overview Section -->
+                <div class="text-center mb-4">
+                    <h3>Dashboard</h3>
                 </div>
 
                 <!-- Chart for Revenue -->
                 <canvas id="revenueChart" width="400" height="200"></canvas>
             </div>
-        </main> <!-- Closing the main tag -->
+        </main>
 
         <!-- Footer Content -->
         <footer class="text-center">
@@ -50,23 +68,28 @@
     </div>
 </div>
 
+<!-- Bootstrap JS -->
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
- <script>
-    const ctx = document.getElementById('revenueChart').getContext('2d');
-    let revenueChart = new Chart(ctx, {
-        type: 'bar',
+
+<script>
+    // Lấy dữ liệu từ controller (sử dụng Thymeleaf để truyền giá trị vào JavaScript)
+    var months = [[${months}]];  // Dữ liệu tháng từ controller
+    var revenues = [[${revenues}]]; // Dữ liệu doanh thu từ controller
+
+    var ctx = document.getElementById('revenueChart').getContext('2d');
+    var revenueChart = new Chart(ctx, {
+        type: 'bar',  // Loại biểu đồ: bar (cột)
         data: {
-            labels: [],
+            labels: months, // Các tháng
             datasets: [{
                 label: 'Revenue',
-                data: [],
-                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                borderColor: 'rgba(54, 162, 235, 1)',
+                data: revenues, // Doanh thu theo tháng
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // Màu nền cho cột
+                borderColor: 'rgba(75, 192, 192, 1)', // Màu viền cột
                 borderWidth: 1
             }]
         },
         options: {
-            responsive: true,
             scales: {
                 y: {
                     beginAtZero: true
@@ -74,25 +97,6 @@
             }
         }
     });
-
-    function updateChart() {
-        const filterOption = document.getElementById('filter-option').value;
-
-        const dailyData = {labels: ['Mon', 'Tue', 'Wed'], data: [120, 150, 180]};
-        const monthlyData = {labels: ['Jan', 'Feb', 'Mar'], data: [1000, 1200, 900]};
-        const yearlyData = {labels: ['2022', '2023', '2024'], data: [15000, 18000, 20000]};
-
-        let selectedData;
-        if (filterOption === 'daily') selectedData = dailyData;
-        else if (filterOption === 'monthly') selectedData = monthlyData;
-        else selectedData = yearlyData;
-
-        revenueChart.data.labels = selectedData.labels;
-        revenueChart.data.datasets[0].data = selectedData.data;
-        revenueChart.update();
-    }
-
-    updateChart();
 </script>
 
 <script>

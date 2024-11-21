@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff - Manage Appointments</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+
+    <title>Stylist - Manage Appointments</title>
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
 
 <header class="text-center">
-    <h2>Staff Dashboard</h2>
+    <h2>Stylist Panel</h2>
     <div class="d-flex justify-content-end align-items-center">
         <span id="usernameDisplay" class="me-3"></span>
         <a href="/logout" class="btn btn-danger">Logout</a>
@@ -19,6 +20,7 @@
 
 <div class="container-fluid">
     <div class="row">
+
 
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">
@@ -34,7 +36,6 @@
                             <th class="text-center">Appointment ID</th>
                             <th class="text-center">Customer</th>
                             <th class="text-center">Services</th>
-                            <th class="text-center">Stylist</th>
                             <th class="text-center">Appointment Date</th>
                             <th class="text-center">Total Price</th>
                             <th class="text-center">Status</th>
@@ -42,8 +43,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="appointment : ${listAppointments}">
-                            <td class="text-center" th:text="${appointment.id}">ID</td>
+                        <tr th:each="appointment : ${listAppointments}"
+                            th:if="${appointment.stylist != null and appointment.stylist.user.username == currentUsername}">
+
+                        <td class="text-center" th:text="${appointment.id}">ID</td>
                             <td class="text-center" th:text="${appointment.customer != null ? appointment.customer.user.username : 'N/A'}">Customer Username</td>
                             <td class="text-center">
                                 <ul>
@@ -53,15 +56,13 @@
                                     </li>
                                 </ul>
                             </td>
-                            <td class="text-center" th:text="${appointment.stylist != null ? appointment.stylist.user.username : 'N/A'}">Stylist Username</td>
                             <td class="text-center" th:text="${appointment.appointmentDate}">Appointment Date</td>
                             <td class="text-center" th:text="${appointment.totalPrice}">Total Price</td>
-                            <td class="text-center" th:text="${appointment.status}">Status</td>
                             <td class="text-center">
-                                <!-- Nút Edit hoặc Xem chi tiết -->
-                                <a class="btn btn-sm btn-outline-info" th:href="@{/staff/appointments/edit/{id}(id=${appointment.id})}">Edit</a>
-                                <!-- Nút Delete -->
-                                <a class="btn btn-sm btn-outline-danger" th:href="@{/staff/appointments/delete/{id}(id=${appointment.id})}">Delete</a>
+                                <span th:text="${appointment.status}">Status</span>
+                            </td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-outline-info" style="margin:5px 0;" th:href="@{/stylistAppointments/edit/{id}(id=${appointment.id})}">Edit</a>
                             </td>
                         </tr>
                         </tbody>
@@ -71,11 +72,9 @@
         </main>
     </div>
 </div>
-<!-- Footer Content -->
 <footer class="text-center">
     <p>&copy;  2024 Hair Salon. All rights reserved.</p>
 </footer>
-
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -88,4 +87,5 @@
         }
     });
 </script>
+
 </html>

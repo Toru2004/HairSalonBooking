@@ -60,7 +60,6 @@
                     </div>
                 </form>
 
-
                 <!-- Add New Appointment Button -->
                 <div class="text-end mb-3">
                     <a class="btn btn-primary" th:href="@{/manageAppointments/new}">Add New Appointment</a>
@@ -100,17 +99,21 @@
                             <td class="text-center" th:text="${appointment.appointmentDate}">Appointment Date</td>
                             <td class="text-center" th:text="${appointment.totalPrice}">Total Price</td>
                             <td class="text-center">
-                                <select class="form-control status-dropdown"
-                                        th:disabled="${appointment.status == 'COMPLETED' or appointment.status == 'CANCELED'}">
-                                    <option th:each="status : ${statuses}"
-                                            th:value="${status.name()}"
-                                            th:text="${status}"></option>
+                                <select class="form-control status-dropdown" th:disabled="${appointment.status == 'COMPLETED' or appointment.status == 'CANCELED'}">
+                                    <option th:each="status : ${statuses}" th:value="${status.name()}" th:text="${status}"></option>
                                 </select>
                             </td>
                             <td class="text-center">
                                 <a class="btn btn-sm btn-outline-info" style="margin:5px 0;" th:href="@{/manageAppointments/edit/{id}(id=${appointment.id})}">Edit</a>
                                 <a class="btn btn-sm btn-outline-danger" style="margin:5px 0;" th:href="@{/manageAppointments/delete/{id}(id=${appointment.id})}">Delete</a>
                             </td>
+                            <!-- Total Price for the month -->
+                        <tr>
+                            <td colspan="6" class="text-right"><strong>Total Price for the Month:</strong></td>
+                            <td class="text-center"><strong th:text="${totalPriceMonth}">0</strong></td>
+                            <td></td>
+                        </tr>
+
                         </tr>
                         </tbody>
                     </table>
@@ -121,8 +124,4 @@
 </div>
 
 </body>
-<script>
-    // JavaScript functionality remains the same as in your original code
-</script>
-
 </html>
