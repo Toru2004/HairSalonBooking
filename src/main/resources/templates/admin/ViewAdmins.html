@@ -84,14 +84,46 @@
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
+    const usernameDisplay = document.getElementById("usernameDisplay");
+    const loginLink = document.getElementById("loginLink");
+    const logoutLink = document.getElementById("logoutLink");
 
-    if (currentUsername) {
-      document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+    // Lấy thông tin từ localStorage
+    const username = localStorage.getItem("username");
+    const role = localStorage.getItem("role");
+
+    if (username && role) {
+      // Nếu đã đăng nhập
+      usernameDisplay.textContent = `Welcome, ${username}`;
+      loginLink.style.display = "none"; // Ẩn nút Login/Sign Up
+      logoutLink.style.display = "inline-block"; // Hiển thị nút Logout
     } else {
-      document.getElementById("usernameDisplay").textContent = "No user logged in.";
+      // Nếu chưa đăng nhập
+      usernameDisplay.textContent = "";
+      loginLink.style.display = "inline-block"; // Hiển thị Login/Sign Up
+      logoutLink.style.display = "none"; // Ẩn nút Logout
     }
+
+    // Xử lý sự kiện Logout
+    logoutLink.addEventListener("click", () => {
+      // Gọi API Logout để hủy session trên server
+      fetch("/logout")
+              .then(response => {
+                if (response.ok) {
+                  // Xóa dữ liệu trong localStorage
+                  localStorage.removeItem("username");
+                  localStorage.removeItem("role");
+
+                  // Chuyển hướng về trang login
+                  window.location.href = "/page/login"; // Hoặc dùng window.location.reload() nếu bạn không muốn chuyển hướng
+                } else {
+                  console.error("Logout failed");
+                }
+              })
+              .catch(error => console.error("Error:", error));
+    });
   });
+
 
 </script>
 

@@ -58,7 +58,31 @@ header {
     padding: 10px 20px;
     border-radius: 50px;
     height: 40px;
+
 }
+.namengdung{
+    color: white;
+}
+/* Initially hide the logout button */
+#logoutLink {
+    display: none;
+}
+
+/* Initially show the login/signup button */
+#loginLink {
+    display: inline-block;
+}
+
+/* When logged in, show the logout button */
+.logged-in #logoutLink {
+    display: inline-block;
+}
+
+/* Hide login/signup button after login */
+.logged-in #loginLink {
+    display: none;
+}
+
 
 .flag {
     width: 25px;
