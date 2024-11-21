@@ -107,9 +107,9 @@ public class AuthController {
             String role = user.get().getRole();
             switch (role.toLowerCase()) {
                 case "manager":
-                    return "redirect:/manager/dashboard"; // Chuyển đến trang của manager
+                    return "redirect:/manager/managerDashboard"; // Chuyển đến trang của manager
                 case "staff":
-                    return "redirect:/staff/dashboard"; // Chuyển đến trang của staff
+                    return "redirect:/Staff/staffDashboard"; // Chuyển đến trang của staff
                 case "admin":
                     return "redirect:/admin/ViewAdmins"; // Chuyển đến trang của admin
                 case "user":

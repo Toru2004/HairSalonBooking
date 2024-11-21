@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
+
     // Tổng doanh thu trong khoảng thời gian (Native Query)
     @Query(value = "SELECT SUM(total_price) FROM appointments WHERE appointment_date BETWEEN :startDate AND :endDate",
             nativeQuery = true)

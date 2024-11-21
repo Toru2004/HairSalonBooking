@@ -22,6 +22,7 @@ public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
     public Map<String, Object> getRevenueDataByFilter(String filter) {
         Map<String, Object> revenueData = new HashMap<>();
 
@@ -43,14 +44,14 @@ public class AppointmentService {
 
         return appointmentRepository.findAppointmentsByAppointmentDateBetween(startDate, endDate);
     }
-    @Autowired
-    private AppointmentRepository AppointmentRepository; // Giả sử bạn có repository này
+
 
     // Phương thức này trả về tất cả các Appointment
     public List<Appointment> getAllAppointments() {
         // Truy vấn tất cả các appointments từ cơ sở dữ liệu
         return appointmentRepository.findAll();
     }
+
     public Map<String, Double> calculateMonthlyRevenue(List<Appointment> appointments) {
         Map<String, Double> revenueByMonth = new HashMap<>();
 
@@ -100,4 +101,8 @@ public class AppointmentService {
         }
     }
 
+    public List<Appointment> findAll() {
+
+        return List.of();
+    }
 }
