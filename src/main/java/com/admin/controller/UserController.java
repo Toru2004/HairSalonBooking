@@ -46,10 +46,26 @@ public class UserController {
     // Lưu thông tin người dùng
     @PostMapping("/manageUsers/save")
     public String saveUser(User user, RedirectAttributes ra) {
-        userService.save(user); // Lưu người dùng vào cơ sở dữ liệu
-        ra.addFlashAttribute("message", "The user has been saved successfully."); // Thông báo lưu thành công
-        return "redirect:/manageUsers"; // Chuyển hướng về trang danh sách người dùng
+        try {
+            if (user.getId() != null) { // Nếu có ID thì thực hiện cập nhật
+                User existingUser = userService.get(user.getId());
+                existingUser.setUsername(user.getUsername());
+                existingUser.setEmail(user.getEmail());
+                existingUser.setPhoneNumber(user.getPhoneNumber());
+                existingUser.setPassword(user.getPassword());
+                existingUser.setEnabled(user.isEnabled());
+                userService.save(existingUser); // Lưu bản ghi đã chỉnh sửa
+            } else {
+                // Nếu không có ID, thêm mới
+                userService.save(user);
+            }
+            ra.addFlashAttribute("message", "The user has been saved successfully."); // Thông báo thành công
+        } catch (UserNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the user: " + e.getMessage()); // Thông báo lỗi
+        }
+        return "redirect:/manageUsers"; // Quay lại danh sách người dùng
     }
+
 
     // Hiển thị form để chỉnh sửa thông tin người dùng
     @GetMapping("/manageUsers/edit/{id}")

@@ -1,6 +1,8 @@
 package com.admin.service;
 
+import com.admin.model.Customer;
 import com.admin.model.User;
+import com.admin.repository.CustomerRepository;
 import com.admin.repository.UserRepository;
 import com.admin.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     // Mã hóa mật khẩu thủ công
     private String encodePassword(String password) throws NoSuchAlgorithmException {
@@ -51,21 +56,22 @@ public class UserService {
         }
         userRepository.deleteById(id);
     }
-
-    public String registerUser(User user) throws NoSuchAlgorithmException {
+    public String registerCustomer(Customer customer) throws NoSuchAlgorithmException {
         // Kiểm tra xem người dùng đã tồn tại chưa
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.findByEmail(customer.getUser().getEmail()).isPresent()) {
             return "Username already exists";
         }
 
+        // Thiết lập mặc định role cho người dùng
+        User user = customer.getUser();
         user.setRole("customer");
 
         // Mã hóa mật khẩu trước khi lưu (dùng MD5, có thể thay thế với bcrypt nếu cần)
 //        String encodedPassword = encodePassword(user.getPassword());
 //        user.setPassword(encodedPassword);
-
+        customer.setUser(user);
         // Lưu người dùng vào cơ sở dữ liệu
-        userRepository.save(user);
+        customerRepository.save(customer);
         return "User registered successfully";
     }
 

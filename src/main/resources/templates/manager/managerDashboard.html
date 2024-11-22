@@ -101,7 +101,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const currentUsername = localStorage.getItem("adminUsername");
+        const currentUsername = localStorage.getItem("username");
 
         if (currentUsername) {
             document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;

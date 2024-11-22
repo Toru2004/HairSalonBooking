@@ -1,6 +1,8 @@
 package com.admin.controller;
 
+import com.admin.model.Customer;
 import com.admin.model.User;
+import com.admin.service.CustomerService;
 import com.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,18 +29,27 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CustomerService customerService;
+
     // Đăng ký người dùng
     @PostMapping("/signup")
     public String registerUser(@RequestParam String username, @RequestParam String email,
                                @RequestParam String phone, @RequestParam String password, Model model) {
         try {
-            User user = new User();
-            user.setUsername(username);
-            user.setEmail(email);
-            user.setPhoneNumber(phone);
-            user.setPassword(password); // Mật khẩu chưa mã hóa
+//            User user = new User();
+            Customer customer = new Customer();
 
-            String result = userService.registerUser(user);
+            if (customer.getUser() == null) {
+                customer.setUser(new User()); // Khởi tạo đối tượng User nếu chưa có
+            }
+
+            customer.getUser().setUsername(username);
+            customer.getUser().setEmail(email);
+            customer.getUser().setPhoneNumber(phone);
+            customer.getUser().setPassword(password); // Mật khẩu chưa mã hóa
+
+            String result = userService.registerCustomer(customer);
             model.addAttribute("message", result);
 
             return "view/pages/signup"; // Trở lại trang đăng ký với thông báo
@@ -101,8 +112,6 @@ public class AuthController {
             return ResponseEntity.status(500).body(error);
         }
     }
-
-
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {

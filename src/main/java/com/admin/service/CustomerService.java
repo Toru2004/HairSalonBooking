@@ -2,10 +2,12 @@ package com.admin.service;
 
 import com.admin.exception.CustomerNotFoundException;
 import com.admin.model.Customer;
+import com.admin.model.User;
 import com.admin.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,5 +38,23 @@ public class CustomerService {
         }
         customerRepository.deleteById(id);
     }
+
+//    public String registerCustomer(Customer customer) throws NoSuchAlgorithmException {
+//        // Kiểm tra xem người dùng đã tồn tại chưa
+//        UserRepository
+//        if (customerRepository.findByEmail(customer.getUser().getEmail()).isPresent()) {
+//            return "Username already exists";
+//        }
+//
+//        customer.getUser().setRole("customer");
+//
+//        // Mã hóa mật khẩu trước khi lưu (dùng MD5, có thể thay thế với bcrypt nếu cần)
+////        String encodedPassword = encodePassword(user.getPassword());
+////        user.setPassword(encodedPassword);
+//
+//        // Lưu người dùng vào cơ sở dữ liệu
+//        customerRepository.save(customer);
+//        return "User registered successfully";
+//    }
 
 }
