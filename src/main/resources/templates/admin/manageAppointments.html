@@ -3,27 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Admin - Manage Appointments</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-
-    <title>Admin</title>
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
-
-    <title>Manage Appointments</title>
-    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-
 </head>
 <body>
-
 <header class="text-center">
-    <h2>Admin Panel </h2>
+    <h2>Admin Panel</h2>
     <div class="d-flex justify-content-end align-items-center">
-        <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
+        <span id="usernameDisplay" class="me-3"></span>
         <a href="/logout" class="btn btn-danger">Logout</a>
-
     </div>
 </header>
 
@@ -37,30 +27,24 @@
             <div class="container">
                 <div class="text-center mb-4">
                     <h2>Manage Appointments</h2>
-
                 </div>
-
                 <div class="text-end mb-3">
-
-                    <!-- Nút chuyển đến trang "Manage Appointments by Month" với tháng hiện tại -->
                     <a class="btn btn-success" th:href="@{/manageAppointments/byMonth(year=${currentYear}, month=${currentMonth})}">
                         Monthly Appointments
                     </a>
                 </div>
-
                 <div th:if="${message}" class="alert alert-success text-center">
                     [[${message}]]
                 </div>
-
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered">
                         <thead class="table-dark">
                         <tr>
                             <th class="text-center">STT</th>
                             <th class="text-center">Customer</th>
-                            <th class="text-center">Services</th> <!-- Dịch vụ lên trước Stylist -->
+                            <th class="text-center">Services</th>
                             <th class="text-center">Stylist</th>
-                            <th class="text-center">Appointment Date</th> <!-- Ngày hẹn lên trước Tổng tiền -->
+                            <th class="text-center">Appointment Date</th>
                             <th class="text-center">Total Price</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Actions</th>
@@ -81,17 +65,11 @@
                             <td class="text-center" th:text="${appointment.stylist != null ? appointment.stylist.user.username : 'N/A'}">Stylist Username</td>
                             <td class="text-center" th:text="${appointment.appointmentDate}">Appointment Date</td>
                             <td class="text-center" th:text="${appointment.totalPrice}">Total Price</td>
-
-                            <!-- Dropdown cho trạng thái -->
                             <td class="text-center">
-                                <select class="form-control status-dropdown"
-                                        th:disabled="${appointment.status == 'COMPLETED' or appointment.status == 'CANCELED'}">
-                                    <option th:each="status : ${statuses}"
-                                            th:value="${status.name()}"
-                                            th:text="${status}"></option>
+                                <select class="form-control status-dropdown" th:disabled="${appointment.status == 'COMPLETED' or appointment.status == 'CANCELED'}">
+                                    <option th:each="status : ${statuses}" th:value="${status.name()}" th:text="${status}"></option>
                                 </select>
                             </td>
-
                             <td class="text-center">
                                 <a class="btn btn-sm btn-outline-info" style="margin:5px 0;" th:href="@{/manageAppointments/edit/{id}(id=${appointment.id})}">Edit</a>
                                 <a class="btn btn-sm btn-outline-danger" style="margin:5px 0;" th:href="@{/manageAppointments/delete/{id}(id=${appointment.id})}">Delete</a>
@@ -106,76 +84,70 @@
 </div>
 
 </body>
-<script>
-    // Định nghĩa thứ tự trạng thái
-    const statusOrder = {
+
+    <script>
+        // Định nghĩa thứ tự trạng thái
+        const statusOrder = {
         PENDING: 1,
         APPROVED: 2,
         CANCELLED: 3
     };
 
-    // Hàm lưu trạng thái từng appointment
-    function saveAppointmentStatus(appointmentId, status) {
+        // Hàm lưu trạng thái từng appointment
+        function saveAppointmentStatus(appointmentId, status) {
         const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
         statuses[appointmentId] = status;
         localStorage.setItem('appointmentStatuses', JSON.stringify(statuses));
     }
 
-    // Hàm tải trạng thái từng appointment
-    function loadAppointmentStatus(appointmentId) {
+        // Hàm tải trạng thái từng appointment
+        function loadAppointmentStatus(appointmentId) {
         const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
-        return statuses[appointmentId] || null; // Trả về trạng thái nếu có, nếu không trả về null
+        return statuses[appointmentId] || "PENDING"; // Nếu không có trạng thái, trả về PENDING mặc định
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
         const rows = document.querySelectorAll('tbody tr'); // Chọn tất cả các dòng trong bảng
         rows.forEach(row => {
-            const appointmentId = row.querySelector('td').textContent.trim(); // Lấy Appointment ID
-            const dropdown = row.querySelector('select');
-            let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
+        const appointmentId = row.querySelector('td').textContent.trim(); // Lấy Appointment ID
+        const dropdown = row.querySelector('select');
+        let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
 
-            // Đặt trạng thái ban đầu cho dropdown
-            if (!savedStatus) {
-                // Nếu chưa có trạng thái lưu trước đó, đặt mặc định là PENDING
-                dropdown.value = "PENDING";
-                saveAppointmentStatus(appointmentId, "PENDING");
-                savedStatus = "PENDING"; // Cập nhật biến để sử dụng trong logic kiểm tra sau
-            } else {
-                dropdown.value = savedStatus; // Nếu có trạng thái đã lưu, đặt trạng thái đó
-            }
+        // Đặt trạng thái ban đầu cho dropdown
+        dropdown.value = savedStatus; // Nếu có trạng thái đã lưu, đặt trạng thái đó
 
-            // Xử lý sự kiện thay đổi trạng thái
-            dropdown.addEventListener('change', (event) => {
-                const selectedStatus = event.target.value;
+        // Xử lý sự kiện thay đổi trạng thái
+        dropdown.addEventListener('change', (event) => {
+        const selectedStatus = event.target.value;
 
-                // Kiểm tra nếu trạng thái hiện tại là CANCELLED và cố gắng quay lui
-                if (savedStatus === "CANCELLED" && selectedStatus !== "CANCELLED") {
-                    alert("Không thể thay đổi trạng thái từ CANCELLED!");
-                    event.target.value = savedStatus; // Reset về trạng thái cũ
-                }
-                // Kiểm tra nếu trạng thái mới thấp hơn trạng thái hiện tại
-                else if (statusOrder[selectedStatus] < statusOrder[savedStatus]) {
-                    alert("Không thể quay lại trạng thái trước!");
-                    event.target.value = savedStatus; // Reset về trạng thái cũ
-                } else {
-                    // Lưu trạng thái mới và cập nhật giá trị đã lưu
-                    saveAppointmentStatus(appointmentId, selectedStatus);
-                    savedStatus = selectedStatus;
-                }
-            });
-        });
+        // Kiểm tra nếu trạng thái hiện tại là CANCELLED và cố gắng quay lui
+        if (savedStatus === "CANCELLED" && selectedStatus !== "CANCELLED") {
+        alert("Không thể thay đổi trạng thái từ CANCELLED!");
+        event.target.value = savedStatus; // Reset về trạng thái cũ
+    }
+        // Kiểm tra nếu trạng thái mới thấp hơn trạng thái hiện tại
+        else if (statusOrder[selectedStatus] < statusOrder[savedStatus]) {
+        alert("Không thể quay lại trạng thái trước!");
+        event.target.value = savedStatus; // Reset về trạng thái cũ
+    } else {
+        // Lưu trạng thái mới và cập nhật giá trị đã lưu
+        saveAppointmentStatus(appointmentId, selectedStatus);
+        savedStatus = selectedStatus;
+    }
     });
-    document.addEventListener("DOMContentLoaded", () => {
+    });
+    });
+
+        document.addEventListener("DOMContentLoaded", () => {
         const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
 
         if (currentUsername) {
-            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
-        } else {
-            document.getElementById("usernameDisplay").textContent = "No user logged in.";
-        }
+        document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+    } else {
+        document.getElementById("usernameDisplay").textContent = "No user logged in.";
+    }
     });
-
-
 </script>
+
 
 </html>

@@ -107,4 +107,5 @@ public class AppointmentService {
         return appointmentRepository.findRevenueByMonth(year);
     }
 
+
 }
