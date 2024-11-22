@@ -39,9 +39,6 @@
   </nav>
 
   <script>
-    document.body.classList.add("logged-in");  // Add the class if logged in
-    document.body.classList.remove("logged-in");  // Remove the class if not logged in
-
     document.addEventListener("DOMContentLoaded", () => {
       const usernameDisplay = document.getElementById("usernameDisplay");
       const loginLink = document.getElementById("loginLink");
@@ -50,7 +47,6 @@
       // Kiểm tra trạng thái đăng nhập từ localStorage
       const username = localStorage.getItem("username");
 
-      // Nếu có username, chứng tỏ người dùng đã đăng nhập
       if (username) {
         // Hiển thị tên người dùng và nút Logout
         usernameDisplay.textContent = `Welcome, ${username}`;
@@ -63,18 +59,14 @@
         logoutLink.style.display = "none"; // Ẩn nút Logout
       }
 
-      //logout
-      document.getElementById("logoutBtn").addEventListener("click", () => {
+      // Xử lý sự kiện Logout
+      logoutLink.addEventListener("click", () => {
         localStorage.clear(); // Xóa toàn bộ dữ liệu trong Local Storage
         alert("You have been logged out.");
         window.location.href = "/page/login"; // Điều hướng về trang login
       });
-
-
-      // Gọi backend để đăng xuất, xóa session
-        window.location.href = "/logout";  // Đảm bảo chuyển hướng đúng đến endpoint logout
-      });
     });
+
 
   </script>
 </header>
