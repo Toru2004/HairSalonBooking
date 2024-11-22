@@ -5,6 +5,7 @@
     <title>Booking HairSalon</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/css-user/booknow.css} ">
+
 </head>
 <body>
 <!--Login/Signup-->
@@ -39,6 +40,11 @@
                     </div>
                 </div>
 
+                <!-- Thêm các trường ẩn cho thông tin khách hàng -->
+                <input type="hidden" id="customerId" name="customerId" />
+                <input type="hidden" id="customerEmail" name="customerEmail" />
+                <input type="hidden" id="customerPhone" name="customerPhone" />
+
                 <!-- Ngày đặt lịch -->
                 <div class="form-group">
                     <label for="appointmentDate">Appointment Date:</label>
@@ -60,9 +66,7 @@
 
                         <!-- Label hiển thị thông tin dịch vụ -->
                         <label for="service-${care.id}" class="service-label">
-                            <div class="service-box-content">
-                                <span th:text="${care.name}"></span>
-                            </div>
+                            <span th:text="${care.name}"></span>
                         </label>
                     </div>
                 </div>
@@ -162,7 +166,7 @@
         });
     };
 
-    // Hàm hiển thị thông tin stylist
+    // Hàm để hiển thị profile chi tiết của stylist khi chọn
     function displayStylistProfile(stylist) {
         const profileContainer = document.getElementById('stylist-profile');
         const profileDetails = document.getElementById('profile-details');
@@ -175,9 +179,9 @@
         `;
     }
 
-    // Xử lý submit form
-    document.querySelector('form').addEventListener('submit', function (event) {
-        event.preventDefault();
+    // Lắng nghe sự kiện submit của form để chắc chắn thông tin khách hàng và dịch vụ được gửi đúng
+    document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();  // Ngừng form submit để kiểm tra dữ liệu
 
         // Lấy thông tin khách hàng
         const customerSelect = document.getElementById('customer');

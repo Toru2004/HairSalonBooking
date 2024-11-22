@@ -19,7 +19,7 @@ public class Appointment {
     private Stylist stylist;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable=false)
     private Customer customer;
 
     @ManyToMany
@@ -56,6 +56,10 @@ public class Appointment {
 
     public void setStylist(Stylist stylist) {
         this.stylist = stylist;
+    }
+
+    public Integer getCustomerId() {
+        return (customer != null) ? customer.getId() : null;
     }
 
     public Customer getCustomer() {
