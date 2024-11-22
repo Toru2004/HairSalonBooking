@@ -14,9 +14,9 @@ public class FeedbackController {
     @Autowired
     private FeedbackService feedbackService; // Inject FeedbackService
 
-    @PostMapping("/page/feedbacks")
+    @PostMapping("/manageFeedbacks/save")
     public String submitFeedback(@ModelAttribute Feedback feedback, Model model) {
-        feedbackService.saveFeedback(feedback); // Lưu feedback
+        feedbackService.save(feedback); // Lưu feedback
         model.addAttribute("success", "Feedback submitted successfully!");
         return "redirect:/page/thankyou"; // Chuyển hướng đến trang thank you
     }

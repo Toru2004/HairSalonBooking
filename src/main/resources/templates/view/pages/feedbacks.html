@@ -21,7 +21,7 @@
     <div class="feedback-container">
         <h1>We Value Your Feedback</h1>
         <p>Please let us know your thoughts, suggestions, or concerns. Your feedback helps us improve our services!</p>
-        <form action="/page/home" method="post">
+        <form action="/manageFeedbacks/save" method="post">
             <div class="form-group">
                 <label for="name">Your Name</label>
                 <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
@@ -34,11 +34,10 @@
                 <label for="message">Your Feedback</label>
                 <textarea id="message" name="message" class="form-control" rows="5" placeholder="Write your feedback here" required></textarea>
             </div>
-            <input type="hidden" id="customerId" name="customerId" value="">
+<!--            <input type="hidden" id="customerId" name="customerId" value="">-->
             <button type="submit" class="btn btn-primary mt-3">Submit Feedback</button>
         </form>
         <script>
-
             const customerId = localStorage.getItem("customerId");
 
             // Cập nhật giá trị customerId vào trường ẩn
