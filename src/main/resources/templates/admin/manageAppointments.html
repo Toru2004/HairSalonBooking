@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="text-end mb-3">
-                    <a class="btn btn-primary" th:href="@{/manageAppointments/new}">Add New Appointment</a>
+
                     <!-- Nút chuyển đến trang "Manage Appointments by Month" với tháng hiện tại -->
                     <a class="btn btn-success" th:href="@{/manageAppointments/byMonth(year=${currentYear}, month=${currentMonth})}">
                         Monthly Appointments
@@ -56,7 +56,7 @@
                     <table class="table table-striped table-bordered">
                         <thead class="table-dark">
                         <tr>
-                            <th class="text-center">Appointment ID</th>
+                            <th class="text-center">STT</th>
                             <th class="text-center">Customer</th>
                             <th class="text-center">Services</th> <!-- Dịch vụ lên trước Stylist -->
                             <th class="text-center">Stylist</th>
@@ -67,8 +67,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="appointment : ${listAppointments}">
-                            <td class="text-center" th:text="${appointment.id}">ID</td>
+                        <tr th:each="appointment, stat : ${listAppointments}">
+                            <td class="text-center">[[${stat.index + 1}]]</td>
                             <td class="text-center" th:text="${appointment.customer != null ? appointment.customer.user.username : 'N/A'}">Customer Username</td>
                             <td class="text-center">
                                 <ul>

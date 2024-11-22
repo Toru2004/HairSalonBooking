@@ -1,7 +1,10 @@
 package com.admin.controller;
 import java.util.Arrays;
 import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.HashMap;
 
+import org.springframework.ui.Model;
 import com.admin.exception.AppointmentNotFoundException;
 import com.admin.model.Appointment;
 import com.admin.model.Care;
@@ -20,7 +23,8 @@ import com.admin.model.Appointment.Status; // Đảm bảo đã import enum Stat
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -38,15 +42,56 @@ public class AppointmentController {
 
     @Autowired
     private CareService careService;
+    @GetMapping("/revenue")
+    public String showRevenueByMonth(@RequestParam(value = "year", defaultValue = "2024") int year,
+                                     Model model) {
+        // Lấy doanh thu theo tháng từ Service
+        List<Object[]> revenueData = appointmentService.getRevenueByMonth(year);
+
+        // Kiểm tra dữ liệu trả về
+        if (revenueData != null) {
+            for (Object[] data : revenueData) {
+                System.out.println("Month: " + data[0] + ", Revenue: " + data[1]);
+            }
+        } else {
+            System.out.println("No data found for year " + year);
+        }
+
+        // Chuyển dữ liệu doanh thu thành các danh sách riêng biệt cho Chart.js
+        List<Integer> months = new ArrayList<>();
+        List<Double> revenues = new ArrayList<>();
+
+        for (Object[] data : revenueData) {
+            months.add((Integer) data[0]);
+            revenues.add((Double) data[1]);
+        }
+
+        // Truyền dữ liệu vào model
+        model.addAttribute("months", months);
+        model.addAttribute("revenues", revenues);
+        model.addAttribute("selectedYear", year);
+
+
+        return "manager/managerDashboard"; // Trả về View để hiển thị
+    }
+
+
     @GetMapping("/manageAppointments/byMonth")
     public String showAppointmentsByMonth(@RequestParam("year") int year, @RequestParam("month") int month, HttpServletRequest request, Model model) {
         // Get appointments by year and month
+        List<Appointment> listAppointments = appointmentService.listAll();
         List<Appointment> appointments = appointmentService.getAppointmentsByMonth(year, month);
-        model.addAttribute("listAppointments", appointments);
 
-        // Add the year and month to the model to keep track of the selected month
+        // Calculate the total price for the month
+        double totalPriceMonth = appointments.stream()
+                .mapToDouble(Appointment::getTotalPrice)
+                .sum();
+
+        model.addAttribute("listAppointments", appointments);
+        model.addAttribute("statuses", Arrays.asList(Appointment.Status.values()));
         model.addAttribute("selectedYear", year);
         model.addAttribute("selectedMonth", month);
+        model.addAttribute("totalPriceMonth", totalPriceMonth);  // Add total price to the model
         // Lấy vai trò từ session
         String role = (String) request.getSession().getAttribute("role");
 
@@ -55,8 +100,12 @@ public class AppointmentController {
             return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
         }
 
-        return "admin/appointmentFilterForm"; // The same view used for managing all appointments
+        return "admin/appointmentFilterForm";
     }
+
+
+
+
 
     @GetMapping("/manageAppointments")
     public String showManageAppointmentsPage(Model model) {
@@ -67,7 +116,6 @@ public class AppointmentController {
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
         int currentMonth = currentDate.getMonthValue();
-
         // Thêm thông tin vào model
         model.addAttribute("listAppointments", listAppointments);
         model.addAttribute("statuses", Arrays.asList(Appointment.Status.values())); // Thêm danh sách trạng thái
@@ -79,33 +127,39 @@ public class AppointmentController {
     }
 
     @GetMapping("/manageAppointments/new")
-    public String showNewAppointmentForm(Model model) {
+    public String showNewAppointmentForm(Model model, RedirectAttributes ra) {
         Appointment appointment = new Appointment();
 
-        // Lấy dữ liệu từ service
-        List<Customer> customers = customerService.listAll();  // Lấy danh sách khách hàng
-        List<Stylist> stylists = stylistService.listAll();  // Lấy danh sách stylist
-        List<Care> cares = careService.listAll();  // Lấy danh sách dịch vụ
+        try {
+            // Lấy dữ liệu từ service
+            List<Customer> customers = customerService.listAll(); // Danh sách khách hàng
+            List<Stylist> stylists = stylistService.listAll();    // Danh sách stylist
+            List<Care> cares = careService.listAll();             // Danh sách dịch vụ
 
-        // Kiểm tra nếu danh sách không rỗng
-        if (customers.isEmpty()) {
-            System.out.println("Customer list is empty");
-        }
-        if (stylists.isEmpty()) {
-            System.out.println("Stylist list is empty");
-        }
-        if (cares.isEmpty()) {
-            System.out.println("Care list is empty");
-        }
+            // Kiểm tra và thêm thông báo nếu danh sách rỗng
+            if (customers.isEmpty()) {
+                ra.addFlashAttribute("warning", "Customer list is empty. Please add some customers.");
+            }
+            if (stylists.isEmpty()) {
+                ra.addFlashAttribute("warning", "Stylist list is empty. Please add some stylists.");
+            }
+            if (cares.isEmpty()) {
+                ra.addFlashAttribute("warning", "Care list is empty. Please add some care services.");
+            }
 
-        // Truyền dữ liệu vào model
-        model.addAttribute("appointment", appointment);
-        model.addAttribute("customerList", customers);  // Truyền customer list vào model
-        model.addAttribute("stylistList", stylists);  // Truyền stylist list vào model
-        model.addAttribute("careList", cares);  // Truyền care list vào model
-        model.addAttribute("pageTitle", "Add New Appointment");
+            // Truyền dữ liệu vào model
+            model.addAttribute("appointment", appointment);
+            model.addAttribute("customerList", customers);
+            model.addAttribute("stylistList", stylists);
+            model.addAttribute("careList", cares);
+            model.addAttribute("pageTitle", "Add New Appointment");
 
-        return "admin/appointment_form"; // Trả về view appointment_form.html
+            return "admin/appointment_form"; // Trả về view
+        } catch (Exception e) {
+            // Xử lý lỗi khi lấy dữ liệu từ service
+            ra.addFlashAttribute("error", "An error occurred while loading data: " + e.getMessage());
+            return "redirect:/manageAppointments"; // Quay lại trang danh sách nếu có lỗi
+        }
     }
 
     @PostMapping("/manageAppointments/save")
@@ -118,7 +172,7 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Lưu mới nếu không có ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "redirect:/manageAppointments"; // Chuyển hướng về danh sách appointment
+            return "view/pages/completedBooking";
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Quay lại form nếu có lỗi
@@ -126,7 +180,7 @@ public class AppointmentController {
     }
 
 
-    // Hiển thị form để chỉnh sửa thông tin Appointment
+
     // Hiển thị form để chỉnh sửa thông tin Appointment
     @GetMapping("/manageAppointments/edit/{id}")
     public String showEditAppointmentForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {

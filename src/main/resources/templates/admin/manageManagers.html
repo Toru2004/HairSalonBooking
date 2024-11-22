@@ -49,7 +49,7 @@
                     <table class="table table-striped table-bordered">
                         <thead class="table-dark">
                         <tr>
-                            <th>ID</th>
+                            <th>STT</th>
                             <th>Username</th>
                             <th>Email</th>
                             <th>Phone number</th>
@@ -58,9 +58,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <th:block th:each="manager : ${listManagers}">
+                        <th:block th:each="manager, stat : ${listManagers}">
                             <tr>
-                                <td>[[${manager.id}]]</td>
+                                <td>[[${stat.index + 1}]]</td>
                                 <td>[[${manager.user.username}]]</td>
                                 <td>[[${manager.user.email}]]</td>
                                 <td>[[${manager.user.phoneNumber}]]</td>
