@@ -1,23 +1,27 @@
 package com.admin.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+
+import javax.persistence.*;
 
 @Entity
+@Table(name = "feedbacks")
 public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false)
     private String name;
-    private String email;
-    private String message;
-    private Long customerId; // ID của khách hàng gửi feedback
 
-    // Getters và Setters
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "message", nullable = false, length = 1000)
+    private String message;
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -48,13 +52,5 @@ public class Feedback {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public Long getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
     }
 }
