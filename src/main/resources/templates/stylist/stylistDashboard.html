@@ -1,66 +1,90 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stylist - Dashboard</title>
-    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-</head>
-<body>
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stylist - Dashboard</title>
+        <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    </head>
+    <body>
 
-<header class="text-center">
-    <h2>Stylist Dashboard</h2>
-    <div class="d-flex justify-content-end align-items-center">
-        <span id="usernameDisplay" class="me-3"></span>
-        <a class="btn btn-danger" id="logoutBtn" href="#">Logout</a>
+    <header class="text-center">
+        <h2>Stylist Dashboard</h2>
+        <div class="d-flex justify-content-end align-items-center">
+            <span id="usernameDisplay" class="me-3"></span>
+            <a class="btn btn-danger" id="logoutBtn" href="#">Logout</a>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar Menu -->
+            <aside class="col-md-2 sidebar">
+                <ul class="nav flex-column">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/stylist/stylistappointment}">Manage Appointments</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="col-md-10 p-4">
+                <div class="text-center">
+                    <h2>Welcome to your Stylist Dashboard</h2>
+                    <p>Use the menu on the left to manage your work and view information.</p>
+                </div>
+            </main>
+        </div>
     </div>
-</header>
 
-<div class="container-fluid">
-    <div class="row">
-        <!-- Sidebar Menu -->
-        <aside class="col-md-2 sidebar">
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" th:href="@{/stylist/stylistappointment}">Manage Appointments</a></li>
-            </ul>
-        </aside>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <!--<script>-->
+    <!--    document.addEventListener("DOMContentLoaded", () => {-->
+    <!--        // Get the currently logged-in stylist username-->
+    <!--        const currentUsername = localStorage.getItem("stylistUsername");-->
 
-        <!-- Main Content Area -->
-        <main class="col-md-10 p-4">
-            <div class="text-center">
-                <h2>Welcome to your Stylist Dashboard</h2>
-                <p>Use the menu on the left to manage your work and view information.</p>
-            </div>
-        </main>
-    </div>
-</div>
+    <!--        if (currentUsername) {-->
+    <!--            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;-->
+    <!--        } else {-->
+    <!--            document.getElementById("usernameDisplay").textContent = "No user logged in.";-->
+    <!--        }-->
 
-<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-<!--<script>-->
-<!--    document.addEventListener("DOMContentLoaded", () => {-->
-<!--        // Get the currently logged-in stylist username-->
-<!--        const currentUsername = localStorage.getItem("stylistUsername");-->
+    <!--        // Logout button functionality-->
+    <!--        document.getElementById("logoutBtn").addEventListener("click", () => {-->
+    <!--            localStorage.removeItem("stylistUsername");-->
+    <!--            alert("You have been logged out.");-->
+    <!--            window.location.href = "/page/login";-->
+    <!--        });-->
+    <!--    });-->
+    <!--</script>-->
 
-<!--        if (currentUsername) {-->
-<!--            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;-->
-<!--        } else {-->
-<!--            document.getElementById("usernameDisplay").textContent = "No user logged in.";-->
-<!--        }-->
+    <!-- Footer Content -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const usernameDisplay = document.getElementById("usernameDisplay");
+            const logoutBtn = document.getElementById("logoutBtn");
 
-<!--        // Logout button functionality-->
-<!--        document.getElementById("logoutBtn").addEventListener("click", () => {-->
-<!--            localStorage.removeItem("stylistUsername");-->
-<!--            alert("You have been logged out.");-->
-<!--            window.location.href = "/page/login";-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
+            // Lấy thông tin username từ Local Storage
+            const currentUsername = localStorage.getItem("username"); // Đổi key từ stylistUsername thành username
 
-<!-- Footer Content -->
-<footer class="text-center mt-4">
-    <p>&copy;  2024 Hair Salon. All rights reserved.</p>
-</footer>
+            if (currentUsername) {
+                usernameDisplay.textContent = `Logged in as: ${currentUsername}`;
+            } else {
+                usernameDisplay.textContent = "No user logged in.";
+            }
 
-</body>
-</html>
+            document.getElementById("logoutBtn").addEventListener("click", () => {
+                localStorage.clear(); // Xóa toàn bộ dữ liệu trong Local Storage
+                alert("You have been logged out.");
+                window.location.href = "/page/login"; // Điều hướng về trang login
+            });
+
+        });
+
+    </script>
+
+    <footer class="text-center mt-4">
+        <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+    </footer>
+
+    </body>
+    </html>

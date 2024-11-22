@@ -30,29 +30,43 @@
     </div>
 </div>
 
-
-
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const currentUsername = localStorage.getItem("adminUsername");
+        // Kiểm tra nếu key "username" tồn tại
+        const usernameValue = localStorage.getItem("username");
 
-        if (currentUsername) {
-            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
-        } else {
-            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        if (usernameValue) {
+            // Chuyển đổi từ "username" sang "staffName"
+            localStorage.setItem("staffName", usernameValue); // Lưu vào key mới
+            localStorage.removeItem("username"); // Xóa key cũ
         }
 
-        document.getElementById("logoutBtn").addEventListener("click", () => {
-            localStorage.removeItem("adminUsername");
+        // Hiển thị tên staff
+        const currentStaffName = localStorage.getItem("staffName");
+        const usernameDisplay = document.getElementById("usernameDisplay");
+
+        if (currentStaffName) {
+            usernameDisplay.textContent = `Welcome, ${currentStaffName}`;
+        } else {
+            usernameDisplay.textContent = "No user logged in.";
+        }
+
+        // Xử lý Logout
+        const logoutBtn = document.getElementById("logoutBtn");
+        logoutBtn.addEventListener("click", () => {
+            localStorage.clear(); // Xóa toàn bộ Local Storage
             alert("You have been logged out.");
-            window.location.href = "/page/login";
+            window.location.href = "/page/login"; // Điều hướng về trang login
         });
     });
+
 </script>
+
 <!-- Footer Content -->
 <footer class="text-center">
-    <p>&copy;  2024 Hair Salon. All rights reserved.</p>
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
 </footer>
+
 </body>
 </html>
