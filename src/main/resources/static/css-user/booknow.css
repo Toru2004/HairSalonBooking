@@ -88,8 +88,17 @@ label {
     position: relative;
 }
 
+.service-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
 /* Đảm bảo toàn bộ ô dịch vụ có thể nhấn được */
-.services-box .service-item .service-label {
+.services-box .service-label {
     display: flex;
     justify-content: center;
     align-items: center;
