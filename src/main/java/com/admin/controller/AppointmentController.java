@@ -131,10 +131,12 @@ public class AppointmentController {
         Appointment appointment = new Appointment();
 
         try {
-            List<Customer> customers = customerService.listAll();
-            List<Stylist> stylists = stylistService.listAll();
-            List<Care> cares = careService.listAll();
+            // Lấy dữ liệu từ service
+            List<Customer> customers = customerService.listAll(); // Danh sách khách hàng
+            List<Stylist> stylists = stylistService.listAll();    // Danh sách stylist
+            List<Care> cares = careService.listAll();             // Danh sách dịch vụ
 
+            // Kiểm tra và thêm thông báo nếu danh sách rỗng
             if (customers.isEmpty()) {
                 ra.addFlashAttribute("warning", "Customer list is empty. Please add some customers.");
             }
@@ -145,16 +147,18 @@ public class AppointmentController {
                 ra.addFlashAttribute("warning", "Care list is empty. Please add some care services.");
             }
 
+            // Truyền dữ liệu vào model
             model.addAttribute("appointment", appointment);
             model.addAttribute("customerList", customers);
             model.addAttribute("stylistList", stylists);
             model.addAttribute("careList", cares);
             model.addAttribute("pageTitle", "Add New Appointment");
 
-            return "admin/appointment_form";
+            return "admin/appointment_form"; // Trả về view
         } catch (Exception e) {
+            // Xử lý lỗi khi lấy dữ liệu từ service
             ra.addFlashAttribute("error", "An error occurred while loading data: " + e.getMessage());
-            return "redirect:/manageAppointments";
+            return "redirect:/manageAppointments"; // Quay lại trang danh sách nếu có lỗi
         }
     }
 
@@ -168,13 +172,12 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Lưu mới nếu không có ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "view/pages/completedBooking";  // Trang kết quả thành công
+            return "view/pages/completedBooking";
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Quay lại form nếu có lỗi
         }
     }
-
 
 
 

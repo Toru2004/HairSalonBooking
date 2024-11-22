@@ -37,4 +37,9 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
+    public Customer  findById(Integer id) throws CustomerNotFoundException {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
+    }
+
 }

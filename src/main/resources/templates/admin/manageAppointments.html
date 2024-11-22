@@ -53,7 +53,7 @@
                         <tbody>
                         <tr th:each="appointment, stat : ${listAppointments}">
                             <td class="text-center">[[${stat.index + 1}]]</td>
-                            <td class="text-center" th:text="${appointment.customer != null ? appointment.customer.user.username : 'N/A'}">Customer Username</td>
+                            <td class="text-center" th:text="${customerName}">Customer Username</td>
                             <td class="text-center">
                                 <ul>
                                     <li th:each="care : ${appointment.cares}">
