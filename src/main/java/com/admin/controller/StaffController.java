@@ -41,10 +41,10 @@ public class StaffController {
     @GetMapping("/Staff/appointments")
     public String getAllAppointmentsForStaff(Model model) {
         // Lấy toàn bộ các cuộc hẹn trong hệ thống
-        List<Appointment> allAppointments = appointmentService.findAll();
+        List<Appointment> listAppointments = appointmentService.listAll();
 
         // Đưa danh sách vào model
-        model.addAttribute("listAppointments", allAppointments);
+        model.addAttribute("listAppointments", listAppointments);
 
         return "Staff/appointments";
     }
