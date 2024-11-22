@@ -96,7 +96,7 @@ public class AppointmentController {
         String role = (String) request.getSession().getAttribute("role");
 
         // Kiểm tra nếu không phải staff thì chuyển hướng
-        if (role == null || !role.equals("manager")) {
+        if (role == null || !role.equals("admin")) {
             return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
         }
 
