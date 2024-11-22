@@ -3,7 +3,6 @@ package com.admin.controller;
 import com.admin.model.Appointment;
 import com.admin.model.Care;
 import com.admin.service.AppointmentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,8 +15,11 @@ import java.util.HashMap;
 @Controller
 public class RevenueController {
 
-    @Autowired
-    private AppointmentService appointmentService;
+    private final AppointmentService appointmentService;
+
+    public RevenueController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
 
     @GetMapping("/manager/RevenueOverview")
     public String getRevenueOverview(Model model) {
