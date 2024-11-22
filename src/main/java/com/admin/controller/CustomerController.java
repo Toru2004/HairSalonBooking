@@ -23,7 +23,6 @@ public class CustomerController {
     @Autowired
     private UserService userService;
 
-    // Hiển thị danh sách tất cả khách hàng
     @GetMapping("/manageCustomers")
     public String showCustomerList(HttpServletRequest request,Model model) {
         List<Customer> listCustomers = customerService.listAll(); // Lấy danh sách tất cả khách hàng
