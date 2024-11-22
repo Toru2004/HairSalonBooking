@@ -63,13 +63,15 @@
         logoutLink.style.display = "none"; // Ẩn nút Logout
       }
 
-      // Xử lý sự kiện Logout
-      logoutLink.addEventListener("click", () => {
-        // Xóa thông tin đăng nhập từ Local Storage
-        localStorage.removeItem("username");
-        localStorage.removeItem("role");
+      //logout
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.clear(); // Xóa toàn bộ dữ liệu trong Local Storage
+        alert("You have been logged out.");
+        window.location.href = "/page/login"; // Điều hướng về trang login
+      });
 
-        // Gọi backend để đăng xuất, xóa session
+
+      // Gọi backend để đăng xuất, xóa session
         window.location.href = "/logout";  // Đảm bảo chuyển hướng đúng đến endpoint logout
       });
     });
