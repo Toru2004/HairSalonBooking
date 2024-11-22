@@ -1,8 +1,10 @@
 package com.admin.controller;
 
 
+import com.admin.exception.CustomerNotFoundException;
 import com.admin.exception.ManagerNotFoundException;
 import com.admin.model.Appointment;
+import com.admin.model.Customer;
 import com.admin.model.Manager;
 import com.admin.service.AppointmentService;
 import com.admin.service.ManagerService;
@@ -83,9 +85,28 @@ public class ManagerController {
     // Lưu thông tin manager
     @PostMapping("/manageManagers/save")
     public String saveManager(Manager manager, RedirectAttributes ra) {
-        manager.getUser().setRole("manager");
-        managerService.save(manager);
-        ra.addFlashAttribute("message", "The manager has been saved successfully.");
+        try {
+            if (manager.getId() != null) { // Nếu có ID thì thực hiện cập nhật
+                // Lấy thông tin manager hiện tại từ cơ sở dữ liệu
+                Manager existingManager = managerService.get(manager.getId());
+
+                // Cập nhật thông tin user
+                existingManager.getUser().setUsername(manager.getUser().getUsername());
+                existingManager.getUser().setEmail(manager.getUser().getEmail());
+                existingManager.getUser().setPhoneNumber(manager.getUser().getPhoneNumber());
+                existingManager.getUser().setPassword(manager.getUser().getPassword());
+                existingManager.getUser().setEnabled(manager.getUser().isEnabled());
+                managerService.save(existingManager); // Lưu manager đã chỉnh sửa
+            } else {
+                // Nếu không có ID, thêm mới manager
+                manager.getUser().setRole("manager"); // Gán vai trò
+                managerService.save(manager); // Lưu manager mới
+            }
+
+            ra.addFlashAttribute("message", "The manager has been saved successfully.");
+        } catch (ManagerNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the manager: " + e.getMessage());
+        }
         return "redirect:/manageManagers";
     }
 

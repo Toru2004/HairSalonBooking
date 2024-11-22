@@ -124,7 +124,11 @@ public class StylistController {
             if (stylist.getId() != null) { // Nếu có ID thì thực hiện cập nhật
                 Stylist existingStylist = stylistService.get(stylist.getId());
                 existingStylist.getUser().setUsername(stylist.getUser().getUsername());
-                existingStylist.setUser(stylist.getUser());
+                existingStylist.getUser().setEmail(stylist.getUser().getEmail());
+                existingStylist.getUser().setPhoneNumber(stylist.getUser().getPhoneNumber());
+                existingStylist.getUser().setPassword(stylist.getUser().getPassword());
+                existingStylist.getUser().setEnabled(stylist.getUser().isEnabled());
+//                existingStylist.setUser(stylist.getUser());
 
                 if (!imageFile.isEmpty()) {
                     existingStylist.setProfilePicture(imageFile.getBytes()); // Cập nhật ảnh profile
