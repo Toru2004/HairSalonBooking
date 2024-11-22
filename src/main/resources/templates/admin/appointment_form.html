@@ -2,201 +2,221 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Booking HairSalon</title>
+    <title>Booking Appointment</title>
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/css-user/booknow.css} ">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+            font-family: Arial, sans-serif;
+        }
 
+        .form-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 50px auto;
+            width: 80%;
+        }
+
+        .form-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #343a40;
+            text-align: center;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .btn-success {
+            background-color: #343a40;
+            border-color: #343a40;
+            width: 100%;
+            height: 50px;
+            font-size: 22px;
+        }
+
+        .btn-success:hover {
+            background-color: #495057;
+            border-color: #495057;
+        }
+
+        /* Thiết kế các box chọn dịch vụ */
+        .service-box {
+            display: inline-block;
+            background-color: #ffffff;
+            color: #000000;
+            border: 1px solid #495057;
+            border-radius: 4px;
+            padding: 10px 20px;
+            margin: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .service-box:hover {
+            background-color: #5a6268;
+        }
+
+        .service-box input[type="checkbox"] {
+            display: none;
+        }
+
+        .service-box.active {
+            background-color: #0b0909;
+            border-color: #000000;
+            color: white;
+        }
+
+        /* Profile stylist */
+        #stylist-profile {
+            background-color: #ffffff;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+
+        #stylist-profile h5 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #stylist-profile p {
+            font-size: 16px;
+            color: #495057;
+        }
+
+        #appointmentDate {
+            border: 1px solid #ced4da;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 18px;
+            width: 100%;
+        }
+
+        .form-control {
+            font-size: 18px;
+            padding: 12px;
+            height: auto;
+        }
+
+    </style>
 </head>
 <body>
-<!--Login/Signup-->
 <div th:replace="view/partials/popUpForms :: popUpForms"></div>
-<!-- Header-->
 <div th:replace="view/partials/header :: header"></div>
-<div class="container-fluid">
-    <div class="text-center">
-        <h2 style="font-size:35px;">Booking HairSalon</h2>
+<div class="container">
+    <div class="form-container">
+        <div class="form-title" th:text="${pageTitle}">Booking Appointment</div>
+
+        <form th:action="@{/manageAppointments/save}" method="post" th:object="${appointment}">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <!-- Hiển thị tên khách hàng -->
+                <label>Customer:</label>
+                <input type="text" id="customerDisplay" class="form-control" readonly />
+
+                <!-- Select khách hàng (ẩn đi) -->
+                <select id="customer" th:field="*{customer.id}" class="form-control" style="display:none;" required>
+                    <option value="" disabled selected>-- Select a Customer --</option>
+                    <option th:each="customer : ${customerList}" th:value="${customer.id}" th:data-user-id="${customer.user.id}" th:text="${customer.user.username}"></option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Services:</label>
+                <div class="d-flex flex-wrap">
+                    <div th:each="care : ${careList}" class="service-box" onclick="toggleService(this)">
+                        <input type="checkbox" th:field="*{cares}" th:value="${care.id}" />
+                        <span th:text="${care.name}"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="stylist">Stylist:</label>
+                <select id="stylist" th:field="*{stylist.id}" class="form-control" required onchange="displayStylistProfile()">
+                    <option th:each="stylist : ${stylistList}" th:value="${stylist.id}" th:text="${stylist.user.username}" th:data-description="${stylist.description}"></option>
+                </select>
+            </div>
+
+            <!-- Profile stylist ở chính giữa -->
+            <div id="stylist-profile">
+                <h5 id="stylist-name">Stylist Name</h5>
+                <p id="stylist-description">Description</p>
+            </div>
+
+            <div class="form-group">
+                <label for="appointmentDate">Appointment Date:</label>
+                <input type="datetime-local" id="appointmentDate" th:field="*{appointmentDate}" class="form-control" required />
+            </div>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success m-2" style="background-color:black;">Booking Appointment</button>
+            </div>
+        </form>
     </div>
-
-    <!-- Form -->
-    <form th:action="@{/manageAppointments/save}" method="post" th:object="${appointment}">
-        <div class="column">
-            <div class="border-box">
-                <div class="section-title" style="text-align:center;font-size:28px;">Customer Information</div>
-
-                <!-- Chọn khách hàng -->
-                <div class="form-group">
-                    <label for="customer">Customer:</label>
-                    <input type="text" id="customer" class="form-control" readonly />
-                </div>
-
-                <!-- Thêm các trường ẩn cho thông tin khách hàng -->
-                <input type="hidden" id="customerId" name="customerId" />
-                <input type="hidden" id="customerEmail" name="customerEmail" />
-                <input type="hidden" id="customerPhone" name="customerPhone" />
-
-                <!-- Ngày đặt lịch -->
-                <div class="form-group">
-                    <label for="appointmentDate">Appointment Date:</label>
-                    <input type="datetime-local" id="appointmentDate" th:field="*{appointmentDate}"
-                           class="form-control" required />
-                </div>
-            </div>
-        </div>
-
-        <!-- Các trường thông tin dịch vụ -->
-        <div class="column">
-            <div class="border-box">
-                <div class="section-title" style="text-align:center;font-size:28px; margin:15px 0;">Service Information</div>
-                <div class="section-title" style="font-weight:bold;">Service</div>
-                <div class="services-box">
-                    <div th:each="care : ${careList}" class="service-item">
-                        <!-- Ẩn checkbox -->
-                        <input type="checkbox" th:field="*{cares}" th:value="${care.id}" id="service-${care.id}" style="display: none;" />
-                        <label for="service-${care.id}" class="service-label">
-                            <span th:text="${care.name}"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="border-box">
-                    <div class="section-title" style="font-weight:bold;">Stylist</div>
-
-                    <!-- Chọn stylist -->
-                    <div class="form-group">
-                        <select id="stylist" th:field="*{stylist.id}" class="form-control" required>
-                            <option th:each="stylist : ${stylistList}" th:value="${stylist.id}"
-                                    th:text="${stylist.user.username}"></option>
-                        </select>
-                    </div>
-                    <div id="stylist-profile" style="display: none; margin-top: 20px;">
-                        <h4>Stylist Profile</h4>
-                        <div id="profile-details">
-                            <!-- Nội dung profile sẽ được thêm ở đây -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Nút Booking -->
-            <div class="form-group text-center mt-3">
-                <button type="submit" class="btn btn-success">Booking Appointment</button>
-            </div>
-        </div>
-    </form>
-
 </div>
-
 <div th:replace="view/partials/footer :: footer"></div>
 
 <script type="text/javascript">
+    // Tự động chọn khách hàng nếu user đã đăng nhập
     window.onload = function () {
-        const customerUsername = localStorage.getItem('username'); // Lấy tên khách hàng từ localStorage
-        const customerEmail = localStorage.getItem('email'); // Lấy email khách hàng từ localStorage
-        const customerPhone = localStorage.getItem('phone'); // Lấy số điện thoại khách hàng từ localStorage
-        const customerId = localStorage.getItem('customerId'); // Lấy ID khách hàng từ localStorage
+        const loggedInUserId = localStorage.getItem('id');
+        const loggedInUsername = localStorage.getItem('username'); // Lấy tên từ localStorage
 
-        if (customerUsername) {
-            // Nếu có tên khách hàng, hiển thị tên vào trường input
-            document.getElementById('customer').value = customerUsername;
-            document.getElementById('customerEmail').value = customerEmail; // Điền vào trường ẩn email
-            document.getElementById('customerPhone').value = customerPhone; // Điền vào trường ẩn số điện thoại
-            document.getElementById('customerId').value = customerId; // Điền ID khách hàng vào trường ẩn
-        } else {
-            // Nếu không có tên khách hàng, bạn có thể hiển thị một thông báo hoặc chuyển hướng đến trang đăng nhập
-            alert('Please log in to make a booking.');
-            // Ví dụ chuyển hướng về trang đăng nhập
-            window.location.href = '/pages/login';
-        }
+        if (loggedInUserId) {
+            const customerSelect = document.getElementById('customer');
+            const options = customerSelect.options;
 
-        // Lắng nghe sự kiện khi checkbox được chọn hoặc bỏ chọn
-        const serviceItems = document.querySelectorAll('.service-item input[type="checkbox"]');
-
-        // Lắng nghe sự kiện khi checkbox được chọn hoặc bỏ chọn
-        serviceItems.forEach((checkbox) => {
-            const parentItem = checkbox.closest('.service-item');
-
-            // Lắng nghe sự kiện click vào label (toàn bộ ô dịch vụ)
-            parentItem.addEventListener('click', () => {
-                // Đảm bảo checkbox sẽ thay đổi trạng thái khi nhấn vào toàn bộ ô
-                checkbox.checked = !checkbox.checked;
-
-                // Thêm hoặc bỏ class "active" khi chọn hoặc bỏ chọn
-                if (checkbox.checked) {
-                    parentItem.classList.add('active');
-                } else {
-                    parentItem.classList.remove('active');
+            for (let i = 0; i < options.length; i++) {
+                const userId = options[i].getAttribute('data-user-id');
+                if (userId === loggedInUserId) {
+                    options[i].selected = true; // Chọn option tương ứng
+                    break;
                 }
-            });
-        });
+            }
+
+            // Hiển thị tên khách hàng trong ô CustomerDisplay
+            const customerDisplay = document.getElementById('customerDisplay');
+            customerDisplay.value = loggedInUsername || "Unknown User";
+        } else {
+            alert('No user ID found in localStorage. Please log in again.');
+        }
     };
 
-    // Hàm xử lý hủy bỏ form và chuyển hướng về trang quản lý cuộc hẹn
-    function cancelForm() {
-        window.location.href = '/manageAppointments';
+    // Hàm bật/tắt trạng thái của box dịch vụ
+    function toggleService(element) {
+        const checkbox = element.querySelector('input[type="checkbox"]');
+        checkbox.checked = !checkbox.checked;
+        element.classList.toggle('active', checkbox.checked);
     }
 
-    // Hàm để hiển thị profile chi tiết của stylist khi chọn
-    function displayStylistProfile(stylist) {
-        const staffProfile = document.getElementById('staff-profile');
-        const staffImage = document.getElementById('staff-image');
-        const staffDetails = document.getElementById('staff-details');
+    // Hiển thị profile của stylist khi được chọn
+    function displayStylistProfile() {
+        const stylistSelect = document.getElementById('stylist');
+        const selectedOption = stylistSelect.options[stylistSelect.selectedIndex];
+        const profileContainer = document.getElementById('stylist-profile');
+        const stylistName = document.getElementById('stylist-name');
+        const stylistDescription = document.getElementById('stylist-description');
 
-        staffProfile.style.display = 'flex'; // Hiển thị profile
-
-        // Cập nhật thông tin stylist
-        const profilePicture = stylist.profilePicture
-            ? `data:image/jpeg;base64,${stylist.profilePicture}`
-            : 'default-profile.png'; // Đường dẫn ảnh mặc định
-
-        staffImage.src = profilePicture; // Cập nhật ảnh
-        staffDetails.innerHTML = `
-        <p><strong>${stylist.user.username}</strong></p>
-        <p>Email: ${stylist.user.email || 'No email provided'}</p>
-        <p>${stylist.description || 'No description available'}</p>
-    `;
-    }
-
-    // Lắng nghe sự kiện submit của form để chắc chắn thông tin khách hàng và dịch vụ được gửi đúng
-    document.querySelector('form').addEventListener('submit', function(event) {
-        event.preventDefault();  // Ngừng form submit để kiểm tra dữ liệu
-
-        // Kiểm tra giá trị khách hàng trong các trường ẩn
-        const customerName = document.getElementById('customer').value;
-        const customerId = document.getElementById('customerId').value;
-        const customerEmail = document.getElementById('customerEmail').value;
-        const customerPhone = document.getElementById('customerPhone').value;
-
-        console.log('Customer Name:', customerName);
-        console.log('Customer ID:', customerId);
-        console.log('Customer Email:', customerEmail);
-        console.log('Customer Phone:', customerPhone);
-
-        // Lấy danh sách các dịch vụ đã chọn
-        const selectedServices = [];
-        const serviceItems = document.querySelectorAll('.service-item input[type="checkbox"]:checked');
-        serviceItems.forEach((checkbox) => {
-            selectedServices.push(checkbox.value); // Lưu giá trị của dịch vụ đã chọn
-        });
-
-        console.log('Selected Services:', selectedServices);
-
-        // Nếu dữ liệu hợp lệ, bạn có thể tiếp tục submit form ở đây
-        if (customerName && customerId && customerEmail && customerPhone && selectedServices.length > 0) {
-            // Điền thông tin dịch vụ đã chọn vào form (nếu cần thiết)
-            const servicesInput = document.createElement('input');
-            servicesInput.type = 'hidden';
-            servicesInput.name = 'services';  // Tên của trường gửi dịch vụ
-            servicesInput.value = selectedServices.join(',');  // Lưu dịch vụ dưới dạng chuỗi
-            this.appendChild(servicesInput);  // Thêm vào form
-
-            // Submit form
-            this.submit();  // Gửi form
-        } else {
-            alert('Please ensure all customer details and at least one service are selected.');
+        if (selectedOption) {
+            stylistName.textContent = selectedOption.text;
+            stylistDescription.textContent = selectedOption.getAttribute('data-description') || "No description available.";
+            profileContainer.style.display = "block"; // Hiển thị profile
         }
-    });
-
-
+    }
 </script>
 </body>
 </html>
