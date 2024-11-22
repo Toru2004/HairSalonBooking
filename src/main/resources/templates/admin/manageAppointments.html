@@ -53,7 +53,7 @@
                         <tbody>
                         <tr th:each="appointment, stat : ${listAppointments}">
                             <td class="text-center">[[${stat.index + 1}]]</td>
-                            <td class="text-center" th:text="${customerName}">Customer Username</td>
+                            <td class="text-center" th:text="${appointment.customer != null ? appointment.customer.user.username : 'N/A'}">Customer Username</td>
                             <td class="text-center">
                                 <ul>
                                     <li th:each="care : ${appointment.cares}">
@@ -67,7 +67,9 @@
                             <td class="text-center" th:text="${appointment.totalPrice}">Total Price</td>
                             <td class="text-center">
                                 <select class="form-control status-dropdown" th:disabled="${appointment.status == 'COMPLETED' or appointment.status == 'CANCELED'}">
-                                    <option th:each="status : ${statuses}" th:value="${status.name()}" th:text="${status}"></option>
+                                    <!-- Hiển thị chỉ các trạng thái cần thiết -->
+                                    <option th:each="status : ${statuses}" th:value="${status.name()}" th:text="${status}"
+                                            th:if="${status != 'IN_PROGRESS' && status != 'COMPLETED'}"></option>
                                 </select>
                             </td>
                             <td class="text-center">
@@ -76,6 +78,7 @@
                             </td>
                         </tr>
                         </tbody>
+
                     </table>
                 </div>
             </div>
@@ -85,83 +88,144 @@
 
 </body>
 
-    <script>
-        // Định nghĩa thứ tự trạng thái
-        const statusOrder = {
+<script>
+    const statusOrder = {
         PENDING: 1,
         APPROVED: 2,
-        CANCELLED: 3
+        CANCELED: 3
     };
 
-        // Hàm lưu trạng thái từng appointment
-        function saveAppointmentStatus(appointmentId, status) {
+    // Hàm lưu trạng thái của mỗi cuộc hẹn
+    function saveAppointmentStatus(appointmentId, status) {
         const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
         statuses[appointmentId] = status;
         localStorage.setItem('appointmentStatuses', JSON.stringify(statuses));
     }
 
-        // Hàm tải trạng thái từng appointment
-        function loadAppointmentStatus(appointmentId) {
+    // Hàm tải trạng thái của mỗi cuộc hẹn
+    function loadAppointmentStatus(appointmentId) {
         const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
-        return statuses[appointmentId] || "PENDING"; // Nếu không có trạng thái, trả về PENDING mặc định
+        return statuses[appointmentId] || null; // Trả về trạng thái nếu có, nếu không trả về null
     }
 
-        document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener('DOMContentLoaded', () => {
         const rows = document.querySelectorAll('tbody tr'); // Chọn tất cả các dòng trong bảng
         rows.forEach(row => {
-        const appointmentId = row.querySelector('td').textContent.trim(); // Lấy Appointment ID
-        const dropdown = row.querySelector('select');
-        let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
+            const appointmentId = row.querySelector('td').textContent.trim(); // Lấy Appointment ID
+            const dropdown = row.querySelector('select');
+            let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
 
-        // Đặt trạng thái ban đầu cho dropdown
-        dropdown.value = savedStatus; // Nếu có trạng thái đã lưu, đặt trạng thái đó
-
-        // Xử lý sự kiện thay đổi trạng thái
-        dropdown.addEventListener('change', (event) => {
-        const selectedStatus = event.target.value;
-
-        // Kiểm tra nếu trạng thái hiện tại là CANCELLED và cố gắng quay lui
-        if (savedStatus === "CANCELLED" && selectedStatus !== "CANCELLED") {
-        alert("Không thể thay đổi trạng thái từ CANCELLED!");
-        event.target.value = savedStatus; // Reset về trạng thái cũ
-    }
-        // Kiểm tra nếu trạng thái mới thấp hơn trạng thái hiện tại
-        else if (statusOrder[selectedStatus] < statusOrder[savedStatus]) {
-        alert("Không thể quay lại trạng thái trước!");
-        event.target.value = savedStatus; // Reset về trạng thái cũ
-    } else {
-        // Lưu trạng thái mới và cập nhật giá trị đã lưu
-        saveAppointmentStatus(appointmentId, selectedStatus);
-        savedStatus = selectedStatus;
-    }
-    });
-    });
-    });
-
-        document.addEventListener("DOMContentLoaded", () => {
-        const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
-
-        if (currentUsername) {
-        document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
-    } else {
-        document.getElementById("usernameDisplay").textContent = "No user logged in.";
-    }
-    });
-        //logout
-        document.addEventListener("DOMContentLoaded", () => {
-            const logoutLink = document.querySelector("a[href='/logout']");
-
-            if (logoutLink) {
-                logoutLink.addEventListener("click", (event) => {
-                    event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
-                    localStorage.removeItem("username");
-                    localStorage.removeItem("role");
-                    window.location.href = "/logout"; // Chuyển hướng thủ công sau khi xóa localStorage
-                });
+            // Đặt trạng thái ban đầu cho dropdown (nếu có)
+            if (savedStatus) {
+                dropdown.value = savedStatus;
             }
-        });
 
-    </script>
+            // Ngăn chỉnh quay lùi trạng thái
+            dropdown.addEventListener('change', (event) => {
+                const selectedStatus = event.target.value;
+
+                // Kiểm tra trạng thái khi đang ở PENDING
+                if (savedStatus === 'PENDING' && selectedStatus === 'APPROVED') {
+                    // PENDING -> APPROVED là hợp lệ
+                    saveAppointmentStatus(appointmentId, selectedStatus);
+                    savedStatus = selectedStatus;
+                } else if (savedStatus === 'PENDING' && selectedStatus === 'CANCELED') {
+                    // PENDING -> CANCELED là hợp lệ
+                    saveAppointmentStatus(appointmentId, selectedStatus);
+                    savedStatus = selectedStatus;
+                }
+
+                // Kiểm tra trạng thái khi đang ở APPROVED
+                else if (savedStatus === 'APPROVED' && selectedStatus === 'CANCELED') {
+                    // APPROVED -> CANCELED là hợp lệ
+                    saveAppointmentStatus(appointmentId, selectedStatus);
+                    savedStatus = selectedStatus;
+                } else if (savedStatus === 'APPROVED' && selectedStatus === 'PENDING') {
+                    // APPROVED -> PENDING không hợp lệ
+                    alert('You cannot move from Approved to Pending!');
+                    event.target.value = savedStatus; // Reset về trạng thái cũ
+                }
+
+                // Kiểm tra trạng thái khi đang ở CANCELED
+                else if (savedStatus === 'CANCELED' && selectedStatus === 'PENDING') {
+                    // CANCELED -> PENDING không hợp lệ
+                    alert('You cannot move from Canceled to Pending!');
+                    event.target.value = savedStatus; // Reset về trạng thái cũ
+                } else if (savedStatus === 'CANCELED' && selectedStatus === 'APPROVED') {
+                    // CANCELED -> APPROVED không hợp lệ
+                    alert('You cannot move from Canceled to Approved!');
+                    event.target.value = savedStatus; // Reset về trạng thái cũ
+                } else {
+                    // Nếu không có thay đổi hợp lệ, lưu trạng thái mới
+                    saveAppointmentStatus(appointmentId, selectedStatus);
+                    savedStatus = selectedStatus;
+                }
+            });
+        });
+    });
+
+
+
+    // Định nghĩa tên người dùng admin khi đăng nhập
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
+
+        // Hiển thị tên người dùng nếu có
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        }
+
+        // Xử lý sự kiện Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
+            alert("You have been logged out.");
+            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
+        });
+    });
+
+
+    // Định nghĩa tên người dùng admin khi đăng nhập
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
+
+        // Hiển thị tên người dùng nếu có
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        }
+
+        // Xử lý sự kiện Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
+            alert("You have been logged out.");
+            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
+        });
+    });
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
+
+        // Hiển thị tên người dùng nếu có
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        }
+
+        // Xử lý sự kiện Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
+            alert("You have been logged out.");
+            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
+        });
+    });
+
+</script>
+
 
 
 </html>

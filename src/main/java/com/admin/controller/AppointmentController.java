@@ -127,57 +127,60 @@ public class AppointmentController {
     }
 
     @GetMapping("/manageAppointments/new")
-    public String showNewAppointmentForm(Model model, RedirectAttributes ra) {
+    public String showNewAppointmentForm(Model model) {
         Appointment appointment = new Appointment();
 
-        try {
-            // Lấy dữ liệu từ service
-            List<Customer> customers = customerService.listAll(); // Danh sách khách hàng
-            List<Stylist> stylists = stylistService.listAll();    // Danh sách stylist
-            List<Care> cares = careService.listAll();             // Danh sách dịch vụ
+        // Lấy dữ liệu từ service
+        List<Customer> customers = customerService.listAll();  // Lấy danh sách khách hàng
+        List<Stylist> stylists = stylistService.listAll();  // Lấy danh sách stylist
+        List<Care> cares = careService.listAll();  // Lấy danh sách dịch vụ
 
-            // Kiểm tra và thêm thông báo nếu danh sách rỗng
-            if (customers.isEmpty()) {
-                ra.addFlashAttribute("warning", "Customer list is empty. Please add some customers.");
-            }
-            if (stylists.isEmpty()) {
-                ra.addFlashAttribute("warning", "Stylist list is empty. Please add some stylists.");
-            }
-            if (cares.isEmpty()) {
-                ra.addFlashAttribute("warning", "Care list is empty. Please add some care services.");
-            }
-
-            // Truyền dữ liệu vào model
-            model.addAttribute("appointment", appointment);
-            model.addAttribute("customerList", customers);
-            model.addAttribute("stylistList", stylists);
-            model.addAttribute("careList", cares);
-            model.addAttribute("pageTitle", "Add New Appointment");
-
-            return "admin/appointment_form"; // Trả về view
-        } catch (Exception e) {
-            // Xử lý lỗi khi lấy dữ liệu từ service
-            ra.addFlashAttribute("error", "An error occurred while loading data: " + e.getMessage());
-            return "redirect:/manageAppointments"; // Quay lại trang danh sách nếu có lỗi
+        // Kiểm tra nếu danh sách không rỗng
+        if (customers.isEmpty()) {
+            System.out.println("Customer list is empty");
         }
+        if (stylists.isEmpty()) {
+            System.out.println("Stylist list is empty");
+        }
+        if (cares.isEmpty()) {
+            System.out.println("Care list is empty");
+        }
+
+        // Truyền dữ liệu vào model
+        model.addAttribute("appointment", appointment);
+        model.addAttribute("customerList", customers);  // Truyền customer list vào model
+        model.addAttribute("stylistList", stylists);  // Truyền stylist list vào model
+        model.addAttribute("careList", cares);  // Truyền care list vào model
+        model.addAttribute("pageTitle", "Add New Appointment");
+
+        return "admin/appointment_form"; // Trả về view appointment_form.html
     }
 
     @PostMapping("/manageAppointments/save")
     public String saveAppointment(@ModelAttribute("appointment") Appointment appointment, RedirectAttributes ra) {
+        if (appointment.getStatus() == null) {
+            appointment.setStatus(Status.PENDING); // Default to PENDING when creating a new appointment
+        }
         try {
             if (appointment.getId() != null) {
-                appointmentService.update(appointment); // Cập nhật nếu có ID
+                appointmentService.update(appointment); // Update if there's an ID
                 ra.addFlashAttribute("message", "The appointment has been updated successfully.");
             } else {
-                appointmentService.save(appointment); // Lưu mới nếu không có ID
+                appointmentService.save(appointment); // Save new appointment if no ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "view/pages/completedBooking";
+            return "redirect:/view/pages/feedbacks"; // Redirect to feedbacks
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
-            return "redirect:/manageAppointments/new"; // Quay lại form nếu có lỗi
+            return "redirect:/manageAppointments/new"; // Return to form if error occurs
         }
     }
+
+
+
+
+
+
 
 
 
