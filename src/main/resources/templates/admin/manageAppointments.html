@@ -84,76 +84,70 @@
 </div>
 
 </body>
-<script>
-    // Định nghĩa thứ tự trạng thái
-    const statusOrder = {
+
+    <script>
+        // Định nghĩa thứ tự trạng thái
+        const statusOrder = {
         PENDING: 1,
         APPROVED: 2,
         CANCELLED: 3
     };
 
-    // Hàm lưu trạng thái từng appointment
-    function saveAppointmentStatus(appointmentId, status) {
+        // Hàm lưu trạng thái từng appointment
+        function saveAppointmentStatus(appointmentId, status) {
         const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
         statuses[appointmentId] = status;
         localStorage.setItem('appointmentStatuses', JSON.stringify(statuses));
     }
 
-    // Hàm tải trạng thái từng appointment
-    function loadAppointmentStatus(appointmentId) {
+        // Hàm tải trạng thái từng appointment
+        function loadAppointmentStatus(appointmentId) {
         const statuses = JSON.parse(localStorage.getItem('appointmentStatuses')) || {};
-        return statuses[appointmentId] || null; // Trả về trạng thái nếu có, nếu không trả về null
+        return statuses[appointmentId] || "PENDING"; // Nếu không có trạng thái, trả về PENDING mặc định
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', () => {
         const rows = document.querySelectorAll('tbody tr'); // Chọn tất cả các dòng trong bảng
         rows.forEach(row => {
-            const appointmentId = row.querySelector('td').textContent.trim(); // Lấy Appointment ID
-            const dropdown = row.querySelector('select');
-            let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
+        const appointmentId = row.querySelector('td').textContent.trim(); // Lấy Appointment ID
+        const dropdown = row.querySelector('select');
+        let savedStatus = loadAppointmentStatus(appointmentId); // Lấy trạng thái đã lưu
 
-            // Đặt trạng thái ban đầu cho dropdown
-            if (!savedStatus) {
-                // Nếu chưa có trạng thái lưu trước đó, đặt mặc định là PENDING
-                dropdown.value = "PENDING";
-                saveAppointmentStatus(appointmentId, "PENDING");
-                savedStatus = "PENDING"; // Cập nhật biến để sử dụng trong logic kiểm tra sau
-            } else {
-                dropdown.value = savedStatus; // Nếu có trạng thái đã lưu, đặt trạng thái đó
-            }
+        // Đặt trạng thái ban đầu cho dropdown
+        dropdown.value = savedStatus; // Nếu có trạng thái đã lưu, đặt trạng thái đó
 
-            // Xử lý sự kiện thay đổi trạng thái
-            dropdown.addEventListener('change', (event) => {
-                const selectedStatus = event.target.value;
+        // Xử lý sự kiện thay đổi trạng thái
+        dropdown.addEventListener('change', (event) => {
+        const selectedStatus = event.target.value;
 
-                // Kiểm tra nếu trạng thái hiện tại là CANCELLED và cố gắng quay lui
-                if (savedStatus === "CANCELLED" && selectedStatus !== "CANCELLED") {
-                    alert("Không thể thay đổi trạng thái từ CANCELLED!");
-                    event.target.value = savedStatus; // Reset về trạng thái cũ
-                }
-                // Kiểm tra nếu trạng thái mới thấp hơn trạng thái hiện tại
-                else if (statusOrder[selectedStatus] < statusOrder[savedStatus]) {
-                    alert("Không thể quay lại trạng thái trước!");
-                    event.target.value = savedStatus; // Reset về trạng thái cũ
-                } else {
-                    // Lưu trạng thái mới và cập nhật giá trị đã lưu
-                    saveAppointmentStatus(appointmentId, selectedStatus);
-                    savedStatus = selectedStatus;
-                }
-            });
-        });
+        // Kiểm tra nếu trạng thái hiện tại là CANCELLED và cố gắng quay lui
+        if (savedStatus === "CANCELLED" && selectedStatus !== "CANCELLED") {
+        alert("Không thể thay đổi trạng thái từ CANCELLED!");
+        event.target.value = savedStatus; // Reset về trạng thái cũ
+    }
+        // Kiểm tra nếu trạng thái mới thấp hơn trạng thái hiện tại
+        else if (statusOrder[selectedStatus] < statusOrder[savedStatus]) {
+        alert("Không thể quay lại trạng thái trước!");
+        event.target.value = savedStatus; // Reset về trạng thái cũ
+    } else {
+        // Lưu trạng thái mới và cập nhật giá trị đã lưu
+        saveAppointmentStatus(appointmentId, selectedStatus);
+        savedStatus = selectedStatus;
+    }
     });
-    document.addEventListener("DOMContentLoaded", () => {
+    });
+    });
+
+        document.addEventListener("DOMContentLoaded", () => {
         const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
 
         if (currentUsername) {
-            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
-        } else {
-            document.getElementById("usernameDisplay").textContent = "No user logged in.";
-        }
+        document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+    } else {
+        document.getElementById("usernameDisplay").textContent = "No user logged in.";
+    }
     });
-
-
 </script>
+
 
 </html>

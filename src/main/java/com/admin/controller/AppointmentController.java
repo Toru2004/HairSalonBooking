@@ -168,12 +168,13 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Lưu mới nếu không có ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "view/pages/completedBooking";
+            return "view/pages/completedBooking";  // Trang kết quả thành công
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Quay lại form nếu có lỗi
         }
     }
+
 
 
 
