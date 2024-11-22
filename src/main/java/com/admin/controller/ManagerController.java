@@ -23,16 +23,12 @@ import java.util.Map;
 
 
 @Controller
+
 public class ManagerController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @GetMapping("/manager/RevenueOverview")
-    public String RevenueOverview(Model model) {
-        /*Map<String, Object> revenueData = appointmentService.getRevenueDataByFilter("monthly");  // Ví dụ, lấy doanh thu theo tháng
-        model.addAttribute("revenueData", revenueData);*/
-        return "/manager/RevenueOverview";
-    }
+
 
 
     @GetMapping("/manager/managerDashboard")

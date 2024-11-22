@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Feedbacks</title>
+    <link rel="icon" th:src="@{/images/logo.png}">
+    <link rel="stylesheet" th:href="@{/css-user/header.css}">
+    <link rel="stylesheet" th:href="@{/css-user/footer.css}">
+    <link rel="stylesheet" th:href="@{/css-user/feedbacks.css}">
+    <link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap5.3.0/dist/css/bootstrap.min.css}">
+</head>
+<body>
+
+<!-- Login/Signup
+ <div th:replace="view/partials/popUpForms :: popUpForms"></div> -->
+<!-- Header -->
+<div th:replace="view/partials/header :: header"></div>
+
+<section class="feedback-section">
+    <div class="feedback-container">
+        <h1>We Value Your Feedback</h1>
+        <p>Please let us know your thoughts, suggestions, or concerns. Your feedback helps us improve our services!</p>
+        <form action="/page/home" method="post">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Your Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Your Feedback</label>
+                <textarea id="message" name="message" class="form-control" rows="5" placeholder="Write your feedback here" required></textarea>
+            </div>
+            <input type="hidden" id="customerId" name="customerId" value="">
+            <button type="submit" class="btn btn-primary mt-3">Submit Feedback</button>
+        </form>
+        <script>
+
+            const customerId = localStorage.getItem("customerId");
+
+            // Cập nhật giá trị customerId vào trường ẩn
+            if (customerId) {
+                document.getElementById("customerId").value = customerId;
+            }
+        </script>
+    </div>
+</section>
+
+<!-- Footer -->
+<div th:replace="view/partials/footer :: footer"></div>
+
+<!-- Include JS -->
+<script th:src="@{/js-user/popup-manage.js}"></script>
+</body>
+</html>

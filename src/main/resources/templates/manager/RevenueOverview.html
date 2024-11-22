@@ -1,95 +1,90 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Revenue Overview</title>
-    <!-- Bootstrap CSS -->
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
-    <!-- Chart.js -->
-    <script th:src="@{/webjars/chart.js/Chart.min.js}"></script>
 </head>
 <body>
-<div class="container mt-5">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3">Revenue Overview</h1>
+
+<header class="text-center mb-4">
+    <h2>Revenue Overview</h2>
+    <div class="d-flex justify-content-end align-items-center">
+        <span id="usernameDisplay" class="me-3"></span>
+        <a href="/logout" class="btn btn-danger">Logout</a>
     </div>
+</header>
 
+<div class="container-fluid">
+    <div class="row">
+        <!-- Main Content Area -->
+        <main class="col-md-10 p-4 mx-auto">
+            <div class="container">
+                <!-- Table 1: Service Details -->
+                <div class="mb-4">
+                    <h3 class="text-center">Service Details</h3>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead class="table-dark">
+                            <tr>
+                                <th class="text-center">STT</th>
+                                <th class="text-center">Service</th>
+                                <th class="text-center">Appointment Date</th>
+                                <th class="text-center">Total Price (VND)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="entry, iterStat : ${serviceDetails}">
+                                <td class="text-center" th:text="${iterStat.index + 1}">1</td>
+                                <td class="text-center" th:text="${entry.serviceName}">Haircut</td>
+                                <td class="text-center" th:text="${entry.appointmentDate}">2024-11-22</td>
+                                <td class="text-center" th:text="${entry.totalPrice} + ' VND'">100,000 VND</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-
-    <!-- Chart Section -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <canvas id="revenueChart" height="100"></canvas>
-        </div>
-    </div>
-
-    <!-- Revenue Details -->
-    <div class="card">
-        <div class="card-header">
-            <h5>Revenue Details</h5>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered">
-
-                <tbody>
-                <!-- Data Binding with Thymeleaf -->
-                <tr th:each="entry, iterStat : ${revenueDetails}">
-                    <td th:text="${iterStat.index + 1}"></td>
-                    <td th:text="${entry.serviceName}"></td>
-                    <td th:text="${entry.appointmentDate}"></td>
-                    <td th:text="${entry.revenue} + ' VND'"></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+                <!-- Table 2: Total Revenue -->
+                <div class="mb-4">
+                    <h3 class="text-center">Total Revenue</h3>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="table-dark">
+                            <tr>
+                                <th class="text-center">Total Revenue (VND)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="text-center h4 text-success" th:text="${totalRevenue} + ' VND'">1,000,000 VND</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </div>
 
-<!-- Bootstrap JS -->
-<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- Footer Content -->
+<footer class="text-center mt-4">
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
 
-<!-- Custom JS -->
+</body>
 <script>
-    // Initialize Chart.js
-    const ctx = document.getElementById('revenueChart').getContext('2d');
-    let revenueChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: chartLabels, //chứa danh sách tên (haircut, styling)
-            datasets: [{
-                label: 'Revenue',
-                data: chartData, //chứa doanh thu tương ứng (vidu 10k,20k,30k tien)
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                },
-                title: {
-                    display: true,
-                    text: 'Revenue Overview'
-                }
-            }
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("username");
+
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
         }
     });
-
-    function updateChart() {
-
-        console.log("Update chart based on filter selection");
-    }
-
-    function exportData() {
-
-        console.log("Exporting data...");
-    }
 </script>
-</body>
 </html>
