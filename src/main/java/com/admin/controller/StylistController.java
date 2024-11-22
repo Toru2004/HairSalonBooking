@@ -1,8 +1,10 @@
 package com.admin.controller;
 
 import com.admin.exception.StylistNotFoundException;
+import com.admin.exception.UserNotFoundException;
 import com.admin.model.Appointment;
 import com.admin.model.Stylist;
+import com.admin.model.User;
 import com.admin.service.AppointmentService;
 import com.admin.service.StylistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -119,21 +121,32 @@ public class StylistController {
             @RequestParam("imageFile") MultipartFile imageFile,
             RedirectAttributes ra) {
         try {
-            if (!imageFile.isEmpty()) {
-                stylist.setProfilePicture(imageFile.getBytes()); // Lưu ảnh dưới dạng byte[]
-            }
+            if (stylist.getId() != null) { // Nếu có ID thì thực hiện cập nhật
+                Stylist existingStylist = stylistService.get(stylist.getId());
+                existingStylist.getUser().setUsername(stylist.getUser().getUsername());
+                existingStylist.setUser(stylist.getUser());
 
+                if (!imageFile.isEmpty()) {
+                    existingStylist.setProfilePicture(imageFile.getBytes()); // Cập nhật ảnh profile
+                }
+
+                stylistService.save(existingStylist); // Lưu stylist đã chỉnh sửa
+            } else {
+                // Nếu không có ID, thêm mới
+                if (!imageFile.isEmpty()) {
+                    stylist.setProfilePicture(imageFile.getBytes());
+                }
+                stylist.getUser().setRole("stylist");
+                stylistService.save(stylist);
+            }
+            ra.addFlashAttribute("message", "The stylist has been saved successfully.");
         } catch (IOException e) {
             ra.addFlashAttribute("message", "Error uploading image: " + e.getMessage());
-            return "redirect:/manageStylists";
+        } catch (StylistNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the stylist: " + e.getMessage());
         }
-
-        stylist.getUser().setRole("stylist");
-        stylistService.save(stylist); // Lưu stylist vào cơ sở dữ liệu
-        ra.addFlashAttribute("message", "The stylist has been saved successfully.");
         return "redirect:/manageStylists";
     }
-
 
 
 
