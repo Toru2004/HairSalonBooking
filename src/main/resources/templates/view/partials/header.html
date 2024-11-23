@@ -13,15 +13,12 @@
     </div>
     <div class="search-container">
 
-      <form action="#" method="get" th:action="@{/service/showServices}" class="mb-3">
-        <div class="input-group">
-<!--          <input type="text" name="search" class="form-control" placeholder="Search Staff by Name">-->
-          <input type="text" name="search" placeholder="Search services or businesses" th:value="${searchQuery}">
-<!--          <input type="text" placeholder="Where?">-->
-<!--          <input type="text" placeholder="When?">-->
-          <button class="btn btn-primary" type="submit">Search</button>
-        </div>
-      </form>
+
+                <!--          <input type="text" name="search" class="form-control" placeholder="Search Staff by Name">-->
+                <input type="text" placeholder="Search services or businesses">
+                <input type="text" placeholder="Where?">
+                <input type="text" placeholder="When?">
+<!--                <button class="btn btn-primary" type="submit">Search</button>-->
     </div>
     <span id="usernameDisplay" class="me-3 namengdung" ></span>
     <div class="content">
