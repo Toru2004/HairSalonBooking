@@ -43,10 +43,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="appointment : ${listAppointments}"
-                            th:if="${appointment.stylist != null and appointment.stylist.user.username == currentUsername}">
-
-                        <td class="text-center" th:text="${appointment.id}">ID</td>
+                        <tr th:each="appointment : ${listAppointments}">
+                            <td class="text-center" th:text="${appointment.id}">ID</td>
                             <td class="text-center" th:text="${appointment.customer != null ? appointment.customer.user.username : 'N/A'}">Customer Username</td>
                             <td class="text-center">
                                 <ul>
@@ -66,6 +64,7 @@
                             </td>
                         </tr>
                         </tbody>
+
                     </table>
                 </div>
             </div>
