@@ -116,7 +116,10 @@ public class AppointmentService {
         return appointmentRepository.findById(id).orElse(null);
     }
 
-
+    // Tìm cuộc hẹn theo email của khách hàng
+    public List<Appointment> findAppointmentsByEmail(String email) {
+        return appointmentRepository.findByCustomerUserEmail(email);
+    }
 
 
 

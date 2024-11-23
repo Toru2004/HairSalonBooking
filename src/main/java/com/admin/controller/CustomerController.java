@@ -55,7 +55,7 @@ public class CustomerController {
         try {
             if (customer.getId() != null) { // Nếu có ID thì thực hiện cập nhật
                 Customer existingCustomer = customerService.get(customer.getId());
-                c.getUser().setPhoneNumber(customer.getUser().getPhoneNumber());
+                existingCustomer.getUser().setPhoneNumber(customer.getUser().getPhoneNumber());
                 existingCustomer.getUser().setUsername(customer.getUser().getUsername());
                 existingCustomer.getUser().setEmail(customer.getUser().getEmail());
                 existingCustomer.getUser().setPassword(customer.getUser().getPassword());

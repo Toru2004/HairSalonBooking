@@ -55,7 +55,7 @@ public class UserService {
         if (result.isPresent()) {
             return result.get();
         }
-        throw new UserNotFoundException("Could not find any users with ID " + id);
+        throw new UserNotFoundException("Could not find any users with email " + email);
     }
 
     public void delete(Integer id) throws UserNotFoundException {

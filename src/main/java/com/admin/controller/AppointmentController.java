@@ -262,34 +262,26 @@ public class AppointmentController {
     @GetMapping("/appointment/searchAppointments")
     public String searchAppointments(@RequestParam(value = "search", required = false) String searchQuery, Model model) {
         List<Appointment> listAppointments;
-        List<Care> listCares = new ArrayList<>();
 
         if (searchQuery != null && !searchQuery.trim().isEmpty()) {
-            try {
-                // Tìm kiếm user theo email
-                User existingUser = userService.getByEmail(searchQuery);
+            // Tìm các cuộc hẹn theo email của khách hàng
+            listAppointments = appointmentService.findAppointmentsByEmail(searchQuery);
+//            model.addAttribute("searchQuery", searchQuery);
 
-                // Tìm các cuộc hẹn của user này
-                listAppointments = appointmentService.getAppointmentsByCustomerId(existingUser.getId());
-                model.addAttribute("listAppointments", listAppointments);
-
-                // Tìm kiếm dịch vụ nếu cần
-                listCares = careService.searchByName(searchQuery);
-                model.addAttribute("searchQuery", searchQuery);
-            } catch (UserNotFoundException e) {
-                // Nếu không tìm thấy user, xử lý exception và thông báo lỗi
-                model.addAttribute("error", "User not found with email: " + searchQuery);
-                listAppointments = new ArrayList<>(); // Tránh null pointer
+            // Kiểm tra nếu không tìm thấy cuộc hẹn nào
+            if (listAppointments.isEmpty()) {
+                model.addAttribute("message", "No appointments found for the given email.");
+            } else {
+                model.addAttribute("message", "Founded");
             }
         } else {
-            // Nếu không có tìm kiếm, lấy tất cả các dịch vụ
-            listCares = careService.listAll();
+            // Nếu không có tìm kiếm, lấy tất cả các cuộc hẹn
+            listAppointments = appointmentService.findAll();
         }
 
-        // Thêm các dịch vụ vào model
-        model.addAttribute("listCares", listCares);
-
-        return "view/pages/services"; // Trả về trang dịch vụ
+        // Thêm cuộc hẹn vào model
+        model.addAttribute("listAppointments", listAppointments);
+        return "view/pages/appointments"; // Trả về view danh sách cuộc hẹn
     }
 
 
