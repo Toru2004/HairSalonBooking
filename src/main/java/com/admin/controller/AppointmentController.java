@@ -222,7 +222,7 @@ public class AppointmentController {
 
 
             model.addAttribute("pageTitle", "Edit Appointment (ID: " + id + ")");
-            return "admin/appointment_form";
+            return "admin/editAppointment";
         } catch (AppointmentNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/manageAppointments";
