@@ -110,7 +110,12 @@ public class AppointmentController {
     public String showManageAppointmentsPage(Model model) {
         // Lấy danh sách tất cả các cuộc hẹn
         List<Appointment> listAppointments = appointmentService.listAll();
+// Tạo danh sách các trạng thái
+        List<String> statuses = Arrays.asList("PENDING", "APPROVED", "CANCELED");
 
+        // Đưa vào model
+
+        model.addAttribute("statuses", statuses);
         // Lấy ngày tháng năm hiện tại
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
@@ -168,12 +173,30 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Save new appointment if no ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "redirect:/view/pages/feedbacks"; // Redirect to feedbacks
+            return "/view/pages/feedbacks"; // Redirect to feedbacks
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Return to form if error occurs
         }
     }
+
+    @PostMapping("/manageAppointments/updateStatus")
+    public String updateAppointmentStatus(@RequestParam("id") Integer id, @RequestParam("status") String status, RedirectAttributes ra) {
+        try {
+            Appointment appointment = appointmentService.findById(id);
+            if (appointment != null) {
+                appointment.setStatus(Appointment.Status.valueOf(status));
+                appointmentService.save(appointment); // Lưu trạng thái vào cơ sở dữ liệu
+                ra.addFlashAttribute("message", "Appointment status updated successfully.");
+            } else {
+                ra.addFlashAttribute("message", "Appointment not found.");
+            }
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", "Error updating appointment status: " + e.getMessage());
+        }
+        return "redirect:/manageAppointments"; // Quay lại trang quản lý
+    }
+
 
 
 
