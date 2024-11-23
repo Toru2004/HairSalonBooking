@@ -4,13 +4,14 @@ import com.admin.model.Appointment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import com.admin.model.Stylist;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Integer> {
 
-
+    List<Appointment> findByStylist(Stylist stylist);
     // Tổng doanh thu trong khoảng thời gian (Native Query)
     @Query(value = "SELECT SUM(total_price) FROM appointments WHERE appointment_date BETWEEN :startDate AND :endDate",
             nativeQuery = true)
@@ -34,4 +35,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             "WHERE YEAR(appointment_date) = :year GROUP BY MONTH(appointment_date) ORDER BY MONTH(appointment_date)",
             nativeQuery = true)
     List<Object[]> findRevenueByMonth(@Param("year") int year);
+
 }
