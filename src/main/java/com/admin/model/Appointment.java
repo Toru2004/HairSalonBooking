@@ -155,7 +155,4 @@ public class Appointment {
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }
-
-
-
 }

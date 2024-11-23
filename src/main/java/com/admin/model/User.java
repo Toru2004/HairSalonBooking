@@ -46,21 +46,18 @@ public class User {
     @JsonBackReference // Ngăn vòng lặp tuần tự hóa
     private Stylist stylist;
 
+    // Quan hệ một-một với manager
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Manager manager;
+
+    // Quan hệ một-một với staff
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Staff staff;
 
     //Quan hệ 1-1 với admin
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Admin admin;
 
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-        if (admin != null) {
-            admin.setUser(this);
-        }
-    }
 
 
 
@@ -140,6 +137,32 @@ public class User {
         this.stylist = stylist;
         if (stylist != null) {
             stylist.setUser(this);
+        }
+    }
+
+    public Manager getManager() {
+        return manager;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+    public void setStaff(Staff staff) {
+        this.staff = staff;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+        if (admin != null) {
+            admin.setUser(this);
         }
     }
 
