@@ -173,7 +173,7 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Save new appointment if no ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "/view/pages/feedback"; // Redirect to feedbacks
+            return "/view/pages/completedBooking"; // Redirect to feedbacks
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Return to form if error occurs
