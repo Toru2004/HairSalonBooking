@@ -48,6 +48,7 @@ public class AuthController {
             customer.getUser().setEmail(email);
             customer.getUser().setPhoneNumber(phone);
             customer.getUser().setPassword(password); // Mật khẩu chưa mã hóa
+            customer.getUser().setEnabled(true);
 
             String result = userService.registerCustomer(customer);
             model.addAttribute("message", result);

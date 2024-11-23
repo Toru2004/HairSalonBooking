@@ -117,7 +117,7 @@
 <div th:replace="view/partials/header :: header"></div>
 <div class="container">
     <div class="form-container">
-        <div class="form-title" th:text="${pageTitle}">Booking Appointment</div>
+        <div class="form-title">Booking Appointment</div>
 
         <form th:action="@{/manageAppointments/save}" method="post" th:object="${appointment}">
             <input type="hidden" th:field="*{id}">
