@@ -34,4 +34,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             "WHERE YEAR(appointment_date) = :year GROUP BY MONTH(appointment_date) ORDER BY MONTH(appointment_date)",
             nativeQuery = true)
     List<Object[]> findRevenueByMonth(@Param("year") int year);
+
 }

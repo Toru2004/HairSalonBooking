@@ -4,16 +4,11 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.admin.exception.UserNotFoundException;
+import com.admin.model.*;
+import com.admin.service.*;
 import org.springframework.ui.Model;
 import com.admin.exception.AppointmentNotFoundException;
-import com.admin.model.Appointment;
-import com.admin.model.Care;
-import com.admin.model.Customer;
-import com.admin.model.Stylist;
-import com.admin.service.AppointmentService;
-import com.admin.service.CareService;
-import com.admin.service.CustomerService;
-import com.admin.service.StylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +37,10 @@ public class AppointmentController {
 
     @Autowired
     private CareService careService;
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/revenue")
     public String showRevenueByMonth(@RequestParam(value = "year", defaultValue = "2024") int year,
                                      Model model) {
@@ -236,6 +235,39 @@ public class AppointmentController {
         return appointments;
     }
 
+
+    @GetMapping("/appointment/searchAppointments")
+    public String searchAppointments(@RequestParam(value = "search", required = false) String searchQuery, Model model) {
+        List<Appointment> listAppointments;
+        List<Care> listCares = new ArrayList<>();
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            try {
+                // Tìm kiếm user theo email
+                User existingUser = userService.getByEmail(searchQuery);
+
+                // Tìm các cuộc hẹn của user này
+                listAppointments = appointmentService.getAppointmentsByCustomerId(existingUser.getId());
+                model.addAttribute("listAppointments", listAppointments);
+
+                // Tìm kiếm dịch vụ nếu cần
+                listCares = careService.searchByName(searchQuery);
+                model.addAttribute("searchQuery", searchQuery);
+            } catch (UserNotFoundException e) {
+                // Nếu không tìm thấy user, xử lý exception và thông báo lỗi
+                model.addAttribute("error", "User not found with email: " + searchQuery);
+                listAppointments = new ArrayList<>(); // Tránh null pointer
+            }
+        } else {
+            // Nếu không có tìm kiếm, lấy tất cả các dịch vụ
+            listCares = careService.listAll();
+        }
+
+        // Thêm các dịch vụ vào model
+        model.addAttribute("listCares", listCares);
+
+        return "view/pages/services"; // Trả về trang dịch vụ
+    }
 
 
 }
