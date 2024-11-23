@@ -173,7 +173,7 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Save new appointment if no ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "/view/pages/feedbacks"; // Redirect to feedbacks
+            return "/view/pages/feedback"; // Redirect to feedbacks
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Return to form if error occurs
@@ -221,7 +221,7 @@ public class AppointmentController {
 
 
 
-            model.addAttribute("pageTitle", "Edit Appointment (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Appointment");
             return "admin/editAppointment";
         } catch (AppointmentNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());

@@ -66,14 +66,13 @@ public class UserController {
         return "redirect:/manageUsers"; // Quay lại danh sách người dùng
     }
 
-
     // Hiển thị form để chỉnh sửa thông tin người dùng
     @GetMapping("/manageUsers/edit/{id}")
     public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
             User user = userService.get(id); // Lấy thông tin người dùng theo ID
             model.addAttribute("user", user); // Đưa thông tin người dùng vào model để hiển thị trong form
-            model.addAttribute("pageTitle", "Edit User (ID: " + id + ")"); // Thiết lập tiêu đề trang
+            model.addAttribute("pageTitle", "Edit User"); // Thiết lập tiêu đề trang
             return "admin/user_form"; // Trả về view user_form.html để chỉnh sửa người dùng
         } catch (UserNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage()); // Thông báo lỗi nếu không tìm thấy người dùng

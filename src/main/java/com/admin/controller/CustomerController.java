@@ -80,7 +80,7 @@ public class CustomerController {
         try {
             Customer customer = customerService.get(id); // Lấy thông tin khách hàng theo ID
             model.addAttribute("customer", customer); // Đưa thông tin khách hàng vào model để hiển thị trong form
-            model.addAttribute("pageTitle", "Edit Customer (ID: " + id + ")"); // Thiết lập tiêu đề trang
+            model.addAttribute("pageTitle", "Edit Customer"); // Thiết lập tiêu đề trang
 
             return "admin/customer_form";  // Trả về view customer_form.html để chỉnh sửa khách hàng
         } catch (CustomerNotFoundException e) {

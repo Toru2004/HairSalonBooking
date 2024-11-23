@@ -150,7 +150,7 @@ public class StaffController {
             List<Manager> listManagers = managerService.listAll();
             model.addAttribute("staff", staff);
             model.addAttribute("listManagers", listManagers);
-            model.addAttribute("pageTitle", "Edit Staff (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Staff");
             return "admin/staff_form";
         } catch (StaffNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());

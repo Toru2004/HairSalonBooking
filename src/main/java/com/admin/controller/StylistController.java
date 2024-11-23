@@ -160,7 +160,7 @@ public class StylistController {
         try {
             Stylist stylist = stylistService.get(id);
             model.addAttribute("stylist", stylist);
-            model.addAttribute("pageTitle", "Edit Stylist (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Stylist");
             return "admin/stylist_form";
         } catch (StylistNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
