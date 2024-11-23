@@ -36,4 +36,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Intege
             nativeQuery = true)
     List<Object[]> findRevenueByMonth(@Param("year") int year);
 
+    // Tìm các cuộc hẹn theo email của khách hàng
+    List<Appointment> findByCustomerUserEmail(String email);
 }

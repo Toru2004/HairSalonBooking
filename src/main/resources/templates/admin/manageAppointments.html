@@ -12,9 +12,8 @@
 <header class="text-center">
     <h2>Admin Panel</h2>
     <div class="d-flex justify-content-end align-items-center">
-        <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
+        <span id="usernameDisplay" class="me-3"></span>
         <a href="/logout" class="btn btn-danger">Logout</a>
-
     </div>
 </header>
 
@@ -169,43 +168,62 @@
 
     // Định nghĩa tên người dùng admin khi đăng nhập
     document.addEventListener("DOMContentLoaded", () => {
-        const usernameDisplay = document.getElementById("usernameDisplay");
-        const loginLink = document.getElementById("loginLink");
-        const logoutLink = document.getElementById("logoutLink");
+        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
 
-        // Lấy thông tin từ localStorage
-        const username = localStorage.getItem("username");
-        const role = localStorage.getItem("role");
-
-        if (username && role) {
-            // Nếu đã đăng nhập
-            usernameDisplay.textContent = `Logged in as: ${username}`;
-            loginLink.style.display = "none"; // Ẩn nút Login/Sign Up
-            logoutLink.style.display = "inline-block"; // Hiển thị nút Logout
+        // Hiển thị tên người dùng nếu có
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
         } else {
-            // Nếu chưa đăng nhập
-            usernameDisplay.textContent = "";
-            loginLink.style.display = "inline-block"; // Hiển thị Login/Sign Up
-            logoutLink.style.display = "none"; // Ẩn nút Logout
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
         }
 
+        // Xử lý sự kiện Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
+            alert("You have been logged out.");
+            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
+        });
     });
 
-    //logout
-    // Xử lý logout (dự phòng nếu cần)
+
+    // Định nghĩa tên người dùng admin khi đăng nhập
     document.addEventListener("DOMContentLoaded", () => {
-        const logoutLink = document.querySelector("a[href='/logout']");
+        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
 
-        if (logoutLink) {
-            logoutLink.addEventListener("click", (event) => {
-                event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
-                localStorage.removeItem("username");
-                localStorage.removeItem("role");
-                localStorage.removeItem("id"); // Xóa luôn id
-                window.location.href = "/logout"; // Chuyển hướng thủ công sau khi xóa localStorage
-            });
+        // Hiển thị tên người dùng nếu có
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
         }
+
+        // Xử lý sự kiện Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
+            alert("You have been logged out.");
+            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
+        });
     });
+
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("adminUsername"); // Lấy tên người dùng từ localStorage
+
+        // Hiển thị tên người dùng nếu có
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        }
+
+        // Xử lý sự kiện Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("adminUsername"); // Xóa tên người dùng khỏi localStorage
+            alert("You have been logged out.");
+            window.location.href = "/page/login"; // Chuyển hướng đến trang đăng nhập
+        });
+    });
+
 </script>
 
 

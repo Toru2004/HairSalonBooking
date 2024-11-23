@@ -152,7 +152,7 @@ public class ManagerController {
         try {
             Manager manager = managerService.get(id);
             model.addAttribute("manager", manager);
-            model.addAttribute("pageTitle", "Edit Manager (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Manager");
             return "admin/manager_form"; // C
         } catch (ManagerNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());

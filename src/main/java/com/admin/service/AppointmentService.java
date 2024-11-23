@@ -111,4 +111,19 @@ public class AppointmentService {
     public List<Appointment> findByStylist(Stylist stylist) {
         return appointmentRepository.findByStylist(stylist);
     }
+
+    public Appointment getById(Integer id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+    public Appointment findById(Integer id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+
+    // Tìm cuộc hẹn theo email của khách hàng
+    public List<Appointment> findAppointmentsByEmail(String email) {
+        return appointmentRepository.findByCustomerUserEmail(email);
+    }
+
+
+
 }

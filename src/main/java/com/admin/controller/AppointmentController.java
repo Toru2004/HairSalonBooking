@@ -4,16 +4,11 @@ import java.util.stream.Collectors;
 import java.util.Map;
 import java.util.HashMap;
 
+import com.admin.exception.UserNotFoundException;
+import com.admin.model.*;
+import com.admin.service.*;
 import org.springframework.ui.Model;
 import com.admin.exception.AppointmentNotFoundException;
-import com.admin.model.Appointment;
-import com.admin.model.Care;
-import com.admin.model.Customer;
-import com.admin.model.Stylist;
-import com.admin.service.AppointmentService;
-import com.admin.service.CareService;
-import com.admin.service.CustomerService;
-import com.admin.service.StylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +37,10 @@ public class AppointmentController {
 
     @Autowired
     private CareService careService;
+
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/revenue")
     public String showRevenueByMonth(@RequestParam(value = "year", defaultValue = "2024") int year,
                                      Model model) {
@@ -111,7 +110,12 @@ public class AppointmentController {
     public String showManageAppointmentsPage(Model model) {
         // Lấy danh sách tất cả các cuộc hẹn
         List<Appointment> listAppointments = appointmentService.listAll();
+// Tạo danh sách các trạng thái
+        List<String> statuses = Arrays.asList("PENDING", "APPROVED", "CANCELED");
 
+        // Đưa vào model
+
+        model.addAttribute("statuses", statuses);
         // Lấy ngày tháng năm hiện tại
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
@@ -169,12 +173,30 @@ public class AppointmentController {
                 appointmentService.save(appointment); // Save new appointment if no ID
                 ra.addFlashAttribute("message", "The appointment has been added successfully.");
             }
-            return "redirect:/view/pages/feedbacks"; // Redirect to feedbacks
+            return "/view/pages/feedback"; // Redirect to feedbacks
         } catch (Exception e) {
             ra.addFlashAttribute("message", "Error while saving appointment: " + e.getMessage());
             return "redirect:/manageAppointments/new"; // Return to form if error occurs
         }
     }
+
+    @PostMapping("/manageAppointments/updateStatus")
+    public String updateAppointmentStatus(@RequestParam("id") Integer id, @RequestParam("status") String status, RedirectAttributes ra) {
+        try {
+            Appointment appointment = appointmentService.findById(id);
+            if (appointment != null) {
+                appointment.setStatus(Appointment.Status.valueOf(status));
+                appointmentService.save(appointment); // Lưu trạng thái vào cơ sở dữ liệu
+                ra.addFlashAttribute("message", "Appointment status updated successfully.");
+            } else {
+                ra.addFlashAttribute("message", "Appointment not found.");
+            }
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", "Error updating appointment status: " + e.getMessage());
+        }
+        return "redirect:/manageAppointments"; // Quay lại trang quản lý
+    }
+
 
 
 
@@ -199,8 +221,8 @@ public class AppointmentController {
 
 
 
-            model.addAttribute("pageTitle", "Edit Appointment (ID: " + id + ")");
-            return "admin/appointment_form";
+            model.addAttribute("pageTitle", "Edit Appointment");
+            return "admin/editAppointment";
         } catch (AppointmentNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/manageAppointments";
@@ -236,6 +258,31 @@ public class AppointmentController {
         return appointments;
     }
 
+
+    @GetMapping("/appointment/searchAppointments")
+    public String searchAppointments(@RequestParam(value = "search", required = false) String searchQuery, Model model) {
+        List<Appointment> listAppointments;
+
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            // Tìm các cuộc hẹn theo email của khách hàng
+            listAppointments = appointmentService.findAppointmentsByEmail(searchQuery);
+//            model.addAttribute("searchQuery", searchQuery);
+
+            // Kiểm tra nếu không tìm thấy cuộc hẹn nào
+            if (listAppointments.isEmpty()) {
+                model.addAttribute("message", "No appointments found for the given email.");
+            } else {
+                model.addAttribute("message", "Founded");
+            }
+        } else {
+            // Nếu không có tìm kiếm, lấy tất cả các cuộc hẹn
+            listAppointments = appointmentService.findAll();
+        }
+
+        // Thêm cuộc hẹn vào model
+        model.addAttribute("listAppointments", listAppointments);
+        return "view/pages/appointments"; // Trả về view danh sách cuộc hẹn
+    }
 
 
 }
