@@ -1,13 +1,16 @@
 package com.admin.controller;
 
 import com.admin.exception.CustomerNotFoundException;
+import com.admin.exception.UserNotFoundException;
 import com.admin.model.Customer;
+import com.admin.model.User;
 import com.admin.service.CustomerService;
 import com.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -23,7 +26,6 @@ public class CustomerController {
     @Autowired
     private UserService userService;
 
-    // Hiển thị danh sách tất cả khách hàng
     @GetMapping("/manageCustomers")
     public String showCustomerList(HttpServletRequest request,Model model) {
         List<Customer> listCustomers = customerService.listAll(); // Lấy danh sách tất cả khách hàng
@@ -48,14 +50,29 @@ public class CustomerController {
         return "admin/customer_form"; // Trả về view customer_form.html để thêm mới khách hàng
     }
 
-    // Lưu thông tin khách hàng
     @PostMapping("/manageCustomers/save")
     public String saveCustomer(Customer customer, RedirectAttributes ra) {
-        customer.getUser().setRole("customer");
-        customerService.save(customer); // Lưu thông tin khách hàng vào cơ sở dữ liệu
-        ra.addFlashAttribute("message", "The customer has been saved successfully."); // Thông báo lưu thành công
-        return "redirect:/manageCustomers"; // Chuyển hướng về trang danh sách khách hàng
+        try {
+            if (customer.getId() != null) { // Nếu có ID thì thực hiện cập nhật
+                Customer existingCustomer = customerService.get(customer.getId());
+                existingCustomer.getUser().setPhoneNumber(customer.getUser().getPhoneNumber());
+                existingCustomer.getUser().setUsername(customer.getUser().getUsername());
+                existingCustomer.getUser().setEmail(customer.getUser().getEmail());
+                existingCustomer.getUser().setPassword(customer.getUser().getPassword());
+                existingCustomer.getUser().setEnabled(customer.getUser().isEnabled());
+                customerService.save(existingCustomer); // Lưu bản ghi đã chỉnh sửa
+            } else {
+                // Nếu không có ID, thêm mới
+                customer.getUser().setRole("customer");
+                customerService.save(customer);
+            }
+            ra.addFlashAttribute("message", "The customer has been saved successfully.");
+        } catch (CustomerNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the customer: " + e.getMessage());
+        }
+        return "redirect:/manageCustomers";
     }
+
 
     // Hiển thị form để chỉnh sửa thông tin khách hàng
     @GetMapping("/manageCustomers/edit/{id}")
@@ -63,7 +80,7 @@ public class CustomerController {
         try {
             Customer customer = customerService.get(id); // Lấy thông tin khách hàng theo ID
             model.addAttribute("customer", customer); // Đưa thông tin khách hàng vào model để hiển thị trong form
-            model.addAttribute("pageTitle", "Edit Customer (ID: " + id + ")"); // Thiết lập tiêu đề trang
+            model.addAttribute("pageTitle", "Edit Customer"); // Thiết lập tiêu đề trang
 
             return "admin/customer_form";  // Trả về view customer_form.html để chỉnh sửa khách hàng
         } catch (CustomerNotFoundException e) {

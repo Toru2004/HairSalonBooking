@@ -1,6 +1,9 @@
 package com.admin.controller;
 
+import com.admin.exception.AdminNotFoundException;
+import com.admin.exception.CustomerNotFoundException;
 import com.admin.model.Admin;
+import com.admin.model.Customer;
 import com.admin.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.admin.exception.AdminNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -46,42 +50,26 @@ public class AdminController {
         return "admin/admin_form";
     }
 
-    // Lưu admin mới hoặc chỉnh sửa admin hiện tại
+    // Lưu thông tin admin
+    // Lưu thông tin admin
     @PostMapping("/ViewAdmins/save")
     public String saveAdmin(Admin admin, RedirectAttributes ra) {
-        admin.getUser().setRole("admin");
-        adminService.save(admin);
-        ra.addFlashAttribute("message", "The admin has been saved successfully.");
+        try {
+            // Gán vai trò mặc định cho admin
+            admin.getUser().setRole("admin");
+            // Lưu thông tin admin thông qua service
+            adminService.save(admin);
+            // Thêm thông báo thành công vào model
+            ra.addFlashAttribute("message", "Admin account has been saved successfully.");
+        } catch (Exception e) {
+            ra.addFlashAttribute("message", "Error while saving admin account: " + e.getMessage());
+        }
+        // Chuyển hướng về danh sách admin
         return "redirect:/ViewAdmins";
     }
 
-    // Hiển thị form chỉnh sửa (chỉ chính mình)
-    @GetMapping("/ViewAdmins/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model, HttpServletRequest request) {
-        String currentUsername = (String) request.getSession().getAttribute("loggedInUsername");
-        Admin admin = adminService.get(id);
 
-        // Kiểm tra quyền
-        if (!admin.getUser().getUsername().equals(currentUsername)) {
-            throw new SecurityException("You can only edit your own account!");
-        }
 
-        model.addAttribute("admin", admin);
-        return "admin/admin_form";
-    }
 
-    // Xóa admin (chỉ chính mình)
-    @GetMapping("/ViewAdmins/delete/{id}")
-    public String deleteAdmin(@PathVariable("id") Integer id, HttpServletRequest request) {
-        String currentUsername = (String) request.getSession().getAttribute("loggedInUsername");
-        Admin admin = adminService.get(id);
 
-        // Kiểm tra quyền
-        if (!admin.getUser().getUsername().equals(currentUsername)) {
-            throw new SecurityException("You can only delete your own account!");
-        }
-
-        adminService.delete(id);
-        return "redirect:/ViewAdmins";
-    }
 }

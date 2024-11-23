@@ -1,7 +1,9 @@
 package com.admin.controller;
 
 import com.admin.exception.CareNotFoundException;
+import com.admin.exception.StylistNotFoundException;
 import com.admin.model.Care;
+import com.admin.model.Stylist;
 import com.admin.service.CareService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +71,24 @@ public class CareController {
     }
 
 
+    @GetMapping("/service/showServices")
+    public String showServiceList(@RequestParam(value = "search", required = false) String searchQuery, Model model) {
+        // Kiểm tra nếu có tham số tìm kiếm
+        List<Care> listCares;
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            // Tìm kiếm staff theo tên
+            listCares = careService.searchByName(searchQuery);
+            model.addAttribute("searchQuery", searchQuery);
+        } else {
+            // Nếu không có tìm kiếm, lấy tất cả staff
+            listCares = careService.listAll();
+        }
+
+//        List<Care> listCares = careService.listAll();
+        model.addAttribute("listCares", listCares);
+        return "view/pages/services"; // Trả về view manageCares.html
+    }
+
     // Hiển thị danh sách tất cả care
     @GetMapping("/manageCares")
     public String showCareList(Model model) {
@@ -86,23 +106,34 @@ public class CareController {
     }
 
 
-    // Lưu thông tin care
-
     @PostMapping("/manageCares/save")
-    public String saveCares(
+    public String saveCare(
             @ModelAttribute Care care,
             @RequestParam("imageFile") MultipartFile imageFile,
             RedirectAttributes ra) {
         try {
-            if (!imageFile.isEmpty()) {
-                care.setProfilePicture(imageFile.getBytes()); // Lưu ảnh dưới dạng byte[]
+            if (care.getId() != null) { // Nếu có ID thì thực hiện cập nhật
+                Care existingCare = careService.get(care.getId());
+                existingCare.setName(care.getName());
+                existingCare.setDescription(care.getDescription());
+                existingCare.setPrice(care.getPrice());
+                if (!imageFile.isEmpty()) {
+                    existingCare.setProfilePicture(imageFile.getBytes()); // Cập nhật ảnh
+                }
+                careService.save(existingCare); // Lưu Care đã chỉnh sửa
+            } else {
+                // Nếu không có ID, thêm mới
+                if (!imageFile.isEmpty()) {
+                    care.setProfilePicture(imageFile.getBytes());
+                }
+                careService.save(care);
             }
+            ra.addFlashAttribute("message", "The care has been saved successfully.");
         } catch (IOException e) {
             ra.addFlashAttribute("message", "Error uploading image: " + e.getMessage());
-            return "redirect:/manageCares";
+        } catch (CareNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the care: " + e.getMessage());
         }
-        careService.save(care); // Lưu đối tượng Care
-        ra.addFlashAttribute("message", "The service has been saved successfully.");
         return "redirect:/manageCares";
     }
 

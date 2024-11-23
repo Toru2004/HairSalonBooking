@@ -1,11 +1,14 @@
 package com.admin.controller;
 
 
+import com.admin.exception.CustomerNotFoundException;
 import com.admin.exception.ManagerNotFoundException;
-import com.admin.model.Appointment;
-import com.admin.model.Manager;
+import com.admin.exception.UserNotFoundException;
+import com.admin.model.*;
 import com.admin.service.AppointmentService;
 import com.admin.service.ManagerService;
+import com.admin.service.StaffService;
+import com.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,17 +26,16 @@ import java.util.Map;
 
 
 @Controller
+
 public class ManagerController {
     @Autowired
     private AppointmentService appointmentService;
 
-    @GetMapping("/manager/RevenueOverview")
-    public String RevenueOverview(Model model) {
-        /*Map<String, Object> revenueData = appointmentService.getRevenueDataByFilter("monthly");  // Ví dụ, lấy doanh thu theo tháng
-        model.addAttribute("revenueData", revenueData);*/
-        return "/manager/RevenueOverview";
-    }
+    @Autowired
+    private UserService userService;
 
+    @Autowired
+    private StaffService staffService;
 
     @GetMapping("/manager/managerDashboard")
     public String managerDashboard(HttpServletRequest request, Model model) {
@@ -57,7 +59,39 @@ public class ManagerController {
         return "manager/managerDashboard";
     }
 
+    @GetMapping("/manager/showStaffs")
+    public String showStaffs(HttpServletRequest request, Model model) {
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
 
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("manager")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
+
+        return "manager/showStaffs";
+    }
+
+
+    @GetMapping("/manager/showStaffs/{id}")
+    public String showStaffById(@PathVariable("id") Integer id, Model model) {
+        try {
+            // Lấy thông tin user theo ID
+            User existingUser = userService.get(id);
+
+            // Lấy ID của manager
+            Integer managerId = existingUser.getManager().getId();
+
+            List<Staff> listStaffs = staffService.listByManager(managerId);
+            model.addAttribute("listStaffs", listStaffs);
+            // Chuyển hướng tới đường dẫn động
+            return "manager/showStaffs";
+        } catch (UserNotFoundException e) {
+            // Xử lý khi user không tồn tại
+            model.addAttribute("message", "Manager not found with ID: " + id);
+            return "manager/managerDashboard";
+        }
+    }
 
 
     @Autowired
@@ -87,9 +121,28 @@ public class ManagerController {
     // Lưu thông tin manager
     @PostMapping("/manageManagers/save")
     public String saveManager(Manager manager, RedirectAttributes ra) {
-        manager.getUser().setRole("manager");
-        managerService.save(manager);
-        ra.addFlashAttribute("message", "The manager has been saved successfully.");
+        try {
+            if (manager.getId() != null) { // Nếu có ID thì thực hiện cập nhật
+                // Lấy thông tin manager hiện tại từ cơ sở dữ liệu
+                Manager existingManager = managerService.get(manager.getId());
+
+                // Cập nhật thông tin user
+                existingManager.getUser().setUsername(manager.getUser().getUsername());
+                existingManager.getUser().setEmail(manager.getUser().getEmail());
+                existingManager.getUser().setPhoneNumber(manager.getUser().getPhoneNumber());
+                existingManager.getUser().setPassword(manager.getUser().getPassword());
+                existingManager.getUser().setEnabled(manager.getUser().isEnabled());
+                managerService.save(existingManager); // Lưu manager đã chỉnh sửa
+            } else {
+                // Nếu không có ID, thêm mới manager
+                manager.getUser().setRole("manager"); // Gán vai trò
+                managerService.save(manager); // Lưu manager mới
+            }
+
+            ra.addFlashAttribute("message", "The manager has been saved successfully.");
+        } catch (ManagerNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the manager: " + e.getMessage());
+        }
         return "redirect:/manageManagers";
     }
 
@@ -99,7 +152,7 @@ public class ManagerController {
         try {
             Manager manager = managerService.get(id);
             model.addAttribute("manager", manager);
-            model.addAttribute("pageTitle", "Edit Manager (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Manager");
             return "admin/manager_form"; // C
         } catch (ManagerNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());

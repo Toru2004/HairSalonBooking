@@ -56,12 +56,6 @@ public class Stylist  {
         this.enabled = enabled;
     }
 
-
-
-    // Các thuộc tính riêng biệt khác của Stylist
-    private boolean available;
-
-
     @Lob
     @Column(name = "profile_picture", columnDefinition = "LONGBLOB")
     private byte[] profilePicture;
@@ -71,15 +65,6 @@ public class Stylist  {
 
 
     // Getter và Setter cho các thuộc tính khác của Stylist
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
-    }
-
-
     public byte[] getProfilePicture() {
         return profilePicture;
     }
@@ -109,7 +94,6 @@ public class Stylist  {
                 ", username=" + user.getUsername() + '\'' +
                 ", email='" + user.getEmail() + '\'' +
                 ", phone number='" + user.getPhoneNumber() + '\'' +
-                ", available=" + available +
                 ", profilePicture='" + profilePicture + '\'' +
                 ", description='" + description + '\'' +
                 '}';

@@ -1,11 +1,15 @@
 package com.admin.service;
 
+import com.admin.exception.AdminNotFoundException;
+import com.admin.exception.CustomerNotFoundException;
 import com.admin.model.Admin;
+import com.admin.model.Customer;
 import com.admin.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdminService {
@@ -24,8 +28,12 @@ public class AdminService {
     }
 
     // Lấy admin theo ID
-    public Admin get(Integer id) {
-        return adminRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Admin not found"));
+    public Admin get(Integer id) throws AdminNotFoundException {
+        Optional<Admin> result = adminRepository.findById(id);
+        if (result.isPresent()) {
+            return result.get();
+        }
+        throw new AdminNotFoundException("Could not find any customers with ID " + id);
     }
 
     // Xóa admin theo ID

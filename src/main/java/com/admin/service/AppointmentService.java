@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
+import com.admin.model.Stylist;
 
 
 @Service
@@ -106,5 +107,23 @@ public class AppointmentService {
     public List<Object[]> getRevenueByMonth(int year) {
         return appointmentRepository.findRevenueByMonth(year);
     }
+
+    public List<Appointment> findByStylist(Stylist stylist) {
+        return appointmentRepository.findByStylist(stylist);
+    }
+
+    public Appointment getById(Integer id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+    public Appointment findById(Integer id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+
+    // Tìm cuộc hẹn theo email của khách hàng
+    public List<Appointment> findAppointmentsByEmail(String email) {
+        return appointmentRepository.findByCustomerUserEmail(email);
+    }
+
+
 
 }

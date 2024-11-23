@@ -17,7 +17,7 @@
 <body>
 
 <header class="text-center">
-    <h2>Manager Dashboard</h2>
+    <h2>Manager Panel</h2>
     <div class="d-flex justify-content-end align-items-center">
         <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
         <a class="btn btn-danger" id="logoutBtn" href="#">Logout</a>
@@ -27,8 +27,13 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar Menu -->
-        <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
-
+<!--        <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>-->
+        <aside  th:fragment="asideAdmin" class="col-md-2 sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manager/managerDashboard}">Manage Revenue</a></li>
+                <li class="nav-item"><a class="nav-link" id="showStaffsLink">Show Staffs</a></li>
+            </ul>
+        </aside>
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">
             <!-- Form for Selecting Year and Month -->
@@ -61,13 +66,13 @@
             </div>
         </main>
 
-        <!-- Footer Content -->
-        <footer class="text-center">
-            <p>&copy; 2024 Hair Salon. All rights reserved.</p>
-        </footer>
+
     </div>
 </div>
-
+<!-- Footer Content -->
+<footer class="text-center">
+    <p>&copy; 2024 Hair Salon. All rights reserved.</p>
+</footer>
 <!-- Bootstrap JS -->
 <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
 
@@ -101,7 +106,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const currentUsername = localStorage.getItem("adminUsername");
+        const currentUsername = localStorage.getItem("username");
 
         if (currentUsername) {
             document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
@@ -114,7 +119,21 @@
             alert("You have been logged out.");
             window.location.href = "/page/login";
         });
+
+        // Lấy ID từ Local Storage
+        const userId = localStorage.getItem('id');
+        const showStaffsLink = document.getElementById("showStaffsLink");
+
+        // Gửi ID qua request (ví dụ: bằng cách thêm vào URL)
+        if (userId) {
+            showStaffsLink.href = `/manager/showStaffs/${userId}`;
+        } else {
+            alert("ID không tồn tại trong Local Storage.");
+            showStaffsLink.href = "#"; // Nếu không có ID, vô hiệu hóa link
+        }
     });
+
+
 </script>
 </body>
 </html>

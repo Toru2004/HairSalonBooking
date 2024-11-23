@@ -2,10 +2,12 @@ package com.admin.service;
 
 import com.admin.exception.CustomerNotFoundException;
 import com.admin.model.Customer;
+import com.admin.model.User;
 import com.admin.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +37,11 @@ public class CustomerService {
             throw new CustomerNotFoundException("Could not find any customers with ID " + id);
         }
         customerRepository.deleteById(id);
+    }
+
+    public Customer  findById(Integer id) throws CustomerNotFoundException {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found with ID: " + id));
     }
 
 }

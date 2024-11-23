@@ -1,6 +1,7 @@
 package com.admin.controller;
 
 import com.admin.exception.AppointmentNotFoundException;
+import com.admin.exception.CustomerNotFoundException;
 import com.admin.model.*;
 import com.admin.exception.StaffNotFoundException;
 import com.admin.service.*;
@@ -41,10 +42,10 @@ public class StaffController {
     @GetMapping("/Staff/appointments")
     public String getAllAppointmentsForStaff(Model model) {
         // Lấy toàn bộ các cuộc hẹn trong hệ thống
-        List<Appointment> allAppointments = appointmentService.findAll();
+        List<Appointment> listAppointments = appointmentService.listAll();
 
         // Đưa danh sách vào model
-        model.addAttribute("listAppointments", allAppointments);
+        model.addAttribute("listAppointments", listAppointments);
 
         return "Staff/appointments";
     }
@@ -114,20 +115,32 @@ public class StaffController {
 
     @PostMapping("/manageStaffs/save")
     public String saveStaff(Staff staff, RedirectAttributes ra) {
-        staff.getUser().setRole("staff");
-        // Kiểm tra và lưu User nếu chưa có ID
-        if (staff.getUser() != null && staff.getUser().getId() == null) {
-            userService.save(staff.getUser());  // Lưu user nếu chưa có ID
-        }
+        try {
+            if (staff.getId() != null) { // Nếu có ID thì thực hiện cập nhật
+                // Lấy thông tin staff hiện tại từ cơ sở dữ liệu
+                Staff existingStaff = staffService.get(staff.getId());
+                // Cập nhật thông tin user
+                existingStaff.getUser().setUsername(staff.getUser().getUsername());
+                existingStaff.getUser().setEmail(staff.getUser().getEmail());
+                existingStaff.getUser().setPhoneNumber(staff.getUser().getPhoneNumber());
+                existingStaff.getUser().setPassword(staff.getUser().getPassword());
+                existingStaff.getUser().setEnabled(staff.getUser().isEnabled());
+                existingStaff.setManager(staff.getManager());
 
-        // Lưu staff sau khi lưu user (User đã có ID hoặc mới được lưu)
-        staffService.save(staff);  // Lưu staff
-        ra.addFlashAttribute("message", "The staff has been saved successfully.");
+
+                staffService.save(existingStaff); // Lưu staff đã chỉnh sửa
+            } else {
+                // Nếu không có ID, thêm mới staff
+                staff.getUser().setRole("staff"); // Gán vai trò
+                staffService.save(staff); // Lưu staff mới
+            }
+
+            ra.addFlashAttribute("message", "The staff has been saved successfully.");
+        } catch (StaffNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the staff: " + e.getMessage());
+        }
         return "redirect:/manageStaffs";
     }
-
-
-
 
     // Hiển thị form chỉnh sửa thông tin staff
     @GetMapping("/manageStaffs/edit/{id}")
@@ -137,7 +150,7 @@ public class StaffController {
             List<Manager> listManagers = managerService.listAll();
             model.addAttribute("staff", staff);
             model.addAttribute("listManagers", listManagers);
-            model.addAttribute("pageTitle", "Edit Staff (ID: " + id + ")");
+            model.addAttribute("pageTitle", "Edit Staff");
             return "admin/staff_form";
         } catch (StaffNotFoundException e) {
             ra.addFlashAttribute("message", e.getMessage());

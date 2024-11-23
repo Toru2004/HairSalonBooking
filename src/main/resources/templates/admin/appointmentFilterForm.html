@@ -125,3 +125,19 @@
 
 </body>
 </html>
+<script>
+    //logout
+    document.addEventListener("DOMContentLoaded", () => {
+        const logoutLink = document.querySelector("a[href='/logout']");
+
+        if (logoutLink) {
+            logoutLink.addEventListener("click", (event) => {
+                event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
+                localStorage.removeItem("username");
+                localStorage.removeItem("role");
+                window.location.href = "/logout"; // Chuyển hướng thủ công sau khi xóa localStorage
+            });
+        }
+    });
+
+</script>

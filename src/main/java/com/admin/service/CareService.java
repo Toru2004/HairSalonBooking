@@ -49,4 +49,10 @@ public class CareService {
             throw new IllegalArgumentException("Service not found with ID: " + id);
         }
     }
+
+    public List<Care> searchByName(String name) {
+        return careRepository.findByNameContainingIgnoreCase(name);
+    }
+
+
 }

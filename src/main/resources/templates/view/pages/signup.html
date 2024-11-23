@@ -31,7 +31,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter password" required>
             </div>
-            <button type="submit" class="btn">Sign Up</button>
+            <button type="submit" class="btn" style="background: black;">Sign Up</button>
         </form>
         <p class="text-center mt-3">Already have an account? <a th:href="@{/page/login}">Login</a></p>
         <p th:if="${message}" th:text="${message}" class="success"></p> <!-- Thông báo đăng ký thành công -->

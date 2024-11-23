@@ -46,4 +46,13 @@
             }
             stylistRepository.deleteById(id);
         }
+
+        public Stylist findById(Integer id) throws StylistNotFoundException {
+            return stylistRepository.findById(id)
+                    .orElseThrow(() -> new StylistNotFoundException("Stylist not found with ID: " + id));
+        }
+
+        public Stylist findByUsername(String username) {
+            return stylistRepository.findByUserUsername(username);
+        }
     }
