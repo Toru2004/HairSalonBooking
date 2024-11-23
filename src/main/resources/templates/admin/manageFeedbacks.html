@@ -6,8 +6,10 @@
     <title>Revenue Overview</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 </head>
 <body>
+
 
 <header class="text-center mb-4">
     <h2>Revenue Overview</h2>
@@ -15,10 +17,20 @@
         <span id="usernameDisplay" class="me-3"></span>
         <a href="/logout" class="btn btn-danger">Logout</a>
     </div>
+
+<header class="text-center">
+    <h2>Admin Panel </h2>
+    <div class="d-flex justify-content-end align-items-center">
+        <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
+        <a href="/logout" class="btn btn-danger">Logout</a>
+    </div>
+
+
 </header>
 
 <div class="container-fluid">
     <div class="row">
+
         <!-- Main Content Area -->
         <main class="col-md-10 p-4 mx-auto">
             <div class="container">
@@ -45,6 +57,41 @@
                             </tbody>
                         </table>
                     </div>
+
+    <!-- Sidebar Menu -->
+        <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
+
+        <!-- Main Content Area -->
+        <main class="col-md-10 p-4">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2>Manage Feedbacks</h2>
+                </div>
+
+                <div th:if="${message}" class="alert alert-success text-center">
+                    [[${message}]]
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>STT</th>
+                            <th>Customer</th>
+                            <th>Email</th>
+                            <th>Feedback</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="feedback, stat : ${listFeedbacks}">
+                            <td>[[${stat.index + 1}]]</td>
+                            <td th:text="${feedback.name}">Username</td>
+                            <td th:text="${feedback.email}">Email</td>
+                            <td th:text="${feedback.message}">Feedback</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </main>
@@ -69,3 +116,29 @@
     });
 </script>
 </html>
+
+<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
+
+        if (currentUsername) {
+            document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
+        } else {
+            document.getElementById("usernameDisplay").textContent = "No user logged in.";
+        }
+
+        //logout
+        const logoutLink = document.querySelector("a[href='/logout']");
+
+        if (logoutLink) {
+            logoutLink.addEventListener("click", (event) => {
+                event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
+                localStorage.removeItem("username");
+                localStorage.removeItem("role");
+                window.location.href = "/logout"; // Chuyển hướng thủ công sau khi xóa localStorage
+            });
+        }
+    });
+
+</script>

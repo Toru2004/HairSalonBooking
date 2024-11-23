@@ -108,4 +108,16 @@ public class AppointmentService {
     }
 
 
+
+    public Appointment getById(Integer id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+    public Appointment findById(Integer id) {
+        return appointmentRepository.findById(id).orElse(null);
+    }
+
+
+
+
+
 }

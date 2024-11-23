@@ -50,5 +50,9 @@ public class CareService {
         }
     }
 
+    public List<Care> searchByName(String name) {
+        return careRepository.findByNameContainingIgnoreCase(name);
+    }
+
 
 }

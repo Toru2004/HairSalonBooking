@@ -3,28 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage Staffs</title>
-    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
+    <title>Revenue Overview</title>
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <style>
-        /* Add any custom styles here */
-    </style>
+    <link rel="stylesheet" th:href="@{/css-admin/style.css}">
 </head>
 <body>
-
 <header class="text-center">
-    <h2>Admin Panel</h2>
+    <h2>Manager Panel</h2>
     <div class="d-flex justify-content-end align-items-center">
         <span id="usernameDisplay" class="me-3"></span> <!-- Add margin to separate the text -->
-        <a href="/logout" class="btn btn-danger">Logout</a>
-
+        <a class="btn btn-danger" id="logoutBtn" href="#">Logout</a>
     </div>
 </header>
 
 <div class="container-fluid">
     <div class="row">
-        <!-- Sidebar Menu -->
-        <div th:replace="admin/fragment/asideAdmin :: asideAdmin"></div>
+        <aside  th:fragment="asideAdmin" class="col-md-2 sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" th:href="@{/manager/managerDashboard}">Manage Revenue</a></li>
+                <li class="nav-item"><a class="nav-link" th:href="@{/manager/showStaffs}">Show Staffs</a></li>
+            </ul>
+        </aside>
 
         <!-- Main Content Area -->
         <main class="col-md-10 p-4">
@@ -82,12 +81,14 @@
 </div>
 
 <!-- Footer Content -->
-<footer>
+<footer class="text-center mt-4">
     <p>&copy; 2024 Hair Salon. All rights reserved.</p>
 </footer>
+
+</body>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const currentUsername = localStorage.getItem("username"); // Sửa thành đúng key
+        const currentUsername = localStorage.getItem("username");
 
         if (currentUsername) {
             document.getElementById("usernameDisplay").textContent = `Logged in as: ${currentUsername}`;
@@ -95,22 +96,18 @@
             document.getElementById("usernameDisplay").textContent = "No user logged in.";
         }
 
-        //logout
-        const logoutLink = document.querySelector("a[href='/logout']");
+        // Lấy ID từ Local Storage
+        const userId = localStorage.getItem('id');
 
-        if (logoutLink) {
-            logoutLink.addEventListener("click", (event) => {
-                event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
-                localStorage.removeItem("username");
-                localStorage.removeItem("role");
-                window.location.href = "/logout"; // Chuyển hướng thủ công sau khi xóa localStorage
-            });
+        // Gửi ID qua request (ví dụ: bằng cách thêm vào URL)
+        if (userId) {
+            window.location.href = `/manager/showStaffs/${userId}`;
+        } else {
+            alert("ID không tồn tại trong Local Storage.");
         }
     });
 
 
 
 </script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
-</body>
 </html>

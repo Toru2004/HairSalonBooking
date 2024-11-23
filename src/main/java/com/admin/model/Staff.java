@@ -13,7 +13,7 @@ public class Staff {
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
 
-    @ManyToOne // No cascade here, User already exists in the users table
+    @OneToOne // No cascade here, User already exists in the users table
     @JoinColumn(name = "user_id", nullable = false) // Ensure user_id is not null
     private User user;
 

@@ -47,8 +47,16 @@
     </div>
 </section>
 
+
+
 <!-- Phần Location Services -->
 <div class="container mt-5">
+    <form action="#" method="get" th:action="@{/service/showServices}" class="mb-3" style="width: 500px">
+        <div class="input-group">
+            <input type="text" name="search" placeholder="Search services" th:value="${searchQuery}">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
     <div class="location-container fade-in">
         <div class="location-info">
             <h2>Turn on location services</h2>

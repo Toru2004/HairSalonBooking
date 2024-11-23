@@ -59,12 +59,13 @@
                 <td th:text="${admin.user.email}"></td>
                 <td th:text="${admin.user.phoneNumber}"></td>
                 <td>
-                  <a th:if="${currentUsername == admin.user.username}"
-                     class="btn btn-sm btn-outline-info"
-                     th:href="@{'/ViewAdmins/edit/' + ${admin.id}}">Edit</a>
-                  <a th:if="${currentUsername == admin.user.username}"
-                     class="btn btn-sm btn-outline-danger"
-                     th:href="@{'/ViewAdmins/delete/' + ${admin.id}}">Delete</a>
+                  <th:block th:if="${currentUsername == admin.user.username || role == 'admin'}">
+                    <a th:href="@{'/ViewAdmins/edit/' + ${admin.id}}" class="btn btn-primary">Edit</a>
+                    <a th:href="@{'/ViewAdmins/delete/' + ${admin.id}}" class="btn btn-danger">Delete</a>
+                  </th:block>
+                  <th:block th:if="${currentUsername != admin.user.username && role != 'admin'}">
+                    <p>You do not have permission to edit this account.</p>
+                  </th:block>
                 </td>
               </tr>
             </th:block>
@@ -94,7 +95,7 @@
 
     if (username && role) {
       // Nếu đã đăng nhập
-      usernameDisplay.textContent = `Welcome, ${username}`;
+      usernameDisplay.textContent = `Logged in as: ${username}`;
       loginLink.style.display = "none"; // Ẩn nút Login/Sign Up
       logoutLink.style.display = "inline-block"; // Hiển thị nút Logout
     } else {

@@ -71,6 +71,24 @@ public class CareController {
     }
 
 
+    @GetMapping("/service/showServices")
+    public String showServiceList(@RequestParam(value = "search", required = false) String searchQuery, Model model) {
+        // Kiểm tra nếu có tham số tìm kiếm
+        List<Care> listCares;
+        if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+            // Tìm kiếm staff theo tên
+            listCares = careService.searchByName(searchQuery);
+            model.addAttribute("searchQuery", searchQuery);
+        } else {
+            // Nếu không có tìm kiếm, lấy tất cả staff
+            listCares = careService.listAll();
+        }
+
+//        List<Care> listCares = careService.listAll();
+        model.addAttribute("listCares", listCares);
+        return "view/pages/services"; // Trả về view manageCares.html
+    }
+
     // Hiển thị danh sách tất cả care
     @GetMapping("/manageCares")
     public String showCareList(Model model) {

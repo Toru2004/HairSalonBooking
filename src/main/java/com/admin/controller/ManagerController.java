@@ -3,11 +3,12 @@ package com.admin.controller;
 
 import com.admin.exception.CustomerNotFoundException;
 import com.admin.exception.ManagerNotFoundException;
-import com.admin.model.Appointment;
-import com.admin.model.Customer;
-import com.admin.model.Manager;
+import com.admin.exception.UserNotFoundException;
+import com.admin.model.*;
 import com.admin.service.AppointmentService;
 import com.admin.service.ManagerService;
+import com.admin.service.StaffService;
+import com.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +31,11 @@ public class ManagerController {
     @Autowired
     private AppointmentService appointmentService;
 
+    @Autowired
+    private UserService userService;
 
-
+    @Autowired
+    private StaffService staffService;
 
     @GetMapping("/manager/managerDashboard")
     public String managerDashboard(HttpServletRequest request, Model model) {
@@ -55,7 +59,39 @@ public class ManagerController {
         return "manager/managerDashboard";
     }
 
+    @GetMapping("/manager/showStaffs")
+    public String showStaffs(HttpServletRequest request, Model model) {
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
 
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("manager")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
+
+        return "manager/showStaffs";
+    }
+
+
+    @GetMapping("/manager/showStaffs/{id}")
+    public String showStaffById(@PathVariable("id") Integer id, Model model) {
+        try {
+            // Lấy thông tin user theo ID
+            User existingUser = userService.get(id);
+
+            // Lấy ID của manager
+            Integer managerId = existingUser.getManager().getId();
+
+            List<Staff> listStaffs = staffService.listByManager(managerId);
+            model.addAttribute("listStaffs", listStaffs);
+            // Chuyển hướng tới đường dẫn động
+            return "manager/showStaffs";
+        } catch (UserNotFoundException e) {
+            // Xử lý khi user không tồn tại
+            model.addAttribute("message", "Manager not found with ID: " + id);
+            return "manager/managerDashboard";
+        }
+    }
 
 
     @Autowired
