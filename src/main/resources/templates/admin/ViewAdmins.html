@@ -48,8 +48,6 @@
               <th>Username</th>
               <th>Email</th>
               <th>Phone Number</th>
-              <th>Enabled</th>
-              <th style="width: 100px; text-align: center;">Actions</th> <!-- Điều chỉnh chiều rộng -->
             </tr>
             </thead>
             <tbody>
@@ -59,17 +57,10 @@
                 <td th:text="${admin.user.username}"></td>
                 <td th:text="${admin.user.email}"></td>
                 <td th:text="${admin.user.phoneNumber}"></td>
-                <td th:text="${admin.user.enabled}"></td>
-                <td style="text-align: center;"> <!-- Canh giữa nút Edit -->
-                  <a th:if="${currentUsername == admin.user.username}"
-                     th:href="@{'/ViewAdmins/edit/' + ${admin.id}}"
-                     class="btn btn-primary btn-sm">Edit</a>
-                </td>
               </tr>
             </th:block>
             </tbody>
           </table>
-
         </div>
       </div>
     </main>
