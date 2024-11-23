@@ -4,6 +4,8 @@ import com.admin.model.Feedback;
 import com.admin.repository.FeedbackRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FeedbackService {
 
@@ -15,5 +17,9 @@ public class FeedbackService {
 
     public void save(Feedback feedback) {
         feedbackRepository.save(feedback);
+    }
+
+    public List<Feedback> getAllFeedbacks() {
+        return feedbackRepository.findAll();
     }
 }
