@@ -1,103 +1,77 @@
 package com.admin.controller;
 
 import com.admin.exception.StylistNotFoundException;
+import com.admin.exception.UserNotFoundException;
 import com.admin.model.Appointment;
 import com.admin.model.Stylist;
+import com.admin.model.User;
 import com.admin.service.AppointmentService;
 import com.admin.service.StylistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.ArrayList;
-import com.admin.repository.StylistRepository;
-
-import com.admin.repository.AppointmentRepository;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.List;
 
+
+
+
+
 @Controller
-@RequestMapping("/stylist") // Đặt tiền tố URL cho Stylist
 public class StylistController {
-
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-
-
     @Autowired
     private AppointmentService appointmentService;
 
     @Autowired
-    private StylistRepository stylistRepository;
+    private StylistService stylistService;//Service để lấy dữ liệu từ DB
 
-    @Autowired
-    private StylistService stylistService;
-
-    // Dashboard của stylist
-    @GetMapping("/stylistDashboard")
+    @GetMapping("/stylist/stylistDashboard")
     public String openDashboard() {
         return "stylist/stylistDashboard";
     }
 
-    /**
-     * Lấy danh sách tất cả các cuộc hẹn liên quan đến stylist đang đăng nhập.
-     * URL: /stylist/stylistAppointments
-     */
-    @GetMapping("/stylistAppointments")
-    public String getAllAppointmentsForStylist(HttpServletRequest request, Model model) {
-        // Lấy stylist từ session (username hoặc id của stylist)
-        String username = (String) request.getSession().getAttribute("username");
 
-        if (username == null) {
-            // Nếu không tìm thấy username trong session, chuyển hướng đến trang login
-            return "redirect:/page/login";
-        }
+    @GetMapping("/stylist/stylistAppointment")
+    public String getAllAppointmentsForStylist(Model model) {
+        // Lấy toàn bộ các cuộc hẹn trong hệ thống
+//        List<Appointment> allAppointments = appointmentService.findAll();
+//
+//        // Đưa danh sách vào model
+//        model.addAttribute("listAppointments", allAppointments);
 
-        // Lấy Stylist dựa trên username
-        Stylist stylist = stylistService.findByUsername(username);
-        if (stylist == null) {
-            // Nếu không tìm thấy stylist, thông báo lỗi và quay lại Dashboard
-            model.addAttribute("errorMessage", "Stylist not found. Please contact admin.");
-            return "stylist/stylistDashboard";
-        }
-
-        // Lấy danh sách các Appointment liên quan đến Stylist
-        List<Appointment> listAppointments = appointmentService.findByStylist(stylist);
-
-        // Đưa danh sách Appointment vào model
-        model.addAttribute("listAppointments", listAppointments);
-        model.addAttribute("stylistName", stylist.getUser().getUsername());
-
-        return "stylist/stylistAppointment"; // Trả về trang quản lý Appointment
+        return "stylist/stylistAppointment";
     }
 
-    /**
-     * Hiển thị danh sách tất cả stylist (chỉ dành cho Admin).
-     * URL: /manageStylists
-     */
+
+
+
+    // Hiển thị danh sách tất cả stylist
     @GetMapping("/manageStylists")
     public String showStylistList(HttpServletRequest request, Model model) {
-        // Lấy vai trò từ session
-        String role = (String) request.getSession().getAttribute("role");
-
-        // Kiểm tra nếu không phải admin thì chuyển hướng
-        if (role == null || !role.equals("admin")) {
-            return "redirect:/page/login";
-        }
-
-        // Lấy danh sách stylist
         List<Stylist> listStylists = stylistService.listAll();
         model.addAttribute("listStylists", listStylists);
 
-        return "admin/manageStylists"; // Trả về trang quản lý stylist
+        // Lấy vai trò từ session
+        String role = (String) request.getSession().getAttribute("role");
+
+        // Kiểm tra nếu không phải staff thì chuyển hướng
+        if (role == null || !role.equals("admin")) {
+            return "redirect:/page/login"; // Chuyển hướng đến trang Access Denied
+        }
+
+        return "admin/manageStylists";//trả về trang html
     }
 
-    /**
-     * Hiển thị danh sách stylist cho khách hàng.
-     * URL: /page/stylists
-     */
+    // Hiển thị danh sách stylist cho khách hàng
     @GetMapping("/page/stylists")
     public String listStylists(Model model) {
         List<Stylist> listStylists = stylistService.findEnabledStylists();
@@ -105,48 +79,48 @@ public class StylistController {
         return "view/pages/stylists";
     }
 
-    /**
-     * Hiển thị trang đặt lịch hẹn (dành cho khách hàng).
-     * URL: /page/bookNow
-     */
     @GetMapping("/page/bookNow")
     public String showBookNowPage() {
-        return "view/pages/bookNow";
+        return "view/pages/bookNow"; // Đường dẫn đến file bookNow.html
     }
 
-    /**
-     * Hiển thị form thêm mới stylist.
-     * URL: /manageStylists/new
-     */
+    // Hiển thị form thêm mới stylist
     @GetMapping("/manageStylists/new")
     public String showNewForm(Model model) {
         model.addAttribute("stylist", new Stylist());
         model.addAttribute("pageTitle", "Add New Stylist");
-        return "admin/stylist_form";
+        return "admin/stylist_form";//trả về form stylist
     }
 
-    /**
-     * Lấy ảnh profile của stylist.
-     * URL: /manageStylists/image/{id}
-     */
     @GetMapping("/manageStylists/image/{id}")
-    @ResponseBody
-    public byte[] getStylistImage(@PathVariable("id") Integer id) throws StylistNotFoundException {
+    public ResponseEntity<byte[]> getStylistImage(@PathVariable("id") Integer id) throws StylistNotFoundException {/// Lấy stylist từ service
         Stylist stylist = stylistService.get(id);
-        return stylist.getProfilePicture(); // Trả về ảnh dưới dạng byte[]
+
+        // Lấy byte[] của ảnh từ stylist
+        byte[] image = stylist.getProfilePicture();
+
+        // Kiểm tra nếu ảnh không tồn tại
+        if (image == null) {
+            throw new StylistNotFoundException("Image not found for stylist with ID " + id);
+        }
+
+        // Thiết lập header cho Content-Type của ảnh
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.IMAGE_PNG); // Hoặc MediaType.IMAGE_JPEG nếu ảnh là JPG
+
+        // Trả về ảnh dưới dạng ResponseEntity với header thích hợp
+        return new ResponseEntity<>(image, headers, HttpStatus.OK);
     }
 
-    /**
-     * Lưu thông tin stylist (thêm mới hoặc cập nhật).
-     * URL: /manageStylists/save
-     */
+
+
+    // Lưu thông tin stylist
     @PostMapping("/manageStylists/save")
     public String saveStylist(
             @ModelAttribute Stylist stylist,
-            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-            Model model) {
+            @RequestParam("imageFile") MultipartFile imageFile,
+            RedirectAttributes ra) {
         try {
-<<<<<<< HEAD
             if (stylist.getId() != null) { // Nếu có ID thì thực hiện cập nhật
                 Stylist existingStylist = stylistService.get(stylist.getId());
                 existingStylist.getUser().setUsername(stylist.getUser().getUsername());
@@ -168,61 +142,42 @@ public class StylistController {
                 }
                 stylist.getUser().setRole("stylist");
                 stylistService.save(stylist);
-=======
-            if (!imageFile.isEmpty()) {
-                stylist.setProfilePicture(imageFile.getBytes()); // Lưu ảnh nếu có
->>>>>>> d42551bdf572efa4f41794e67d6e35be7ce856e0
             }
-            stylist.getUser().setRole("stylist"); // Đặt vai trò stylist
-            stylistService.save(stylist);
-            model.addAttribute("message", "The stylist has been saved successfully.");
-        } catch (Exception e) {
-            model.addAttribute("message", "Error saving stylist: " + e.getMessage());
+            ra.addFlashAttribute("message", "The stylist has been saved successfully.");
+        } catch (IOException e) {
+            ra.addFlashAttribute("message", "Error uploading image: " + e.getMessage());
+        } catch (StylistNotFoundException e) {
+            ra.addFlashAttribute("message", "Failed to save the stylist: " + e.getMessage());
         }
         return "redirect:/manageStylists";
     }
 
-    @GetMapping("/stylistAppointments/byStylist/{username}")
-    public String viewStylistAppointmentsByUsername(@PathVariable String username, Model model) {
-        // Tìm stylist theo username
-        Stylist stylist = stylistRepository.findByUserUsername(username);
 
-        // Lấy danh sách appointment thuộc stylist
-        List<Appointment> appointments = stylist != null ? appointmentRepository.findByStylist(stylist) : new ArrayList<>();
 
-        model.addAttribute("listAppointments", appointments);
-        return "stylist/stylistAppointments";
-    }
-
-    /**
-     * Hiển thị form chỉnh sửa stylist.
-     * URL: /manageStylists/edit/{id}
-     */
+    // Hiển thị form chỉnh sửa thông tin stylist
     @GetMapping("/manageStylists/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model) {
+    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) {
         try {
             Stylist stylist = stylistService.get(id);
             model.addAttribute("stylist", stylist);
             model.addAttribute("pageTitle", "Edit Stylist (ID: " + id + ")");
             return "admin/stylist_form";
         } catch (StylistNotFoundException e) {
-            model.addAttribute("message", e.getMessage());
+            ra.addFlashAttribute("message", e.getMessage());
             return "redirect:/manageStylists";
         }
     }
 
-    /**
-     * Xóa stylist theo ID.
-     * URL: /manageStylists/delete/{id}
-     */
+    // Xóa stylist theo ID
     @GetMapping("/manageStylists/delete/{id}")
-    public String deleteStylist(@PathVariable("id") Integer id, Model model) {
+    public String deleteStylist(@PathVariable("id") Integer id, RedirectAttributes ra) {
         try {
             stylistService.delete(id);
-            model.addAttribute("message", "The stylist ID " + id + " has been deleted.");
+            ra.addFlashAttribute("message", "The stylist ID " + id + " has been deleted.");
         } catch (StylistNotFoundException e) {
-            model.addAttribute("message", e.getMessage());
+            ra.addFlashAttribute("message", e.getMessage());
         }
         return "redirect:/manageStylists";
     }
 }
+
