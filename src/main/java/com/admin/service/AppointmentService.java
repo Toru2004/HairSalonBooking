@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.HashMap;
+import com.admin.model.Stylist;
 
 
 @Service
@@ -107,7 +108,9 @@ public class AppointmentService {
         return appointmentRepository.findRevenueByMonth(year);
     }
 
-
+    public List<Appointment> findByStylist(Stylist stylist) {
+        return appointmentRepository.findByStylist(stylist);
+    }
 
     public Appointment getById(Integer id) {
         return appointmentRepository.findById(id).orElse(null);

@@ -14,5 +14,6 @@
         List<Stylist> findAllByUserEnabled(boolean enabled);
         @Query("SELECT a FROM Appointment a WHERE a.stylist.user.username = :username")
         List<Appointment> findByStylistUsername(@Param("username") String username);
+        Stylist findByUserUsername(String username);
 
     }

@@ -48,7 +48,6 @@
               <th>Username</th>
               <th>Email</th>
               <th>Phone Number</th>
-              <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -58,15 +57,6 @@
                 <td th:text="${admin.user.username}"></td>
                 <td th:text="${admin.user.email}"></td>
                 <td th:text="${admin.user.phoneNumber}"></td>
-                <td>
-                  <th:block th:if="${currentUsername == admin.user.username || role == 'admin'}">
-                    <a th:href="@{'/ViewAdmins/edit/' + ${admin.id}}" class="btn btn-primary">Edit</a>
-                    <a th:href="@{'/ViewAdmins/delete/' + ${admin.id}}" class="btn btn-danger">Delete</a>
-                  </th:block>
-                  <th:block th:if="${currentUsername != admin.user.username && role != 'admin'}">
-                    <p>You do not have permission to edit this account.</p>
-                  </th:block>
-                </td>
               </tr>
             </th:block>
             </tbody>
@@ -105,27 +95,10 @@
       logoutLink.style.display = "none"; // Ẩn nút Logout
     }
 
-    // Xử lý sự kiện Logout
-    logoutLink.addEventListener("click", () => {
-      // Gọi API Logout để hủy session trên server
-      fetch("/logout")
-              .then(response => {
-                if (response.ok) {
-                  // Xóa dữ liệu trong localStorage
-                  localStorage.removeItem("username");
-                  localStorage.removeItem("role");
-
-                  // Chuyển hướng về trang login
-                  window.location.href = "/page/login"; // Hoặc dùng window.location.reload() nếu bạn không muốn chuyển hướng
-                } else {
-                  console.error("Logout failed");
-                }
-              })
-              .catch(error => console.error("Error:", error));
-    });
   });
 
   //logout
+  // Xử lý logout (dự phòng nếu cần)
   document.addEventListener("DOMContentLoaded", () => {
     const logoutLink = document.querySelector("a[href='/logout']");
 
@@ -134,6 +107,7 @@
         event.preventDefault(); // Ngăn chặn chuyển hướng mặc định
         localStorage.removeItem("username");
         localStorage.removeItem("role");
+        localStorage.removeItem("id"); // Xóa luôn id
         window.location.href = "/logout"; // Chuyển hướng thủ công sau khi xóa localStorage
       });
     }

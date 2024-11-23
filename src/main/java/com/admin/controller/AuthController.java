@@ -67,18 +67,23 @@ public class AuthController {
         try {
             Optional<User> user = userService.loginUser(email, password);
             if (user.isPresent()) {
+                // Kiểm tra nếu tài khoản bị vô hiệu hóa
+                if (!user.get().isEnabled()) {
+                    Map<String, String> error = new HashMap<>();
+                    error.put("error", "Your account has been disabled. Please contact support.");
+                    return ResponseEntity.status(403).body(error); // HTTP 403: Forbidden
+                }
+
                 // Lưu thông tin vào session
                 session.setAttribute("id", user.get().getId());
                 session.setAttribute("username", user.get().getUsername());
                 session.setAttribute("role", user.get().getRole());
-
 
                 // Tạo phản hồi JSON
                 Map<String, String> response = new HashMap<>();
                 response.put("id", user.get().getId().toString());
                 response.put("username", user.get().getUsername());
                 response.put("role", user.get().getRole());
-
 
                 // Xử lý phân quyền theo role
                 String role = user.get().getRole().toLowerCase(); // Đảm bảo role là chữ thường
@@ -104,14 +109,15 @@ public class AuthController {
                 // Trả về lỗi nếu đăng nhập không thành công
                 Map<String, String> error = new HashMap<>();
                 error.put("error", "Invalid email or password");
-                return ResponseEntity.status(401).body(error);
+                return ResponseEntity.status(401).body(error); // HTTP 401: Unauthorized
             }
         } catch (NoSuchAlgorithmException e) {
             Map<String, String> error = new HashMap<>();
             error.put("error", "Error during password encryption.");
-            return ResponseEntity.status(500).body(error);
+            return ResponseEntity.status(500).body(error); // HTTP 500: Internal Server Error
         }
     }
+
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {

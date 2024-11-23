@@ -52,5 +52,7 @@
                     .orElseThrow(() -> new StylistNotFoundException("Stylist not found with ID: " + id));
         }
 
-
+        public Stylist findByUsername(String username) {
+            return stylistRepository.findByUserUsername(username);
+        }
     }

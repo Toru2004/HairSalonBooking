@@ -180,3 +180,4 @@ public class StylistController {
         return "redirect:/manageStylists";
     }
 }
+
